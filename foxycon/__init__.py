@@ -1,3 +1,3 @@
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 from foxycon.statistics_services.content_social_network import StatisticianSocNet
-
+from foxycon.utils.call_balancer import CallBalancer

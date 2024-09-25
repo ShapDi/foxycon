@@ -1,5 +1,7 @@
 import inspect
 import asyncio
+
+from typing import Callable
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 from foxycon.statistics_services.modules_youtube.statistics_social_network import StatisticianModuleStrategy
 
@@ -10,11 +12,13 @@ class StatisticianSocNet:
     def __init__(self, proxy=None, file_settings=None):
         self._proxy = proxy
         self._file_settings = file_settings
+
     @staticmethod
-    def is_coroutine(func):
+    def is_coroutine(func: Callable):
         return inspect.iscoroutinefunction(func)
+
     @staticmethod
-    def get_basic_data(link):
+    def get_basic_data(link: str):
         data = ContentAnalyzer().get_data(link)
         return data
 
