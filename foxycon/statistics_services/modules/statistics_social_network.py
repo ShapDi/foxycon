@@ -2,12 +2,14 @@ from abc import ABC
 
 from foxycon.data_structures.analysis_type import ResultAnalytics
 from foxycon.data_structures.statistician_type import YouTubeChannelsData, YouTubeContentData
-from foxycon.statistics_services.modules_youtube.statistics_instagram import InstagramReels
-from foxycon.statistics_services.modules_youtube.statistics_youtube import YouTubeChannel, YouTubeContent
+from foxycon.statistics_services.modules.statistics_instagram import InstagramReels
+from foxycon.statistics_services.modules.statistics_youtube import YouTubeChannel, YouTubeContent
 
 
 class StatisticianModuleStrategy(ABC):
-    pass
+    @staticmethod
+    def get_data(object_sn):
+        pass
 
 
 class InstagramStatistician(StatisticianModuleStrategy):

@@ -3,7 +3,7 @@ import asyncio
 
 from typing import Callable
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
-from foxycon.statistics_services.modules_youtube.statistics_social_network import StatisticianModuleStrategy
+from foxycon.statistics_services.modules.statistics_social_network import StatisticianModuleStrategy
 
 
 class StatisticianSocNet:
