@@ -2,6 +2,8 @@ import inspect
 import asyncio
 
 from typing import Callable
+
+from foxycon.utils.call_balancer import CallBalancer
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 from foxycon.statistics_services.modules.statistics_social_network import StatisticianModuleStrategy
 
@@ -9,9 +11,17 @@ from foxycon.statistics_services.modules.statistics_social_network import Statis
 class StatisticianSocNet:
     statistics_modules = {subclass().__str__(): subclass for subclass in StatisticianModuleStrategy.__subclasses__()}
 
-    def __init__(self, proxy=None, file_settings=None):
+    def __init__(self, proxy=None, file_settings=None, telegram_accounts=None):
         self._proxy = proxy
+        self._telegram_accounts = telegram_accounts
         self._file_settings = file_settings
+
+        if self._proxy is not None:
+            self._proxy_balancer = CallBalancer(self._proxy)
+
+        if self._telegram_accounts is not None:
+            self._telegram_accounts = CallBalancer(self._proxy)
+
 
     @staticmethod
     def is_coroutine(func: Callable):

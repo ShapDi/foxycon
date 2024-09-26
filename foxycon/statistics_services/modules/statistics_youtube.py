@@ -12,9 +12,10 @@ class RecipientYouTubeAbstract(ABC):
 
 
 class YouTubeChannel(RecipientYouTubeAbstract):
-    def __init__(self, link):
+    def __init__(self, link, proxy=None):
         self._link = self.transform_youtube_channel_link(link)
-        self._object_channel = self.get_object_youtube(self._link)
+        self._proxy = proxy
+        self._object_channel = self.get_object_youtube(self._link, self._proxy)
         self.name = self._object_channel.channel_name
         self.link = self._object_channel.channel_url
         self.description = self.get_description()
@@ -36,8 +37,8 @@ class YouTubeChannel(RecipientYouTubeAbstract):
             return url
 
     @staticmethod
-    def get_object_youtube(link):
-        channel = Channel(link)
+    def get_object_youtube(link, proxies):
+        channel = Channel(link, proxies)
         return channel
 
     @staticmethod
@@ -95,8 +96,9 @@ class YouTubeChannel(RecipientYouTubeAbstract):
 
 
 class YouTubeContent(RecipientYouTubeAbstract):
-    def __init__(self, link):
-        self._object_youtube = self.get_object_youtube(link)
+    def __init__(self, link, proxy=None):
+        self._proxy = proxy
+        self._object_youtube = self.get_object_youtube(link, self._proxy)
         self.title = self._object_youtube.title
         self.likes = self.get_like_num(self._object_youtube)
         self.link = self._object_youtube.watch_url
@@ -107,8 +109,8 @@ class YouTubeContent(RecipientYouTubeAbstract):
         self.publish_date = self._object_youtube.publish_date
 
     @staticmethod
-    def get_object_youtube(link):
-        youtube = YouTube(link)
+    def get_object_youtube(link, proxy):
+        youtube = YouTube(link, proxies=proxy)
         return youtube
 
     @staticmethod

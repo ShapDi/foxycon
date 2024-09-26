@@ -7,12 +7,20 @@ from foxycon.statistics_services.modules.statistics_youtube import YouTubeChanne
 
 
 class StatisticianModuleStrategy(ABC):
+    def __init__(self, proxy=None):
+        self._proxy = proxy
+
     @staticmethod
     def get_data(object_sn):
         pass
 
 
 class InstagramStatistician(StatisticianModuleStrategy):
+
+    def __init__(self, proxy=None):
+        super().__init__(proxy)
+        self._proxy = proxy
+
     @staticmethod
     async def get_data(object_sn: ResultAnalytics):
         if object_sn.content_type == 'reel':
@@ -24,10 +32,15 @@ class InstagramStatistician(StatisticianModuleStrategy):
 
 
 class YouTubeStatistician(StatisticianModuleStrategy):
+
+    def __init__(self, proxy=None):
+        super().__init__(proxy)
+        self._proxy = proxy
+
     @staticmethod
-    def get_data(object_sn: ResultAnalytics):
+    def get_data(object_sn: ResultAnalytics, proxy = None):
         if object_sn.content_type == 'channel':
-            data = YouTubeChannel(object_sn.link)
+            data = YouTubeChannel(object_sn.link, proxy=proxy)
             return YouTubeChannelsData(name=data.name,
                                        link=data.link,
                                        description=data.name,
