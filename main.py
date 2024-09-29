@@ -38,6 +38,9 @@ from foxycon import StatisticianSocNet
 
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 
+proxy = ["http://shapdi:8b3yGiQBjy1D@93.183.125.176:3128", "http://shapdi2:BVZzY5xENsN1@194.246.82.177:3128"]
+
+
 ca = ContentAnalyzer()
 
 print(ca.get_data("fasfdszfs"))
@@ -59,8 +62,8 @@ print(ca.get_data("https://www.tiktok.com/@yourfavrum/video/7394549234214636807?
 print(ca.get_data("https://www.youtube.com/watch?v=yydTXyC9StM&t=139s"))
 print(ca.get_data("https://www.youtube.com/@basitrind"))
 
+ssn = StatisticianSocNet(proxy = proxy)
+print(ssn.get_data('https://www.youtube.com/@basitrind'))
+print(ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s'))
 
-print(StatisticianSocNet().get_data('https://www.youtube.com/@basitrind'))
-print(StatisticianSocNet().get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s'))
-
-print(StatisticianSocNet().get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
+# print(StatisticianSocNet().get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))

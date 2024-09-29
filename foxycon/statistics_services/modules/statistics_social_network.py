@@ -36,11 +36,13 @@ class YouTubeStatistician(StatisticianModuleStrategy):
     def __init__(self, proxy=None):
         super().__init__(proxy)
         self._proxy = proxy
+        if self._proxy is not None:
+            self._proxy = {"http": self._proxy,
+                           "https": self._proxy, }
 
-    @staticmethod
-    def get_data(object_sn: ResultAnalytics, proxy = None):
+    def get_data(self, object_sn: ResultAnalytics, proxy=None):
         if object_sn.content_type == 'channel':
-            data = YouTubeChannel(object_sn.link, proxy=proxy)
+            data = YouTubeChannel(object_sn.link, proxy=self._proxy)
             return YouTubeChannelsData(name=data.name,
                                        link=data.link,
                                        description=data.name,
@@ -49,7 +51,7 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                                        view_count=data.view_count,
                                        subscriber=data.subscriber, )
         elif object_sn.content_type == 'video':
-            data = YouTubeContent(object_sn.link)
+            data = YouTubeContent(object_sn.link, proxy=self._proxy)
             return YouTubeContentData(title=data.title,
                                       likes=data.likes,
                                       link=data.link,
