@@ -6,7 +6,7 @@ setup(
     description='A package created to interact with various electrical networks based on other libraries.',
     author='ShapDi',
     author_email='shapranov.work@gmail.com',
-    url='git@github.com:ShapDi/FoxyCon.git',
+    url='git@github.com:technology-department-mb/social-media-data.git',
     packages=find_packages(),
     install_requires=[
         "aiohttp==3.9.2",
@@ -18,7 +18,7 @@ setup(
         "cffi==1.16.0",
         "charset-normalizer==2.1.1",
         "frozenlist==1.3.3",
-        "idna==3.4",
+        "idna==3.7",
         "instagram-auth==0.1.1",
         "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git"
         "@6ece09397445fc78790aeb6072cc72cd1fa5a343",
