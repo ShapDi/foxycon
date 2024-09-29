@@ -31,7 +31,7 @@ setup(
         "typing_extensions==4.12.2",
         "urllib3==2.2.3",
         "yarl==1.8.2",
-        "git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343#egg=instagram-reels"  # Добавьте сюда
+        "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343"  # Добавьте сюда
     ],
     python_requires=">=3.10",
     license="MIT",
