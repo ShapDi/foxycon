@@ -8,7 +8,7 @@ setup(
     packages=['foxycon', 'foxycon.analysis_services', 'foxycon.analysis_services', 'foxycon.data_structures',
               'foxycon.statistics_services'],
     author_email='shapranov.work@gmail.com',
-    url='git@github.com:ShapDi/FoxyCon.git',
+    url='git@github.com:ShapDi/foxycon.git',
     install_requires=[
         "aiohttp==3.9.2",
         "aiosignal==1.3.1",
