@@ -5,8 +5,9 @@ from instagram_reels.main.InstagramAPIClientImpl import InstagramAPIClientImpl
 
 
 class InstagramReels:
-    def __init__(self, link):
+    def __init__(self, link, proxy):
         self._link = link
+        self._proxy = proxy
 
     @staticmethod
     async def get_client():
@@ -30,7 +31,6 @@ class InstagramReels:
     async def get_data(self):
         code = await self.get_code(self._link)
         client = await self.get_client()
-        data = await client.get(code)
-        data.linux_time_crete = await self.unix_to_date(data.linux_time_сreation)
-        print(data)
+        data = await client.get(code, proxy=self._proxy)
+        data.publish_date = await self.unix_to_date(data.publish_date)
         return data

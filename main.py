@@ -66,4 +66,4 @@ ssn = StatisticianSocNet(proxy = proxy)
 print(ssn.get_data('https://www.youtube.com/@basitrind'))
 print(ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s'))
 
-# print(StatisticianSocNet().get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
+print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))

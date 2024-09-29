@@ -21,10 +21,10 @@ class InstagramStatistician(StatisticianModuleStrategy):
         super().__init__(proxy)
         self._proxy = proxy
 
-    @staticmethod
-    async def get_data(object_sn: ResultAnalytics):
+
+    async def get_data(self, object_sn: ResultAnalytics):
         if object_sn.content_type == 'reel':
-            data = await InstagramReels(object_sn.link).get_data()
+            data = await InstagramReels(object_sn.link, proxy=self._proxy ).get_data()
             return data
 
     def __str__(self):
