@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='foxycon',
-    version='0.1.0',
-    description='A package created to interact with various electrical networks based on other libraries.',
-    author='ShapDi',
-    author_email='shapranov.work@gmail.com',
-    url='git@github.com:technology-department-mb/social-media-data.git',
-    packages=find_packages(),
+    name="foxycon",
+    version="0.1.0",
+    description="A package created to interact with various electrical networks based on other libraries.",
+    author="ShapDi",
+    author_email="shapranov.work@gmail.com",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     install_requires=[
         "aiohttp==3.9.2",
         "aiosignal==1.3.1",
@@ -18,9 +18,8 @@ setup(
         "cffi==1.16.0",
         "charset-normalizer==2.1.1",
         "frozenlist==1.3.3",
-        "idna==3.7",
+        "idna==3.4",
         "instagram-auth==0.1.1",
-        "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343"
         "multidict==6.0.4",
         "pycparser==2.21",
         "pycryptodomex==3.19.1",
@@ -33,10 +32,17 @@ setup(
         "urllib3==2.2.3",
         "yarl==1.8.2"
     ],
+    extras_require={
+        "instagram-reels": [
+            "git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343"
+        ]
+    },
+    python_requires=">=3.10",
+    license="MIT",
     classifiers=[
-        'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent"
     ],
-    python_requires='>=3.10',
+    keywords=["electrical", "network", "analysis"],
 )
