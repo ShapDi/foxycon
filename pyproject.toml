@@ -18,7 +18,7 @@ classifiers = [
 keywords = ["electrical", "network", "analysis"]
 
 
-urls = { "Home" = "git@github.com:ShapDi/FoxyCon.git" }
+urls = { "Home" = "git@github.com:technology-department-mb/social-media-data.git" }
 
 [project.dependencies]
 aiohttp = "==3.9.2"
