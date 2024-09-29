@@ -18,7 +18,7 @@ setup(
         "cffi==1.16.0",
         "charset-normalizer==2.1.1",
         "frozenlist==1.3.3",
-        "idna==3.4",
+        "idna==3.7",
         "instagram-auth==0.1.1",
         "multidict==6.0.4",
         "pycparser==2.21",
@@ -30,13 +30,9 @@ setup(
         "soupsieve==2.3.2.post1",
         "typing_extensions==4.12.2",
         "urllib3==2.2.3",
-        "yarl==1.8.2"
+        "yarl==1.8.2",
+        "git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343#egg=instagram-reels"  # Добавьте сюда
     ],
-    extras_require={
-        "instagram-reels": [
-            "git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343#egg=instagram-reels"
-        ]
-    },
     python_requires=">=3.10",
     license="MIT",
     classifiers=[
