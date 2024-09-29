@@ -17,7 +17,7 @@ setup(
         "frozenlist==1.3.3",
         "idna==3.7",
         "instagram-auth==0.1.1",
-        "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git"
+        "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343"
         "multidict==6.0.4",
         "pycparser==2.21",
         "pycryptodomex==3.19.1",
