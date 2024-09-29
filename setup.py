@@ -34,7 +34,7 @@ setup(
     ],
     extras_require={
         "instagram-reels": [
-            "git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343"
+            "git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343#egg=instagram-reels"
         ]
     },
     python_requires=">=3.10",
