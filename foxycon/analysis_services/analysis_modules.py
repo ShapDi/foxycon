@@ -122,6 +122,8 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
             return query_params.get('v', [None])[0]
         elif '@' in parsed_url.path:
             return parsed_url.path.split('@')[1]
+        elif 'channel' in parsed_url.path:
+            return parsed_url.path.split('channel/')[1]
         return None
 
     @staticmethod
@@ -135,6 +137,9 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         elif '@' in parsed_url.path:
             # Preserve the channel URL as-is
             return f"https://www.youtube.com/@{parsed_url.path.split('@')[1]}"
+        elif 'channel' in parsed_url.path:
+            # Preserve the channel URL as-is
+            return f"https://www.youtube.com/channel{parsed_url.path.split('channel')[1]}"
         return None
 
     @staticmethod
@@ -143,7 +148,7 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         parsed_url = urllib.parse.urlparse(link)
         if 'watch' in parsed_url.path:
             return YouTube.video.value
-        elif '@' in parsed_url.path:
+        elif '@' or 'channel' in parsed_url.path:
             return YouTube.channel.value
         else:
             return 'unknown'

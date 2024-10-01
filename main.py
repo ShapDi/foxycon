@@ -61,9 +61,11 @@ print(ca.get_data("https://www.tiktok.com/@univer_serial1?_t=8oe1uJ7kZQo&_r=1 ht
 print(ca.get_data("https://www.tiktok.com/@yourfavrum/video/7394549234214636807?_t=8oe1rB7TXRR&_r=1"))
 print(ca.get_data("https://www.youtube.com/watch?v=yydTXyC9StM&t=139s"))
 print(ca.get_data("https://www.youtube.com/@basitrind"))
+print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
 
-ssn = StatisticianSocNet(proxy = proxy)
+ssn = StatisticianSocNet(proxy=proxy)
 print(ssn.get_data('https://www.youtube.com/@basitrind'))
 print(ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s'))
 
 print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
+print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
