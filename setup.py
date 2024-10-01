@@ -11,7 +11,9 @@ setup(
     url='git@github.com:ShapDi/foxycon.git',
     install_requires=[
         "pytube==15.0.0",
-        "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343"
+        "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343",
+        'regex==2024.9.11',
+        'requests==2.32.3',
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
