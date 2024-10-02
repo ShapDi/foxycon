@@ -1,3 +1,6 @@
+import youtube_subtitles.analizer as analizer
+from foxycon.data_structures.country_type import Country
+
 # from foxycon.search_services import DataGoogleSearch, LanguageGoogle, TimeGoogle, CountryGoogle
 from foxycon import StatisticianSocNet
 # data = DataGoogleSearch(language = 'lang_e', country = 'CA', period = 'year')
@@ -69,3 +72,7 @@ print(ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s'))
 
 print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
 print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
+
+print(analizer.try_get_subtitles('https://youtu.be/K-FkRVlbiXs', Country.India))
+print(analizer.try_get_subtitles('https://www.youtube.com/watch?v=uXleufh2mY0', Country.USA))
+print(analizer.try_get_subtitles('https://www.youtube.com/watch?v=YDAZ6hNe9pg&list=RDQO0IWTDp96c&index=2', Country.Russia))

@@ -1,25 +1,39 @@
+import srt
+
 from pytubefix import YouTube
+from foxycon.data_structures.country_type import Country
 
-url_no_sub = 'https://www.youtube.com/watch?v=YDAZ6hNe9pg&list=RDQO0IWTDp96c&index=2'
-url_auto = 'https://www.youtube.com/watch?v=6rjaNgA8Okc&list=RDQO0IWTDp96c&index=3'
-url_manual = 'https://www.youtube.com/watch?v=uXleufh2mY0'
 
-yt = YouTube(url_auto)
-captions = yt.captions
+def try_get_subtitles(url: str, country: Country, one_line: bool = False) -> (bool, []):
+    country_language_map = {
+        Country.Russia: ['ru', 'a.ru'],
+        Country.USA: ['en', 'a.en'],
+        Country.India: ['hi', 'a.hi']
+    }
 
-def main():
+    yt = YouTube(url)
+    captions = yt.captions
+
     if len(captions) == 0:
         print('No subs')
-        return
+        return False, []
 
-    caption = captions.get('en', False)
-    print(caption)
+    for code in country_language_map.get(country):
+        caption = captions.get(code, False)
 
-    try:
-        caption = captions['en']
-        print('Suc')
-    except KeyError:
-        print('Key not founded')
+        if not caption:
+            continue
 
+        srt_captions = caption.generate_srt_captions()
+        subtitles = ''
 
-main()
+        for data in srt.parse(srt_captions):
+            if not one_line:
+                subtitles = f'{subtitles} {data.content}\n'
+            else:
+                subtitles = f'{subtitles} {data.content}'
+
+        return True, subtitles
+
+    print(f'No subs for {country.name}')
+    return False, []
