@@ -10,7 +10,7 @@ setup(
     author_email='shapranov.work@gmail.com',
     url='git@github.com:ShapDi/foxycon.git',
     install_requires=[
-        "pytube==15.0.0",
+        "pytubefix==7.1.3",
         "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git@6ece09397445fc78790aeb6072cc72cd1fa5a343"
     ],
     classifiers=[
