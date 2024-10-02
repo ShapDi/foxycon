@@ -28,7 +28,6 @@ class ContentAnalyzer:
                                      social_network=social_network,
                                      content_type=data.get("type_content"),
                                      code=data.get("code"))
-            print(result)
             return result
         else:
             return None
