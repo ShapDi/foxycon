@@ -2,7 +2,7 @@ import json
 from abc import ABC
 import re
 
-from pytube import YouTube, Channel
+from pytubefix import YouTube, Channel
 from bs4 import BeautifulSoup
 from regex import regex
 
