@@ -11,7 +11,7 @@ setup(
     url='git@github.com:ShapDi/foxycon.git',
     install_requires=[
         "pytubefix==7.1.3",
-        "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git"
+        "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git",
         'regex==2024.9.11',
         'requests==2.32.3',
     ],
