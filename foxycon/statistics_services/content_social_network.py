@@ -58,7 +58,7 @@ class StatisticianSocNet:
         class_statistics = self.statistics_modules.get(f"{data.social_network}")
         if self.is_coroutine(class_statistics().get_data):
             try:
-                await class_statistics(class_statistics(proxy=self._proxy)).get_data(data)
+                await class_statistics(proxy=self._proxy).get_data(data)
             except:
                 data = asyncio.run(class_statistics(proxy=self._proxy).get_data(data))
         else:
