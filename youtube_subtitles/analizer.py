@@ -8,7 +8,7 @@ def try_get_subtitles(url: str, country: Country, one_line: bool = False) -> (bo
     country_language_map = {
         Country.Russia: ['ru', 'a.ru'],
         Country.USA: ['en', 'a.en'],
-        Country.India: ['hi', 'a.hi']
+        Country.India: ['hi', 'te', 'a.hi', 'a.te']
     }
 
     yt = YouTube(url)
@@ -18,7 +18,12 @@ def try_get_subtitles(url: str, country: Country, one_line: bool = False) -> (bo
         print('No subs')
         return False, []
 
-    for code in country_language_map.get(country):
+    codes = country_language_map.get(country)
+
+    if country is not Country.USA:
+        codes.extend(country_language_map.get(Country.USA))
+
+    for code in codes:
         caption = captions.get(code, False)
 
         if not caption:
