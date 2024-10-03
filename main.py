@@ -1,3 +1,5 @@
+from foxycon.data_structures.country_type import Country
+
 # from foxycon.search_services import DataGoogleSearch, LanguageGoogle, TimeGoogle, CountryGoogle
 from foxycon import StatisticianSocNet
 import asyncio
@@ -93,3 +95,8 @@ async def main_corut():
     print(data)
 
 asyncio.run(main_corut())
+
+print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
+print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
+
+
