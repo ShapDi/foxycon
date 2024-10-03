@@ -32,7 +32,7 @@ class InstagramAnalyzer(AnalyzerModuleStrategy):
     @staticmethod
     def get_code(link):
         # Extract the unique code for Instagram posts, reels, or page names
-        match = re.search(r'/(p|reel)/([^/?]+)', link)
+        match = re.search(r'/(p|reel|reels)/([^/?]+)', link)
         if match:
             return match.group(2)
 
@@ -51,6 +51,8 @@ class InstagramAnalyzer(AnalyzerModuleStrategy):
     def get_type_content(link):
         # Determine the content type from the Instagram link
         if '/reel/' in link:
+            return Instagram.reel.value
+        if '/reels/' in link:
             return Instagram.reel.value
         elif '/p/' in link:
             return Instagram.post.value

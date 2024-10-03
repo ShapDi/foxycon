@@ -7,8 +7,9 @@ from foxycon.statistics_services.modules.statistics_youtube import YouTubeChanne
 
 
 class StatisticianModuleStrategy(ABC):
-    def __init__(self, proxy=None):
+    def __init__(self, proxy=None, subtitles=None):
         self._proxy = proxy
+        self._subtitles = subtitles
 
     @staticmethod
     def get_data(object_sn):
@@ -17,14 +18,14 @@ class StatisticianModuleStrategy(ABC):
 
 class InstagramStatistician(StatisticianModuleStrategy):
 
-    def __init__(self, proxy=None):
+    def __init__(self, proxy=None, subtitles=None):
         super().__init__(proxy)
         self._proxy = proxy
-
+        self._subtitles = subtitles
 
     async def get_data(self, object_sn: ResultAnalytics):
         if object_sn.content_type == 'reel':
-            data = await InstagramReels(object_sn.link, proxy=self._proxy ).get_data()
+            data = await InstagramReels(object_sn.link, proxy=self._proxy).get_data()
             return data
 
     def __str__(self):
@@ -33,9 +34,10 @@ class InstagramStatistician(StatisticianModuleStrategy):
 
 class YouTubeStatistician(StatisticianModuleStrategy):
 
-    def __init__(self, proxy=None):
+    def __init__(self, proxy=None, subtitles=None):
         super().__init__(proxy)
         self._proxy = proxy
+        self._subtitles = subtitles
         if self._proxy is not None:
             self._proxy = {"http": self._proxy,
                            "https": self._proxy, }
@@ -49,9 +51,9 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                                        country=data.country,
                                        code=data.code,
                                        view_count=data.view_count,
-                                       subscriber=data.subscriber, )
+                                       subscriber=data.subscriber)
         elif object_sn.content_type == 'video':
-            data = YouTubeContent(object_sn.link, proxy=self._proxy)
+            data = YouTubeContent(object_sn.link, proxy=self._proxy, subtitles=self._subtitles)
             return YouTubeContentData(title=data.title,
                                       likes=data.likes,
                                       link=data.link,

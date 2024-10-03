@@ -3,6 +3,7 @@ from enum import Enum
 
 class Instagram(Enum):
     reel = 'reel'
+    reels = 'reels'
     post = 'post'
     page = 'page'
 

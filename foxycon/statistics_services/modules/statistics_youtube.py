@@ -96,7 +96,7 @@ class YouTubeChannel(RecipientYouTubeAbstract):
 
 
 class YouTubeContent(RecipientYouTubeAbstract):
-    def __init__(self, link, proxy=None):
+    def __init__(self, link, proxy=None, subtitles=None):
         self._proxy = proxy
         self._object_youtube = self.get_object_youtube(link, self._proxy)
         self.title = self._object_youtube.title
@@ -108,10 +108,33 @@ class YouTubeContent(RecipientYouTubeAbstract):
         self.channel_url = self._object_youtube.channel_url
         self.publish_date = self._object_youtube.publish_date
 
+        if subtitles:
+            self._subtitles = self.get_subtitles(self._object_youtube)
+
     @staticmethod
     def get_object_youtube(link, proxy):
         youtube = YouTube(link, proxies=proxy)
         return youtube
+
+    @staticmethod
+    def get_subtitles(youtube: YouTube):
+        captions = youtube.captions
+        if len(captions) == 0:
+            print('No subs')
+            return None
+
+        caption = captions.get('en', False)
+        print(caption)
+
+        try:
+            caption = captions['en']
+            print('Suc')
+            return caption
+
+        except KeyError:
+            print('Key not founded')
+            return None
+
 
     @staticmethod
     def get_like_num(youtube: YouTube):
