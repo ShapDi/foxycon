@@ -71,7 +71,7 @@ print(ca.get_data("https://www.youtube.com/watch?v=M4HCrPSU0C0?start=92.40&end=9
 
 
 ssn = StatisticianSocNet(proxy=proxy)
-print(asyncio.run(ssn.get_data('https://www.youtube.com/@basitrind')))
+# print(asyncio.run(ssn.get_data('https://www.youtube.com/@basitrind')))
 # print(ssn.get_data('https://www.youtube.com/@basitrind'))
 # print(ca.get_data("https://www.youtube.com/watch?v=ELjqloF-P2M"))
 # print(ssn.get_data('https://www.youtube.com/watch?v=ELjqloF-P2M'))
@@ -91,12 +91,12 @@ async def main_corut():
     print(data)
     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
     print(data)
-    data = await ssn.get_data('https://www.youtube.com/watch?v=ELjqloF-P2M')
+    data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
     print(data)
 
 asyncio.run(main_corut())
 
-print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
-print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
-
-
+# print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
+# print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
+#
+#

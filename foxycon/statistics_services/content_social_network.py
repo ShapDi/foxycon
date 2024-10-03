@@ -31,22 +31,6 @@ class StatisticianSocNet:
         data = ContentAnalyzer().get_data(link)
         return data
 
-    def get_data(self, link):
-
-        if self._proxy_balancer is not None:
-            self._proxy = self._proxy_balancer.call_next()
-
-        data = self.get_basic_data(link)
-
-        class_statistics = self.statistics_modules.get(f"{data.social_network}")
-        if self.is_coroutine(class_statistics().get_data):
-            try:
-                data = asyncio.run(class_statistics(proxy=self._proxy).get_data(data))
-            except:
-                class_statistics.get_data(data)
-        else:
-            data = class_statistics(proxy=self._proxy, subtitles=self._subtitles).get_data(data)
-        return data
 
     async def get_data(self, link):
 
@@ -58,7 +42,7 @@ class StatisticianSocNet:
         class_statistics = self.statistics_modules.get(f"{data.social_network}")
         if self.is_coroutine(class_statistics().get_data):
             try:
-                await class_statistics(proxy=self._proxy).get_data(data)
+                data = await class_statistics(proxy=self._proxy).get_data(data)
             except:
                 data = asyncio.run(class_statistics(proxy=self._proxy).get_data(data))
         else:
