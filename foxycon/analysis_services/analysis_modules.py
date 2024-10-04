@@ -122,6 +122,8 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         if 'watch' in parsed_url.path:
             query_params = urllib.parse.parse_qs(parsed_url.query)
             return query_params.get('v', [None])[0]
+        elif 'shorts' in parsed_url.path:
+            return parsed_url.path.split('/shorts/')[1].split('?')[0]
         elif '@' in parsed_url.path:
             return parsed_url.path.split('@')[1]
         elif 'channel' in parsed_url.path:
@@ -130,30 +132,34 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
 
     @staticmethod
     def clean_link(link):
-        # Clean the YouTube link to remove extra parameters
+        # Remove everything after the "?" in the YouTube link
         parsed_url = urllib.parse.urlparse(link)
-        query_params = urllib.parse.parse_qs(parsed_url.query)
         if 'watch' in parsed_url.path:
             # Return clean URL for video
-            return f"https://www.youtube.com/watch?v={query_params.get('v', [None])[0]}"
+            query_params = urllib.parse.parse_qs(parsed_url.query)
+            return f"https://youtube.com/watch?v={query_params.get('v', [None])[0]}"
+        elif 'shorts' in parsed_url.path:
+            # Convert shorts link to watch link
+            shorts_id = parsed_url.path.split('/shorts/')[1].split('?')[0]
+            return f"https://youtube.com/watch?v={shorts_id}"
         elif '@' in parsed_url.path:
             # Preserve the channel URL as-is
             return f"https://www.youtube.com/@{parsed_url.path.split('@')[1]}"
         elif 'channel' in parsed_url.path:
             # Preserve the channel URL as-is
             return f"https://www.youtube.com/channel{parsed_url.path.split('channel')[1]}"
-        return None
+        return parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path
 
     @staticmethod
     def get_type_content(link):
-        # Determine the content type from the YouTube link
         parsed_url = urllib.parse.urlparse(link)
         if 'watch' in parsed_url.path:
             return YouTube.video.value
-        elif '@' or 'channel' in parsed_url.path:
+        elif 'shorts' in parsed_url.path:
+            return YouTube.shorts.value
+        elif '@' in parsed_url.path or 'channel' in parsed_url.path:
             return YouTube.channel.value
-        else:
-            return 'unknown'
+        return 'unknown'
 
     def get_data(self, link):
         return {
