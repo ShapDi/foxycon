@@ -14,6 +14,7 @@ setup(
         "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git",
         'regex==2024.9.11',
         'requests==2.32.3',
+        'srt==3.5.3',
     ],
     classifiers=[
         'Programming Language :: Python :: 3',

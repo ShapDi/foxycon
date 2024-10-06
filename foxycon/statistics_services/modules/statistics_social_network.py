@@ -73,6 +73,5 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                                       channel_url=data.channel_url,
                                       publish_date=data.publish_date)
 
-
     def __str__(self):
         return 'youtube'

@@ -1,10 +1,12 @@
 import json
 from abc import ABC
 import re
+import srt
 
 from pytubefix import YouTube, Channel
 from bs4 import BeautifulSoup
 from regex import regex
+from foxycon.data_structures.country_type import Country
 
 
 class RecipientYouTubeAbstract(ABC):
@@ -109,7 +111,7 @@ class YouTubeContent(RecipientYouTubeAbstract):
         self.publish_date = self._object_youtube.publish_date
 
         if subtitles:
-            self._subtitles = self.get_subtitles(self._object_youtube)
+            self._subtitles = self.get_subtitles(self._object_youtube, country=Country.Russia)
 
     @staticmethod
     def get_object_youtube(link, proxy):
@@ -117,24 +119,43 @@ class YouTubeContent(RecipientYouTubeAbstract):
         return youtube
 
     @staticmethod
-    def get_subtitles(youtube: YouTube):
+    def get_subtitles(youtube: YouTube, country: Country, one_line: bool = False) -> (bool, []):
+        country_language_map = {
+            Country.Russia: ['ru', 'a.ru'],
+            Country.USA: ['en', 'a.en'],
+            Country.India: ['hi', 'te', 'a.hi', 'a.te']
+        }
+
         captions = youtube.captions
+
         if len(captions) == 0:
             print('No subs')
-            return None
+            return False, []
 
-        caption = captions.get('en', False)
-        print(caption)
+        codes = country_language_map.get(country)
 
-        try:
-            caption = captions['en']
-            print('Suc')
-            return caption
+        if country is not Country.USA:
+            codes.extend(country_language_map.get(Country.USA))
 
-        except KeyError:
-            print('Key not founded')
-            return None
+        for code in codes:
+            caption = captions.get(code, False)
 
+            if not caption:
+                continue
+
+            srt_captions = caption.generate_srt_captions()
+            subtitles = ''
+
+            for data in srt.parse(srt_captions):
+                if not one_line:
+                    subtitles = f'{subtitles} {data.content}\n'
+                else:
+                    subtitles = f'{subtitles} {data.content}'
+            print(subtitles)
+            return True, subtitles
+
+        print(f'No subs for {country.name}')
+        return False, []
 
     @staticmethod
     def get_like_num(youtube: YouTube):

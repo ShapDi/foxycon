@@ -72,7 +72,7 @@ print(ca.get_data("https://www.youtube.com/watch?v=M4HCrPSU0C0?start=92.40&end=9
 
 
 
-ssn = StatisticianSocNet(proxy=proxy)
+ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 # print(asyncio.run(ssn.get_data('https://www.youtube.com/@basitrind')))
 # print(ssn.get_data('https://www.youtube.com/@basitrind'))
 # print(ca.get_data("https://www.youtube.com/watch?v=ELjqloF-P2M"))
@@ -92,6 +92,8 @@ async def main_corut():
     data = await ssn.get_data('https://www.youtube.com/@AgnamoN')
     print(data)
     data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
+    print(data)
+    data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
     print(data)
 #     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
 #     print(data)
