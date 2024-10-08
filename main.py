@@ -1,5 +1,3 @@
-from foxycon.data_structures.country_type import Country
-
 # from foxycon.search_services import DataGoogleSearch, LanguageGoogle, TimeGoogle, CountryGoogle
 from foxycon import StatisticianSocNet
 import asyncio
