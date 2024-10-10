@@ -31,7 +31,6 @@ class StatisticianSocNet:
         data = ContentAnalyzer().get_data(link)
         return data
 
-
     async def get_data(self, link):
 
         if self._proxy_balancer is not None:
