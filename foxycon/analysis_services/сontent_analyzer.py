@@ -22,7 +22,6 @@ class ContentAnalyzer:
         social_network = self.get_social_network(link)
         if social_network is not None:
             class_analysis = self.analysis_modules.get(social_network)
-
             data = class_analysis().get_data(link)
             result = ResultAnalytics(link=data.get("clean_link"),
                                      social_network=social_network,

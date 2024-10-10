@@ -1,5 +1,3 @@
-from foxycon.data_structures.country_type import Country
-
 # from foxycon.search_services import DataGoogleSearch, LanguageGoogle, TimeGoogle, CountryGoogle
 from foxycon import StatisticianSocNet
 import asyncio
@@ -60,6 +58,8 @@ print(ca.get_data("https://www.instagram.com/prikol.pedro/"))
 print(ca.get_data("https://www.instagram.com/papich_legenda"))
 print(ca.get_data("https://www.instagram.com/reel/C9kE36uxz_v/?igsh=YXF2NXVmaG9pOWZt"))
 print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
+print(ca.get_data("https://www.youtube.com/shorts/J-m4POZFGyM"))
+print(ca.get_data("https://www.youtube.com/@AgnamoN"))
 
 # print(ca.get_data("https://www.tiktok.com/@univer_serial1?_t=8oe1uJ7kZQo&_r=1 https://www.tiktok.com/t/ZTNbRpGhg/"))
 # print(ca.get_data("https://www.tiktok.com/@yourfavrum/video/7394549234214636807?_t=8oe1rB7TXRR&_r=1"))
@@ -70,7 +70,7 @@ print(ca.get_data("https://www.youtube.com/watch?v=M4HCrPSU0C0?start=92.40&end=9
 
 
 
-ssn = StatisticianSocNet(proxy=proxy)
+ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 # print(asyncio.run(ssn.get_data('https://www.youtube.com/@basitrind')))
 # print(ssn.get_data('https://www.youtube.com/@basitrind'))
 # print(ca.get_data("https://www.youtube.com/watch?v=ELjqloF-P2M"))
@@ -87,10 +87,14 @@ ssn = StatisticianSocNet(proxy=proxy)
 # print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
 
 async def main_corut():
-    data = await ssn.get_data('https://www.youtube.com/watch?v=6rjaNgA8Okc&list=RDQO0IWTDp96c&index=3')
+    data = await ssn.get_data('https://www.youtube.com/@AgnamoN')
     print(data)
-    data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
+    data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
     print(data)
+    data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
+    print(data)
+#     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
+#     print(data)
     data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
     print(data)
 

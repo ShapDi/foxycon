@@ -62,6 +62,16 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                                       system_id=data.system_id,
                                       channel_url=data.channel_url,
                                       publish_date=data.publish_date)
+        elif object_sn.content_type == 'shorts':
+            data = YouTubeContent(object_sn.link, proxy=self._proxy, subtitles=self._subtitles)
+            return YouTubeContentData(title=data.title,
+                                      likes=data.likes,
+                                      link=data.link,
+                                      code=data.code,
+                                      views=data.views,
+                                      system_id=data.system_id,
+                                      channel_url=data.channel_url,
+                                      publish_date=data.publish_date)
 
     def __str__(self):
         return 'youtube'
