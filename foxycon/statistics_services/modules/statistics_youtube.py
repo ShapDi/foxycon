@@ -38,7 +38,7 @@ class YouTubeChannel(RecipientYouTubeAbstract):
             return url
 
     @staticmethod
-    def get_object_youtube(link, proxies):
+    def get_object_youtube(link, proxies) -> Channel:
         channel = Channel(link, proxies)
         return channel
 
@@ -110,10 +110,10 @@ class YouTubeContent(RecipientYouTubeAbstract):
         self.publish_date = self._object_youtube.publish_date
 
         if subtitles:
-            self._subtitles = self.get_subtitles(self._object_youtube)
+            self.subtitles = self.get_subtitles(self._object_youtube)[1]
 
     @staticmethod
-    def get_object_youtube(link, proxy):
+    def get_object_youtube(link, proxy) -> YouTube:
         youtube = YouTube(link, proxies=proxy)
         return youtube
 
@@ -122,7 +122,7 @@ class YouTubeContent(RecipientYouTubeAbstract):
         return subtitles_analizer.try_get_subtitles(youtube, one_line)
 
     @staticmethod
-    def get_like_num(youtube: YouTube):
+    def get_like_num(youtube: YouTube) -> bool | int:
         like_template = r"like this video along with (.*?) other people"
         text = str(youtube.initial_data)
         matches = re.findall(like_template, text, re.MULTILINE)
@@ -132,18 +132,18 @@ class YouTubeContent(RecipientYouTubeAbstract):
         return False
 
     @classmethod
-    def __str__(cls):
+    def __str__(cls) -> str:
         return 'video'
 
 
 class Convert:
     @staticmethod
-    def convert_views_to_int(views_str):
+    def convert_views_to_int(views_str) -> int:
         clean_str = views_str.replace(",", "").replace(" views", "").strip()
         return int(clean_str)
 
     @staticmethod
-    def convert_subscribers_to_int(subscribers_str):
+    def convert_subscribers_to_int(subscribers_str) -> int:
         clean_str = subscribers_str.replace(" subscribers", "").strip()
 
         if 'K' in clean_str:

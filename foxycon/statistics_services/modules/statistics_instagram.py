@@ -22,15 +22,8 @@ class InstagramReels:
         else:
             return None
 
-    @staticmethod
-    async def unix_to_date(unix_time: int) -> str:
-        date_time = datetime.utcfromtimestamp(unix_time)
-        formatted_date = date_time.strftime('%d.%m.%Y')
-        return formatted_date
-
     async def get_data(self):
         code = await self.get_code(self._link)
         client = await self.get_client()
         data = await client.get(code, proxy=self._proxy)
-        data.publish_date = await self.unix_to_date(data.publish_date)
         return data

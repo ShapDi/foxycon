@@ -1,8 +1,10 @@
 from dataclasses import dataclass
 from enum import Enum
+
+
 @dataclass
 class ResultAnalytics:
-    link: str
+    url: str
     social_network: str
     content_type: str
     code: str
