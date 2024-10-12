@@ -5,7 +5,6 @@ import re
 from pytubefix import YouTube, Channel
 from bs4 import BeautifulSoup
 from regex import regex
-from foxycon.statistics_services.modules.utils import subtitles_analizer
 
 
 class RecipientYouTubeAbstract(ABC):
@@ -118,8 +117,24 @@ class YouTubeContent(RecipientYouTubeAbstract):
         return youtube
 
     @staticmethod
-    def get_subtitles(youtube: YouTube, one_line: bool = False) -> (bool, []):
-        return subtitles_analizer.try_get_subtitles(youtube, one_line)
+    def get_subtitles(youtube: YouTube):
+        captions = youtube.captions
+        if len(captions) == 0:
+            print('No subs')
+            return None
+
+        caption = captions.get('en', False)
+        print(caption)
+
+        try:
+            caption = captions['en']
+            print('Suc')
+            return caption
+
+        except KeyError:
+            print('Key not founded')
+            return None
+
 
     @staticmethod
     def get_like_num(youtube: YouTube) -> bool | int:
