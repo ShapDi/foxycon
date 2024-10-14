@@ -87,12 +87,12 @@ ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 # print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
 
 async def main_corut():
-    # data = await ssn.get_data('https://www.youtube.com/@AgnamoN')
-    # print(data)
-    # data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
-    # print(data)
-    # data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
-    # print(data)
+    data = await ssn.get_data('https://www.youtube.com/@AgnamoN')
+    print(data)
+    data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
+    print(data)
+    data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
+    print(data)
 
 
 #     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')

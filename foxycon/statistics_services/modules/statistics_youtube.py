@@ -109,7 +109,12 @@ class YouTubeContent(RecipientYouTubeAbstract):
         self.publish_date = self._object_youtube.publish_date
 
         if subtitles:
-            self.subtitles = self.get_subtitles(self._object_youtube)[1]
+            try:
+                self.subtitles = self.get_subtitles(self._object_youtube)[1]
+            except Exception as e:
+                self.subtitles = None
+        else:
+            self.subtitles = None
 
     @staticmethod
     def get_object_youtube(link, proxy) -> YouTube:
@@ -134,7 +139,6 @@ class YouTubeContent(RecipientYouTubeAbstract):
         except KeyError:
             print('Key not founded')
             return None
-
 
     @staticmethod
     def get_like_num(youtube: YouTube) -> bool | int:
