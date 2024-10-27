@@ -68,7 +68,8 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                                        channel_id=data.code,
                                        view_count=data.view_count,
                                        subscriber=data.subscriber,
-                                       analytics_obj=object_sn)
+                                       analytics_obj=object_sn,
+                                       pytube_ob=data.object_channel)
         elif object_sn.content_type == 'video':
             data = YouTubeContent(object_sn.url, proxy=self._proxy, subtitles=self._subtitles)
             return YouTubeContentData(title=data.title,
@@ -80,7 +81,8 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                                       channel_url=data.channel_url,
                                       publish_date=data.publish_date,
                                       subtitles=data.subtitles,
-                                      analytics_obj=object_sn)
+                                      analytics_obj=object_sn,
+                                      pytube_ob=data.object_youtube)
         elif object_sn.content_type == 'shorts':
             data = YouTubeContent(object_sn.url, proxy=self._proxy, subtitles=self._subtitles)
             return YouTubeContentData(title=data.title,
@@ -92,7 +94,8 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                                       channel_url=data.channel_url,
                                       publish_date=data.publish_date,
                                       subtitles=data.subtitles,
-                                      analytics_obj=object_sn)
+                                      analytics_obj=object_sn,
+                                      pytube_ob=data.object_youtube)
 
     def __str__(self):
         return 'youtube'

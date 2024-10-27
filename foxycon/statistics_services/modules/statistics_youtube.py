@@ -94,6 +94,10 @@ class YouTubeChannel(RecipientYouTubeAbstract):
             .get('metadata').get('aboutChannelViewModel').get('description')
         return text_description
 
+    @property
+    def object_channel(self):
+        return self._object_channel
+
 
 class YouTubeContent(RecipientYouTubeAbstract):
     def __init__(self, link, proxy=None, subtitles=None):
@@ -153,6 +157,10 @@ class YouTubeContent(RecipientYouTubeAbstract):
     @classmethod
     def __str__(cls) -> str:
         return 'video'
+
+    @property
+    def object_youtube(self):
+        return self._object_youtube
 
 
 class Convert:

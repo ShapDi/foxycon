@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+from pytubefix import YouTube, Channel
 from foxycon.data_structures.analysis_type import ResultAnalytics
 
 
@@ -15,6 +15,7 @@ class YouTubeContentData:
     publish_date: str
     subtitles: str
     analytics_obj: ResultAnalytics
+    pytube_ob: YouTube
 
 
 @dataclass
@@ -27,6 +28,7 @@ class YouTubeChannelsData:
     view_count: int
     subscriber: int
     analytics_obj: ResultAnalytics
+    pytube_ob: Channel
 
 
 @dataclass
