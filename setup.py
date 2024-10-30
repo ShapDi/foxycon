@@ -11,11 +11,11 @@ setup(
     author_email='shapranov.work@gmail.com',
     url='git@github.com:ShapDi/foxycon.git',
     install_requires=[
-        "pytubefix==7.1.3",
+        "pytubefix>=7.1.3",
         "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git",
-        'regex==2024.9.11',
-        'requests==2.32.3',
-        'srt==3.5.3',
+        'regex>=2024.9.11',
+        'requests>=2.32.3',
+        'srt>=3.5.3',
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
