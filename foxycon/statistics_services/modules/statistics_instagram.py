@@ -1,4 +1,3 @@
-from datetime import datetime
 import re
 
 from instagram_reels.main.InstagramAPIClientImpl import InstagramAPIClientImpl
@@ -16,7 +15,7 @@ class InstagramReels:
 
     @staticmethod
     async def get_code(url):
-        match = re.search(r'/reel[s]?/([^/?#&]+)', url)
+        match = re.search(r"/reel[s]?/([^/?#&]+)", url)
         if match:
             return match.group(1)
         else:

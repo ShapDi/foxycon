@@ -1,17 +1,23 @@
 import inspect
-import asyncio
 
 from typing import Callable
 
 from foxycon.utils.call_balancer import CallBalancer
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
-from foxycon.statistics_services.modules.statistics_social_network import StatisticianModuleStrategy
+from foxycon.statistics_services.modules.statistics_social_network import (
+    StatisticianModuleStrategy,
+)
 
 
 class StatisticianSocNet:
-    statistics_modules = {subclass().__str__(): subclass for subclass in StatisticianModuleStrategy.__subclasses__()}
+    statistics_modules = {
+        subclass().__str__(): subclass
+        for subclass in StatisticianModuleStrategy.__subclasses__()
+    }
 
-    def __init__(self, proxy=None, file_settings=None, telegram_accounts=None, subtitles=None):
+    def __init__(
+        self, proxy=None, file_settings=None, telegram_accounts=None, subtitles=None
+    ):
         self._proxy = proxy
         self._telegram_accounts = telegram_accounts
         self._subtitles = subtitles
@@ -32,7 +38,6 @@ class StatisticianSocNet:
         return data
 
     async def get_data(self, link):
-
         if self._proxy_balancer is not None:
             self._proxy = self._proxy_balancer.call_next()
 
@@ -40,9 +45,10 @@ class StatisticianSocNet:
 
         class_statistics = self.statistics_modules.get(f"{data.social_network}")
         if self.is_coroutine(class_statistics().get_data):
-
             data = await class_statistics(proxy=self._proxy).get_data(data)
 
         else:
-            data = class_statistics(proxy=self._proxy, subtitles=self._subtitles).get_data(data)
+            data = class_statistics(
+                proxy=self._proxy, subtitles=self._subtitles
+            ).get_data(data)
         return data

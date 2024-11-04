@@ -4,11 +4,7 @@ from pytubefix import YouTube
 
 
 def try_get_subtitles(youtube: YouTube, one_line: bool = False) -> (bool, []):
-    languages = [
-        'ru', 'a.ru',
-        'hi', 'te', 'a.hi', 'a.te',
-        'en', 'a.en'
-    ]
+    languages = ["ru", "a.ru", "hi", "te", "a.hi", "a.te", "en", "a.en"]
 
     captions = youtube.captions
 
@@ -22,13 +18,13 @@ def try_get_subtitles(youtube: YouTube, one_line: bool = False) -> (bool, []):
             continue
 
         srt_captions = caption.generate_srt_captions()
-        subtitles = ''
+        subtitles = ""
 
         for data in srt.parse(srt_captions):
             if not one_line:
-                subtitles = f'{subtitles} {data.content}\n'
+                subtitles = f"{subtitles} {data.content}\n"
             else:
-                subtitles = f'{subtitles} {data.content}'
+                subtitles = f"{subtitles} {data.content}"
 
         return True, subtitles
 

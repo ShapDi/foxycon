@@ -4,7 +4,12 @@ from foxycon.data_structures.analysis_type import ResultAnalytics
 
 
 @dataclass
-class YouTubeContentData:
+class ContentData:
+    analytics_obj: ResultAnalytics
+
+
+@dataclass
+class YouTubeContentData(ContentData):
     system_id: str
     channel_id: str
     title: str
@@ -14,12 +19,12 @@ class YouTubeContentData:
     channel_url: str
     publish_date: str
     subtitles: str
-    analytics_obj: ResultAnalytics
+    # analytics_obj: ResultAnalytics
     pytube_ob: YouTube
 
 
 @dataclass
-class YouTubeChannelsData:
+class YouTubeChannelsData(ContentData):
     channel_id: str
     name: str
     link: str
@@ -27,12 +32,12 @@ class YouTubeChannelsData:
     country: str
     view_count: int
     subscriber: int
-    analytics_obj: ResultAnalytics
+    # analytics_obj: ResultAnalytics
     pytube_ob: Channel
 
 
 @dataclass
-class InstagramPageData:
+class InstagramPageData(ContentData):
     user_id: str
     username: str
     full_name: str
@@ -40,7 +45,7 @@ class InstagramPageData:
 
 
 @dataclass
-class InstagramContentData:
+class InstagramContentData(ContentData):
     title: str
     system_id: str
     publish_date: str
@@ -50,4 +55,4 @@ class InstagramContentData:
     duration: int
     code_id: str
     author: InstagramPageData
-    analytics_obj: ResultAnalytics
+    # analytics_obj: ResultAnalytics

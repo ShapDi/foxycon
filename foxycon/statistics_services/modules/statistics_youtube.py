@@ -39,11 +39,12 @@ class YouTubeChannel(RecipientYouTubeAbstract):
     @staticmethod
     def get_object_youtube(link, proxies) -> Channel:
         channel = Channel(link, proxies)
+        print(channel.__dict__)
         return channel
 
     @staticmethod
     def extract_json(text):
-        json_pattern = regex.compile(r'\{(?:[^{}]|(?R))*\}')
+        json_pattern = regex.compile(r"\{(?:[^{}]|(?R))*\}")
         json_matches = json_pattern.findall(str(text))
         extracted_json = []
         for match in json_matches:
@@ -55,43 +56,87 @@ class YouTubeChannel(RecipientYouTubeAbstract):
         return extracted_json
 
     def get_base_con(self):
-        soup = BeautifulSoup(self._object_channel.about_html, 'html.parser')
+        soup = BeautifulSoup(self._object_channel.about_html, "html.parser")
         script = soup.find_all("script")
         data = self.extract_json(script)
-        return data[4].get('onResponseReceivedEndpoints')
+        return data[4].get("onResponseReceivedEndpoints")
 
     def get_country(self):
         data = self.get_base_con()
-        text_country = data[0].get('showEngagementPanelEndpoint').get('engagementPanel') \
-            .get('engagementPanelSectionListRenderer').get('content').get('sectionListRenderer') \
-            .get('contents')[0].get('itemSectionRenderer').get('contents')[0].get('aboutChannelRenderer') \
-            .get('metadata').get('aboutChannelViewModel').get('country')
+        text_country = (
+            data[0]
+            .get("showEngagementPanelEndpoint")
+            .get("engagementPanel")
+            .get("engagementPanelSectionListRenderer")
+            .get("content")
+            .get("sectionListRenderer")
+            .get("contents")[0]
+            .get("itemSectionRenderer")
+            .get("contents")[0]
+            .get("aboutChannelRenderer")
+            .get("metadata")
+            .get("aboutChannelViewModel")
+            .get("country")
+        )
         return text_country
 
     def get_view_count(self):
         data = self.get_base_con()
-        text_view_count = data[0].get('showEngagementPanelEndpoint').get('engagementPanel') \
-            .get('engagementPanelSectionListRenderer').get('content').get('sectionListRenderer') \
-            .get('contents')[0].get('itemSectionRenderer').get('contents')[0].get('aboutChannelRenderer') \
-            .get('metadata').get('aboutChannelViewModel').get('viewCountText')
+        text_view_count = (
+            data[0]
+            .get("showEngagementPanelEndpoint")
+            .get("engagementPanel")
+            .get("engagementPanelSectionListRenderer")
+            .get("content")
+            .get("sectionListRenderer")
+            .get("contents")[0]
+            .get("itemSectionRenderer")
+            .get("contents")[0]
+            .get("aboutChannelRenderer")
+            .get("metadata")
+            .get("aboutChannelViewModel")
+            .get("viewCountText")
+        )
         view_count = Convert.convert_views_to_int(text_view_count)
         return view_count
 
     def get_subscriber(self):
         data = self.get_base_con()
-        text_subscriber = data[0].get('showEngagementPanelEndpoint').get('engagementPanel') \
-            .get('engagementPanelSectionListRenderer').get('content').get('sectionListRenderer') \
-            .get('contents')[0].get('itemSectionRenderer').get('contents')[0].get('aboutChannelRenderer') \
-            .get('metadata').get('aboutChannelViewModel').get('subscriberCountText')
+        text_subscriber = (
+            data[0]
+            .get("showEngagementPanelEndpoint")
+            .get("engagementPanel")
+            .get("engagementPanelSectionListRenderer")
+            .get("content")
+            .get("sectionListRenderer")
+            .get("contents")[0]
+            .get("itemSectionRenderer")
+            .get("contents")[0]
+            .get("aboutChannelRenderer")
+            .get("metadata")
+            .get("aboutChannelViewModel")
+            .get("subscriberCountText")
+        )
         subscriber = Convert.convert_subscribers_to_int(text_subscriber)
         return subscriber
 
     def get_description(self):
         data = self.get_base_con()
-        text_description = data[0].get('showEngagementPanelEndpoint').get('engagementPanel') \
-            .get('engagementPanelSectionListRenderer').get('content').get('sectionListRenderer') \
-            .get('contents')[0].get('itemSectionRenderer').get('contents')[0].get('aboutChannelRenderer') \
-            .get('metadata').get('aboutChannelViewModel').get('description')
+        text_description = (
+            data[0]
+            .get("showEngagementPanelEndpoint")
+            .get("engagementPanel")
+            .get("engagementPanelSectionListRenderer")
+            .get("content")
+            .get("sectionListRenderer")
+            .get("contents")[0]
+            .get("itemSectionRenderer")
+            .get("contents")[0]
+            .get("aboutChannelRenderer")
+            .get("metadata")
+            .get("aboutChannelViewModel")
+            .get("description")
+        )
         return text_description
 
     @property
@@ -115,7 +160,7 @@ class YouTubeContent(RecipientYouTubeAbstract):
         if subtitles:
             try:
                 self.subtitles = self.get_subtitles(self._object_youtube)[1]
-            except Exception as e:
+            except Exception:
                 self.subtitles = None
         else:
             self.subtitles = None
@@ -129,19 +174,19 @@ class YouTubeContent(RecipientYouTubeAbstract):
     def get_subtitles(youtube: YouTube):
         captions = youtube.captions
         if len(captions) == 0:
-            print('No subs')
+            print("No subs")
             return None
 
-        caption = captions.get('en', False)
+        caption = captions.get("en", False)
         print(caption)
 
         try:
-            caption = captions['en']
-            print('Suc')
+            caption = captions["en"]
+            print("Suc")
             return caption
 
         except KeyError:
-            print('Key not founded')
+            print("Key not founded")
             return None
 
     @staticmethod
@@ -151,12 +196,12 @@ class YouTubeContent(RecipientYouTubeAbstract):
         matches = re.findall(like_template, text, re.MULTILINE)
         if len(matches) >= 1:
             like_str = matches[0]
-            return int(like_str.replace(',', ''))
+            return int(like_str.replace(",", ""))
         return False
 
     @classmethod
     def __str__(cls) -> str:
-        return 'video'
+        return "video"
 
     @property
     def object_youtube(self):
@@ -173,9 +218,9 @@ class Convert:
     def convert_subscribers_to_int(subscribers_str) -> int:
         clean_str = subscribers_str.replace(" subscribers", "").strip()
 
-        if 'K' in clean_str:
-            return int(float(clean_str.replace('K', '')) * 1000)
-        elif 'M' in clean_str:
-            return int(float(clean_str.replace('M', '')) * 1000000)
+        if "K" in clean_str:
+            return int(float(clean_str.replace("K", "")) * 1000)
+        elif "M" in clean_str:
+            return int(float(clean_str.replace("M", "")) * 1000000)
         else:
             return int(clean_str)

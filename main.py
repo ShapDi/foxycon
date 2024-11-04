@@ -1,5 +1,6 @@
 # from foxycon.search_services import DataGoogleSearch, LanguageGoogle, TimeGoogle, CountryGoogle
 from foxycon import StatisticianSocNet
+from foxycon import Search
 import asyncio
 # data = DataGoogleSearch(language = 'lang_e', country = 'CA', period = 'year')
 
@@ -39,7 +40,10 @@ import asyncio
 
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 
-proxy = ["http://shapdi:8b3yGiQBjy1D@93.183.125.176:3128", "http://shapdi2:BVZzY5xENsN1@194.246.82.177:3128"]
+proxy = [
+    "http://shapdi:8b3yGiQBjy1D@93.183.125.176:3128",
+    "http://shapdi2:BVZzY5xENsN1@194.246.82.177:3128",
+]
 
 ca = ContentAnalyzer()
 
@@ -48,7 +52,7 @@ ca = ContentAnalyzer()
 print(ca.get_data("https://www.instagram.com/blyea_u/"))
 print(ca.get_data("https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw"))
 
-# print(ca.get_data("fasfdszfs"))
+# print(ca.get_data("fasfdszfs"))ruff check
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
 print(ca.get_data("https://www.instagram.com/blyea_u/"))
 print(ca.get_data("https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw"))
@@ -80,25 +84,29 @@ ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 # print(ssn.get_data('https://www.youtube.com/watch?v=6rjaNgA8Okc&list=RDQO0IWTDp96c&index=3'))
 
 
-# print(ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s'))
-
 #
 # print(asyncio.runssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/'))
 # print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
+print(ca.get_data("https://www.youtube.com/@4ekaku"))
+
 
 async def main_corut():
-    data = await ssn.get_data('https://www.youtube.com/@AgnamoN')
-    print(data)
-    data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
-    print(data)
-    data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
-    print(data)
+    # data = await ssn.get_data("https://m.youtube.com/@KhaaneMeinKyaHai")
+    # print(data)
+    # data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
+    # print(data)
+    # data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
+    # print(data)
 
+    #     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
+    #     print(data)
+    #     data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
+    #     print(data)
+    search = await Search(proxy=proxy, subtitles=True).start_search(
+        "https://www.youtube.com/@AgnamoN"
+    )
+    print(search)
 
-#     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
-#     print(data)
-    data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
-    print(data)
 
 asyncio.run(main_corut())
 

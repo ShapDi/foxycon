@@ -13,6 +13,11 @@ class DataNews:
         entry = NewsFeed.entries
         list_news = []
         for new in entry:
-            list_news.append({'title': new.title, 'translated_title': translator.translate(new.title, dest='ru').text,
-                              'link': new.link})
+            list_news.append(
+                {
+                    "title": new.title,
+                    "translated_title": translator.translate(new.title, dest="ru").text,
+                    "link": new.link,
+                }
+            )
         return list_news
