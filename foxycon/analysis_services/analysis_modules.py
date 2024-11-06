@@ -114,9 +114,10 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
     def get_code(link):
         # Extract the unique code (video ID or channel ID) from the YouTube link
         parsed_url = urllib.parse.urlparse(link)
+        print(parsed_url)
         if "watch" in parsed_url.path:
             query_params = urllib.parse.parse_qs(parsed_url.query)
-            return query_params.get("v", [None])[0]
+            return query_params.get('v')[0].split('?')[0]
         elif "shorts" in parsed_url.path:
             return parsed_url.path.split("/shorts/")[1].split("?")[0]
         elif "@" in parsed_url.path:
@@ -134,7 +135,7 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         if "watch" in parsed_url.path:
             # Return clean URL for video
             query_params = urllib.parse.parse_qs(parsed_url.query)
-            return f"https://youtube.com/watch?v={query_params.get('v', [None])[0]}"
+            return f"https://youtube.com/watch?v={query_params.get('v')[0].split('?')[0]}"
         elif "shorts" in parsed_url.path:
             # Convert shorts link to watch link
             shorts_id = parsed_url.path.split("/shorts/")[1].split("?")[0]
