@@ -18,6 +18,8 @@ class ContentAnalyzer:
         for network in SocialNetwork:
             if re.search(network.value, link):
                 return network.name.lower()
+            elif re.search('youtu.be', link):
+                return 'youtube'
 
         return None
 

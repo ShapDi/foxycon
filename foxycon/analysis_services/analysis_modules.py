@@ -123,6 +123,8 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
             return parsed_url.path.split("@")[1]
         elif "channel" in parsed_url.path:
             return parsed_url.path.split("channel/")[1]
+        elif "/" in parsed_url.path:
+            return parsed_url.path.split("/")[1]
         return None
 
     @staticmethod
@@ -145,12 +147,18 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
             return (
                 f"https://www.youtube.com/channel{parsed_url.path.split('channel')[1]}"
             )
+        elif "/" in parsed_url.path:
+            # Convert shorts link to watch link
+            shorts_id = parsed_url.path.split("/")[1]
+            return f"https://youtube.com/watch?v={shorts_id}"
         return parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path
 
     @staticmethod
     def get_type_content(link):
         parsed_url = urllib.parse.urlparse(link)
         if "watch" in parsed_url.path:
+            return YouTube.video.value
+        if "youtu.be" in parsed_url.netloc:
             return YouTube.video.value
         elif "shorts" in parsed_url.path:
             return YouTube.shorts.value
