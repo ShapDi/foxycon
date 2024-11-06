@@ -114,7 +114,6 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
     def get_code(link):
         # Extract the unique code (video ID or channel ID) from the YouTube link
         parsed_url = urllib.parse.urlparse(link)
-        print(parsed_url)
         if "watch" in parsed_url.path:
             query_params = urllib.parse.parse_qs(parsed_url.query)
             return query_params.get('v')[0].split('?')[0]

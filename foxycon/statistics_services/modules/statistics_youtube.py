@@ -174,19 +174,15 @@ class YouTubeContent(RecipientYouTubeAbstract):
     def get_subtitles(youtube: YouTube):
         captions = youtube.captions
         if len(captions) == 0:
-            print("No subs")
             return None
 
         caption = captions.get("en", False)
-        print(caption)
 
         try:
             caption = captions["en"]
-            print("Suc")
             return caption
 
         except KeyError:
-            print("Key not founded")
             return None
 
     @staticmethod
