@@ -8,12 +8,11 @@ setup(
     packages=[
         "foxycon",
         "foxycon.analysis_services",
-        "foxycon.analysis_services",
         "foxycon.data_structures",
-        "foxycon.statistics_services",
+        "foxycon.statistics_services"
+        "foxycon.search_services",
         "foxycon.utils",
         "foxycon.statistics_services.modules",
-        "foxycon.statistics_services.modules.utils",
     ],
     author_email="shapranov.work@gmail.com",
     url="git@github.com:ShapDi/foxycon.git",
