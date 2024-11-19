@@ -9,7 +9,7 @@ setup(
         "foxycon",
         "foxycon.analysis_services",
         "foxycon.data_structures",
-        "foxycon.statistics_services"
+        "foxycon.statistics_services",
         "foxycon.search_services",
         "foxycon.utils",
         "foxycon.statistics_services.modules",
