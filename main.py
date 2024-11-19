@@ -38,6 +38,7 @@ import asyncio
 #     print(dad.get_instagram('mostbet'))
 
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
+from foxycon.search_services.search import Search
 
 proxy = [
     "http://shapdi:8b3yGiQBjy1D@93.183.125.176:3128",
@@ -101,11 +102,10 @@ async def main_corut():
     #     print(data)
     #     data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
     #     print(data)
-    # search = await Search(proxy=proxy, subtitles=True).start_search(
-    #     "https://www.youtube.com/@AgnamoN"
-    # )
+    search = await Search(proxy=proxy, subtitles=True).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
+    async for i in search():
+        print(i)
     # print(search)
-    pass
 
 
 asyncio.run(main_corut())
