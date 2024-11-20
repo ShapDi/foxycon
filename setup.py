@@ -11,6 +11,7 @@ setup(
         "foxycon.data_structures",
         "foxycon.statistics_services",
         "foxycon.search_services",
+        "foxycon.search_services.modules",
         "foxycon.utils",
         "foxycon.statistics_services.modules",
     ],
