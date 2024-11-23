@@ -51,7 +51,7 @@ ca = ContentAnalyzer()
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
 # print(ca.get_data("https://www.instagram.com/blyea_u/"))
 print(ca.get_data("https://youtu.be/dMPPMmUrYQM?si=_uGQVE6wtTXnVULv&t=32"))
-
+print(ca.get_data("https://youtu.be/GhXMLM7vUJI2"))
 # print(ca.get_data("fasfdszfs"))ruff check
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
 # print(ca.get_data("https://www.instagram.com/blyea_u/"))
@@ -102,7 +102,7 @@ async def main_corut():
     #     print(data)
     #     data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
     #     print(data)
-    search = await Search(proxy=proxy, subtitles=True).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
+    search = await  Search(proxy=proxy, subtitles=True).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
     async for i in search():
         print(i)
     # print(search)
