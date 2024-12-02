@@ -1,6 +1,8 @@
-import re
+import urllib.parse
+from typing import Type
 
-from foxycon.analysis_services.analysis_modules import AnalyzerModuleStrategy
+from foxycon.analysis_services.analysis_modules import AnalyzerModuleStrategy, YouTubeAnalyzer, GoogleDriveAnalyzer, \
+    InstagramAnalyzer
 from foxycon.data_structures.analysis_type import SocialNetwork, ResultAnalytics
 
 
@@ -10,29 +12,30 @@ class ContentAnalyzer:
         for subclass in AnalyzerModuleStrategy.__subclasses__()
     }
 
-    @classmethod
-    def get_social_network(cls, link: str) -> str | None:
-        if not isinstance(link, str) or not re.match(r"https?://", link):
-            return None
-
-        for network in SocialNetwork:
-            if re.search(network.value, link):
-                return network.name.lower()
-            elif re.search('youtu.be', link):
-                return 'youtube'
-
+    @staticmethod
+    def get_social_network_object(link: str) -> Type[AnalyzerModuleStrategy] | None:
+        pars_link = urllib.parse.urlparse(link)
+        print(pars_link)
+        match pars_link.netloc:
+            case 'youtu.be':
+                return YouTubeAnalyzer
+            case 'www.youtube.com':
+                return YouTubeAnalyzer
+            case 'www.instagram.com':
+                return InstagramAnalyzer
+            case 'drive.google.com':
+                return GoogleDriveAnalyzer
         return None
 
-    def get_data(self, link):
-        social_network = self.get_social_network(link)
-        if social_network is not None:
-            class_analysis = self.analysis_modules.get(social_network)
-            data = class_analysis().get_data(link)
+    def get_data(self, link) -> ResultAnalytics | None:
+        analysis_modules = self.get_social_network_object(link)
+        if analysis_modules is not None:
+            data_analysis = analysis_modules().get_data(link)
             result = ResultAnalytics(
-                url=data.get("clean_link"),
-                social_network=social_network,
-                content_type=data.get("type_content"),
-                code=data.get("code"),
+                url=data_analysis.get("clean_link"),
+                social_network=data_analysis.get("social_network"),
+                content_type=data_analysis.get("type_content"),
+                code=data_analysis.get("code"),
             )
             return result
         else:

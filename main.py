@@ -52,10 +52,11 @@ ca = ContentAnalyzer()
 # print(ca.get_data("https://www.instagram.com/blyea_u/"))
 print(ca.get_data("https://youtu.be/dMPPMmUrYQM?si=_uGQVE6wtTXnVULv&t=32"))
 print(ca.get_data("https://youtu.be/GhXMLM7vUJI2"))
+print(ca.get_data("https://drive.google.com/file/d/1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs/view?usp=sharing"))
 # print(ca.get_data("fasfdszfs"))ruff check
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
-# print(ca.get_data("https://www.instagram.com/blyea_u/"))
-# print(ca.get_data("https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw"))
+print(ca.get_data("https://www.instagram.com/blyea_u/"))
+print(ca.get_data("https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw"))
 #
 # print(ca.get_data("https://www.instagram.com/p/C9HMrwooyGW/ "))
 # print(ca.get_data("https://www.instagram.com/prikol.pedro/"))
@@ -63,16 +64,16 @@ print(ca.get_data("https://youtu.be/GhXMLM7vUJI2"))
 # print(ca.get_data("https://www.instagram.com/reel/C9kE36uxz_v/?igsh=YXF2NXVmaG9pOWZt"))
 print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
 print(ca.get_data("https://www.youtube.com/shorts/J-m4POZFGyM"))
-print(ca.get_data("https://www.youtube.com/@AgnamoN"))
-
-# print(ca.get_data("https://www.tiktok.com/@univer_serial1?_t=8oe1uJ7kZQo&_r=1 https://www.tiktok.com/t/ZTNbRpGhg/"))
-# print(ca.get_data("https://www.tiktok.com/@yourfavrum/video/7394549234214636807?_t=8oe1rB7TXRR&_r=1"))
-print(ca.get_data("https://www.youtube.com/watch?v=yydTXyC9StM&t=139s"))
-print(ca.get_data("https://www.youtube.com/@basitrind"))
-print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
-print(ca.get_data("https://www.youtube.com/watch?v=M4HCrPSU0C0?start=92.40&end=96.30"))
-
-ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
+# print(ca.get_data("https://www.youtube.com/@AgnamoN"))
+#
+# # print(ca.get_data("https://www.tiktok.com/@univer_serial1?_t=8oe1uJ7kZQo&_r=1 https://www.tiktok.com/t/ZTNbRpGhg/"))
+# # print(ca.get_data("https://www.tiktok.com/@yourfavrum/video/7394549234214636807?_t=8oe1rB7TXRR&_r=1"))
+# print(ca.get_data("https://www.youtube.com/watch?v=yydTXyC9StM&t=139s"))
+# print(ca.get_data("https://www.youtube.com/@basitrind"))
+# print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
+# print(ca.get_data("https://www.youtube.com/watch?v=M4HCrPSU0C0?start=92.40&end=96.30"))
+#
+# ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 
 
 # print(asyncio.run(ssn.get_data('https://www.youtube.com/@basitrind')))
@@ -108,7 +109,7 @@ async def main_corut():
     # print(search)
 
 
-asyncio.run(main_corut())
+# asyncio.run(main_corut())
 
 # print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
 # print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))

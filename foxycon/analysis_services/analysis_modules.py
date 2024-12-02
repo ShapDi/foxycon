@@ -26,6 +26,7 @@ class AnalyzerModuleStrategy(ABC):
         pass
 
 
+
 class InstagramAnalyzer(AnalyzerModuleStrategy):
     @staticmethod
     def get_code(link):
@@ -63,6 +64,7 @@ class InstagramAnalyzer(AnalyzerModuleStrategy):
         return {
             "clean_link": self.clean_link(link),
             "type_content": self.get_type_content(link),
+            "social_network": 'instagram',
             "code": self.get_code(link),
         }
 
@@ -102,11 +104,10 @@ class TikTokAnalyzer(AnalyzerModuleStrategy):
         return {
             "clean_link": self.clean_link(link),
             "type_content": self.get_type_content(link),
+            "social_network": 'tiktok',
             "code": self.get_code(link),
         }
 
-    def __str__(self):
-        return "tiktok"
 
 
 class YouTubeAnalyzer(AnalyzerModuleStrategy):
@@ -170,8 +171,31 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         return {
             "clean_link": self.clean_link(link),
             "type_content": self.get_type_content(link),
+            "social_network": 'youtube',
             "code": self.get_code(link),
         }
 
-    def __str__(self):
-        return "youtube"
+
+class GoogleDriveAnalyzer(AnalyzerModuleStrategy):
+    @staticmethod
+    def get_code(link):
+        parsed_url = urllib.parse.urlparse(link)
+        code = parsed_url.path.split('/')[3]
+        return code
+
+    @staticmethod
+    def clean_link(link):
+        parsed_url = urllib.parse.urlparse(link)
+        return parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path
+
+    @staticmethod
+    def get_type_content(link):
+        return 'meet'
+
+    def get_data(self, link):
+        return {
+            "clean_link": self.clean_link(link),
+            "type_content": self.get_type_content(link),
+            "social_network": 'google_drive',
+            "code": self.get_code(link),
+        }
