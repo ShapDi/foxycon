@@ -7,7 +7,7 @@ from foxycon.search_services.modules.search_soc_net import YoutubeSearch
 class Search:
     def __init__(
         self,
-        proxy,
+        proxy=None,
         telegram_accounts=None,
         subtitles=None,
         file_settings=None,

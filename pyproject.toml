@@ -1,0 +1,23 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project]
+name = "foxycon"
+version = "0.3.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "shapranov dmitrii", email = "shapranov.work@gmail.com"},
+]
+dependencies = ["pytubefix>=8.7.0", "instagram-reels @ git+ssh://git@github.com/technology-department-mb/instastat.git"]
+requires-python = "==3.11.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.8.1",
+]
+[tool.pdm]
+distribution = false

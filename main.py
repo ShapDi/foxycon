@@ -22,10 +22,10 @@ import asyncio
 # #
 #
 #
-# ip_list = [
-#     'http://zjMKKB:3ru9Pn@185.39.149.135:8000',
-#     'http://zjMKKB:3ru9Pn@91.216.59.86:8000'
-# ]
+ip_list = [
+    'http://zjMKKB:3ru9Pn@185.39.149.135:8000',
+    'http://zjMKKB:3ru9Pn@91.216.59.86:8000'
+]
 # dad = DataGoogleSearch(language = LanguageGoogle.english.value,
 #                        country = CountryGoogle.india.value,
 #                        period = TimeGoogle.week.value,
@@ -73,7 +73,7 @@ print(ca.get_data("https://www.youtube.com/shorts/J-m4POZFGyM"))
 # print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
 # print(ca.get_data("https://www.youtube.com/watch?v=M4HCrPSU0C0?start=92.40&end=96.30"))
 #
-# ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
+ssn = StatisticianSocNet( subtitles=True)
 
 
 # print(asyncio.run(ssn.get_data('https://www.youtube.com/@basitrind')))
@@ -96,20 +96,20 @@ async def main_corut():
     # print(data)
     # data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
     # print(data)
-    # data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
-    # print(data)
+    data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
+    print(data)
 
     #     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
     #     print(data)
     #     data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
     #     print(data)
-    search = await  Search(proxy=proxy, subtitles=True).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
+    search = await  Search( subtitles=True).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
     async for i in search():
         print(i)
     # print(search)
 
 
-# asyncio.run(main_corut())
+asyncio.run(main_corut())
 
 # print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
 # print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
