@@ -26,7 +26,6 @@ class AnalyzerModuleStrategy(ABC):
         pass
 
 
-
 class InstagramAnalyzer(AnalyzerModuleStrategy):
     @staticmethod
     def get_code(link):
@@ -107,7 +106,6 @@ class TikTokAnalyzer(AnalyzerModuleStrategy):
             "social_network": 'tiktok',
             "code": self.get_code(link),
         }
-
 
 
 class YouTubeAnalyzer(AnalyzerModuleStrategy):
@@ -197,5 +195,30 @@ class GoogleDriveAnalyzer(AnalyzerModuleStrategy):
             "clean_link": self.clean_link(link),
             "type_content": self.get_type_content(link),
             "social_network": 'google_drive',
+            "code": self.get_code(link),
+        }
+
+
+class TelegramAnalyzer(AnalyzerModuleStrategy):
+    @staticmethod
+    def get_code(link):
+        parsed_url = urllib.parse.urlparse(link)
+        code = parsed_url.path.split('/')[2]
+        return code
+
+    @staticmethod
+    def clean_link(link):
+        parsed_url = urllib.parse.urlparse(link)
+        return parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path
+
+    @staticmethod
+    def get_type_content(link):
+        return 'post'
+
+    def get_data(self, link):
+        return {
+            "clean_link": self.clean_link(link),
+            "type_content": self.get_type_content(link),
+            "social_network": 'telegram',
             "code": self.get_code(link),
         }

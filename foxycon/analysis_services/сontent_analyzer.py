@@ -2,7 +2,7 @@ import urllib.parse
 from typing import Type
 
 from foxycon.analysis_services.analysis_modules import AnalyzerModuleStrategy, YouTubeAnalyzer, GoogleDriveAnalyzer, \
-    InstagramAnalyzer
+    InstagramAnalyzer, TelegramAnalyzer
 from foxycon.data_structures.analysis_type import SocialNetwork, ResultAnalytics
 
 
@@ -25,6 +25,8 @@ class ContentAnalyzer:
                 return InstagramAnalyzer
             case 'drive.google.com':
                 return GoogleDriveAnalyzer
+            case 't.me':
+                return TelegramAnalyzer
         return None
 
     def get_data(self, link) -> ResultAnalytics | None:
