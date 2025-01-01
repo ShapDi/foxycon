@@ -92,21 +92,29 @@ ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 
 
 async def main_corut():
-    # data = await ssn.get_data("https://m.youtube.com/@KhaaneMeinKyaHai")
-    # print(data)
+    #
     # data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
     # print(data)
-    data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
-    print(data)
-
+    # data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
+    # print(data)
+    #
+    # data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
+    # print(data)
+    # data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
+    # print(data)
+    #
+    # data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
+    # print(data)
+    # data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
+    # print(data)
     #     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
     #     print(data)
     #     data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
     #     print(data)
-    search = await  Search( subtitles=True).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
+    search = await  Search( subtitles=True, proxy=proxy).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
     async for i in search():
         print(i)
-    # print(search)
+    print(search)
 
 
 asyncio.run(main_corut())
