@@ -1,7 +1,5 @@
 import json
-import asyncio
 from abc import ABC, abstractmethod
-from pickle import PROTO
 
 from bs4 import BeautifulSoup
 from regex import regex
@@ -51,7 +49,7 @@ class AlgorithmRecommendation(Algorithm):
                     'endScreen').get('watchNextEndScreenRenderer').get('results'):
                 list_link.append(f'https://www.youtube.com/watch?v={data.get("endScreenVideoRenderer").get("videoId")}')
 
-        except Exception as ex:
+        except Exception:
             for data in self.extract_json(str(soup.html))[6].get("playerOverlays").get('playerOverlayRenderer').get(
                     'endScreen').get('watchNextEndScreenRenderer').get('results'):
                 list_link.append(f'https://www.youtube.com/watch?v={data.get("endScreenVideoRenderer").get("videoId")}')

@@ -1,6 +1,5 @@
 from typing import Generator
 from foxycon import StatisticianSocNet
-from foxycon.data_structures.statistician_type import ContentData
 from foxycon.search_services.modules.search_soc_net import YoutubeSearch
 
 

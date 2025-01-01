@@ -73,7 +73,7 @@ print(ca.get_data("https://www.youtube.com/shorts/J-m4POZFGyM"))
 # print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
 # print(ca.get_data("https://www.youtube.com/watch?v=M4HCrPSU0C0?start=92.40&end=96.30"))
 #
-ssn = StatisticianSocNet( subtitles=True)
+ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 
 
 # print(asyncio.run(ssn.get_data('https://www.youtube.com/@basitrind')))

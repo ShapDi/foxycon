@@ -3,7 +3,7 @@ from typing import Type
 
 from foxycon.analysis_services.analysis_modules import AnalyzerModuleStrategy, YouTubeAnalyzer, GoogleDriveAnalyzer, \
     InstagramAnalyzer
-from foxycon.data_structures.analysis_type import SocialNetwork, ResultAnalytics
+from foxycon.data_structures.analysis_type import ResultAnalytics
 
 
 class ContentAnalyzer:
