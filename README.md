@@ -30,3 +30,23 @@ This project is conceived as a universal platform for parsing statistical data f
 
 ---
 
+## Usage example
+
+### analytics module
+
+```python
+from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
+
+ca = ContentAnalyzer()
+
+
+ca.get_data("https://youtu.be/dMPPMmUrYQM?si=_uGQVE6wtTXnVULv&t=32")
+ca.get_data("https://youtu.be/GhXMLM7vUJI2")
+ca.get_data("https://drive.google.com/file/d/1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs/view?usp=sharing")
+ca.get_data("https://www.instagram.com/blyea_u/")
+ca.get_data("https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw")
+
+```
+
+
+
