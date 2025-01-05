@@ -32,6 +32,7 @@ class YouTubeChannelsData(ContentData):
     country: str
     view_count: int
     subscriber: int
+    number_videos: int
     # analytics_obj: ResultAnalytics
     pytube_ob: Channel
 

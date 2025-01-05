@@ -22,6 +22,7 @@ class YouTubeChannel(RecipientYouTubeAbstract):
         self.country = self.get_country()
         self.code = self._object_channel.channel_id
         self.view_count = self.get_view_count()
+        self.number_videos = self.get_number_videos()
         self.subscriber = self.get_subscriber()
 
     @staticmethod
@@ -39,7 +40,6 @@ class YouTubeChannel(RecipientYouTubeAbstract):
     @staticmethod
     def get_object_youtube(link, proxies) -> Channel:
         channel = Channel(link, proxies)
-        print(channel.__dict__)
         return channel
 
     @staticmethod
@@ -99,6 +99,26 @@ class YouTubeChannel(RecipientYouTubeAbstract):
         )
         view_count = Convert.convert_views_to_int(text_view_count)
         return view_count
+
+    def get_number_videos(self):
+        data = self.get_base_con()
+        number_videos = (
+            data[0]
+            .get("showEngagementPanelEndpoint", {})
+            .get("engagementPanel", {})
+            .get("engagementPanelSectionListRenderer", {})
+            .get("content", {})
+            .get("sectionListRenderer", {})
+            .get("contents", [{}])[0]
+            .get("itemSectionRenderer", {})
+            .get("contents", [{}])[0]
+            .get("aboutChannelRenderer", {})
+            .get("metadata", {})
+            .get("aboutChannelViewModel", {})
+            .get("videoCountText")
+        )
+        number_videos = Convert.convert_number_videos(number_videos)
+        return number_videos
 
     def get_subscriber(self):
         data = self.get_base_con()
@@ -206,12 +226,12 @@ class YouTubeContent(RecipientYouTubeAbstract):
 
 class Convert:
     @staticmethod
-    def convert_views_to_int(views_str) -> int:
+    def convert_views_to_int(views_str: str) -> int:
         clean_str = views_str.replace(",", "").replace(" views", "").strip()
         return int(clean_str)
 
     @staticmethod
-    def convert_subscribers_to_int(subscribers_str) -> int:
+    def convert_subscribers_to_int(subscribers_str: str) -> int:
         clean_str = subscribers_str.replace(" subscribers", "").strip()
 
         if "K" in clean_str:
@@ -220,3 +240,7 @@ class Convert:
             return int(float(clean_str.replace("M", "")) * 1000000)
         else:
             return int(clean_str)
+
+    @staticmethod
+    def convert_number_videos(number_videos: str) -> int:
+        return int(number_videos.split(' ')[0])

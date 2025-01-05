@@ -24,21 +24,18 @@ class CallBalancer:
     def get_element(self, bal_obj):
         bal_obj['num_requests']  = bal_obj['num_requests'] - 1
         self.balancing_objects.insert(0, bal_obj)
-        print(self.balancing_objects)
+        time.sleep(random.randrange(2, 6, 1))
         return bal_obj.get("balanc_ob")
 
     def call_next(self):
         bal_obj = self.balancing_objects.pop(0)
-        print(bal_obj)
-        if bal_obj.get('num_requests') != 0:
-
-            # print(self.balancing_objects)
-            return self.get_element(bal_obj)
-        else:
+        if bal_obj.get('num_requests') == 0:
             bal_obj['num_requests'] = self.get_number_requests()
             self.balancing_objects.append(bal_obj)
             bal_obj = self.balancing_objects.pop(0)
-            return self.get_element(bal_obj)
+
+
+        return self.get_element(bal_obj)
 
 
 
