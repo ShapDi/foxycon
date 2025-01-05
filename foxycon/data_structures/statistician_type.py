@@ -1,3 +1,4 @@
+import datetime
 from dataclasses import dataclass
 from pytubefix import YouTube, Channel
 from foxycon.data_structures.analysis_type import ResultAnalytics
@@ -33,6 +34,7 @@ class YouTubeChannelsData(ContentData):
     view_count: int
     subscriber: int
     number_videos: int
+    data_create: datetime.date
     # analytics_obj: ResultAnalytics
     pytube_ob: Channel
 

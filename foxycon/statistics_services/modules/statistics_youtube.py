@@ -1,6 +1,7 @@
 import json
 from abc import ABC
 import re
+from datetime import datetime
 
 from pytubefix import YouTube, Channel
 from bs4 import BeautifulSoup
@@ -22,6 +23,7 @@ class YouTubeChannel(RecipientYouTubeAbstract):
         self.country = self.get_country()
         self.code = self._object_channel.channel_id
         self.view_count = self.get_view_count()
+        self.data_create = self.get_data_create()
         self.number_videos = self.get_number_videos()
         self.subscriber = self.get_subscriber()
 
@@ -140,6 +142,28 @@ class YouTubeChannel(RecipientYouTubeAbstract):
         subscriber = Convert.convert_subscribers_to_int(text_subscriber)
         return subscriber
 
+    def get_data_create(self):
+        data = self.get_base_con()
+        data_create = (
+            data[0]
+            .get("showEngagementPanelEndpoint", {})
+            .get("engagementPanel", {})
+            .get("engagementPanelSectionListRenderer", {})
+            .get("content", {})
+            .get("sectionListRenderer", {})
+            .get("contents", [{}])[0]
+            .get("itemSectionRenderer", {})
+            .get("contents", [{}])[0]
+            .get("aboutChannelRenderer", {})
+            .get("metadata", {})
+            .get("aboutChannelViewModel", {})
+            .get("joinedDateText", {})
+            .get("content")
+        )
+        data_create = Convert.convert_data_create(data_create)
+        return data_create
+
+
     def get_description(self):
         data = self.get_base_con()
         text_description = (
@@ -244,3 +268,9 @@ class Convert:
     @staticmethod
     def convert_number_videos(number_videos: str) -> int:
         return int(number_videos.split(' ')[0])
+
+    @staticmethod
+    def convert_data_create(data_create: str) -> datetime.date:
+        date_part = data_create.replace("Joined ", "")
+        joined_date = datetime.strptime(date_part, "%b %d, %Y").date()
+        return joined_date

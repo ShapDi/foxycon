@@ -78,8 +78,9 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                 channel_id=data.code,
                 view_count=data.view_count,
                 subscriber=data.subscriber,
+                data_create=data.data_create,
+                number_videos = data.number_videos,
                 analytics_obj=object_sn,
-                number_videos=data.number_videos,
                 pytube_ob=data.object_channel,
             )
         elif object_sn.content_type == "video":
