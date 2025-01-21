@@ -22,10 +22,10 @@ import asyncio
 # #
 #
 #
-ip_list = [
-    'http://zjMKKB:3ru9Pn@185.39.149.135:8000',
-    'http://zjMKKB:3ru9Pn@91.216.59.86:8000'
-]
+# ip_list = [
+#     'http://zjMKKB:3ru9Pn@185.39.149.135:8000',
+#     'http://zjMKKB:3ru9Pn@91.216.59.86:8000'
+# ]
 # dad = DataGoogleSearch(language = LanguageGoogle.english.value,
 #                        country = CountryGoogle.india.value,
 #                        period = TimeGoogle.week.value,
@@ -47,23 +47,25 @@ proxy = [
 
 ca = ContentAnalyzer()
 
+print(ca.get_data('https://t.me/Blazzerfox/6708'))
+
 # print(ca.get_data("fasfdszfs"))
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
 # print(ca.get_data("https://www.instagram.com/blyea_u/"))
-print(ca.get_data("https://youtu.be/dMPPMmUrYQM?si=_uGQVE6wtTXnVULv&t=32"))
-print(ca.get_data("https://youtu.be/GhXMLM7vUJI2"))
-print(ca.get_data("https://drive.google.com/file/d/1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs/view?usp=sharing"))
+# print(ca.get_data("https://youtu.be/dMPPMmUrYQM?si=_uGQVE6wtTXnVULv&t=32"))
+# print(ca.get_data("https://youtu.be/GhXMLM7vUJI2"))
+# print(ca.get_data("https://drive.google.com/file/d/1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs/view?usp=sharing"))
 # print(ca.get_data("fasfdszfs"))ruff check
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
-print(ca.get_data("https://www.instagram.com/blyea_u/"))
-print(ca.get_data("https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw"))
+# print(ca.get_data("https://www.instagram.com/blyea_u/"))
+# print(ca.get_data("https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw"))
 #
 # print(ca.get_data("https://www.instagram.com/p/C9HMrwooyGW/ "))
 # print(ca.get_data("https://www.instagram.com/prikol.pedro/"))
 # print(ca.get_data("https://www.instagram.com/papich_legenda"))
 # print(ca.get_data("https://www.instagram.com/reel/C9kE36uxz_v/?igsh=YXF2NXVmaG9pOWZt"))
-print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
-print(ca.get_data("https://www.youtube.com/shorts/J-m4POZFGyM"))
+# print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
+# print(ca.get_data("https://www.youtube.com/shorts/J-m4POZFGyM"))
 # print(ca.get_data("https://www.youtube.com/@AgnamoN"))
 #
 # # print(ca.get_data("https://www.tiktok.com/@univer_serial1?_t=8oe1uJ7kZQo&_r=1 https://www.tiktok.com/t/ZTNbRpGhg/"))
@@ -73,7 +75,7 @@ print(ca.get_data("https://www.youtube.com/shorts/J-m4POZFGyM"))
 # print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
 # print(ca.get_data("https://www.youtube.com/watch?v=M4HCrPSU0C0?start=92.40&end=96.30"))
 #
-ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
+# ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 
 
 # print(asyncio.run(ssn.get_data('https://www.youtube.com/@basitrind')))
@@ -92,28 +94,23 @@ ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 
 
 async def main_corut():
+    ssn = StatisticianSocNet(proxy=proxy)
 
-    data = await ssn.get_data('https://www.youtube.com/@AshKingChannel')
-    print(data)
-    data = await ssn.get_data('https://www.youtube.com/@Solek_X')
-    print(data)
-    data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
+    data = await ssn.get_data('https://t.me/Blazzerfox/6708')
     print(data)
 
-    data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
-    print(data)
-    data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
-    print(data)
+    # data = await ssn.get_data("https://m.youtube.com/@KhaaneMeinKyaHai")
+    # print(data)
+    # data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
+    # print(data)
+    # data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
+    # print(data)
 
-    data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
-    print(data)
-    data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
-    print(data)
     #     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
     #     print(data)
     #     data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
     #     print(data)
-    # search = await  Search( subtitles=True, proxy=proxy).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
+    # search = await Search(proxy=proxy, subtitles=True).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
     # async for i in search():
     #     print(i)
     # print(search)

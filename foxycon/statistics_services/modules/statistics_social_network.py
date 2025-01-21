@@ -6,12 +6,14 @@ from foxycon.data_structures.statistician_type import (
     YouTubeContentData,
     InstagramContentData,
     InstagramPageData,
+    TelegramContentData,
 )
 from foxycon.statistics_services.modules.statistics_instagram import InstagramReels
 from foxycon.statistics_services.modules.statistics_youtube import (
     YouTubeChannel,
     YouTubeContent,
 )
+from foxycon.statistics_services.modules.statistics_telegram import TelegramPost
 
 
 class StatisticianModuleStrategy(ABC):
@@ -20,7 +22,7 @@ class StatisticianModuleStrategy(ABC):
         self._subtitles = subtitles
 
     @staticmethod
-    def get_data(object_sn):
+    def get_data(object_sn, clients_handlers=None):
         pass
 
 
@@ -30,7 +32,7 @@ class InstagramStatistician(StatisticianModuleStrategy):
         self._proxy = proxy
         self._subtitles = subtitles
 
-    async def get_data(self, object_sn: ResultAnalytics):
+    async def get_data(self, object_sn: ResultAnalytics, clients_handlers=None):
         if object_sn.content_type == "reel":
             data = await InstagramReels(object_sn.url, proxy=self._proxy).get_data()
 
@@ -67,7 +69,7 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                 "https": self._proxy,
             }
 
-    def get_data(self, object_sn: ResultAnalytics, proxy=None):
+    def get_data(self, object_sn: ResultAnalytics, clients_handlers=None):
         if object_sn.content_type == "channel":
             data = YouTubeChannel(object_sn.url, proxy=self._proxy)
             return YouTubeChannelsData(
@@ -120,3 +122,19 @@ class YouTubeStatistician(StatisticianModuleStrategy):
 
     def __str__(self):
         return "youtube"
+
+
+class TelegramStatistician(StatisticianModuleStrategy):
+    def __init__(self, proxy=None):
+        super().__init__(proxy)
+        self._proxy = proxy
+
+    async def get_data(self, object_sn: ResultAnalytics, clients_handlers=None):
+        data = await TelegramPost(object_sn.url, clients_handlers.get('telegram_clients_handler')).get_data()
+        return TelegramContentData(
+            analytics_obj=object_sn,
+            data=data
+        )
+
+    def __str__(self):
+        return 'telegram'

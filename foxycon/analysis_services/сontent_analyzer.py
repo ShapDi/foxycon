@@ -2,8 +2,8 @@ import urllib.parse
 from typing import Type
 
 from foxycon.analysis_services.analysis_modules import AnalyzerModuleStrategy, YouTubeAnalyzer, GoogleDriveAnalyzer, \
-    InstagramAnalyzer
-from foxycon.data_structures.analysis_type import ResultAnalytics
+    InstagramAnalyzer, TelegramAnalyzer
+from foxycon.data_structures.analysis_type import SocialNetwork, ResultAnalytics
 
 
 class ContentAnalyzer:
@@ -15,6 +15,7 @@ class ContentAnalyzer:
     @staticmethod
     def get_social_network_object(link: str) -> Type[AnalyzerModuleStrategy] | None:
         pars_link = urllib.parse.urlparse(link)
+        print(pars_link)
         match pars_link.netloc:
             case 'youtu.be':
                 return YouTubeAnalyzer
@@ -24,6 +25,8 @@ class ContentAnalyzer:
                 return InstagramAnalyzer
             case 'drive.google.com':
                 return GoogleDriveAnalyzer
+            case 't.me':
+                return TelegramAnalyzer
         return None
 
     def get_data(self, link) -> ResultAnalytics | None:
