@@ -2,7 +2,6 @@ import inspect
 
 from typing import Callable
 
-from foxycon.utils.clients_handler import ClientsHandler
 from foxycon.utils.call_balancer import CallBalancer
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 from foxycon.statistics_services.modules.statistics_social_network import (

@@ -14,7 +14,7 @@ class RecipientYouTubeAbstract(ABC):
 
 class YouTubeChannel(RecipientYouTubeAbstract):
     def __init__(self, link, proxy=None):
-        self._link = self.transform_youtube_channel_link(link)
+        self._link = link
         self._proxy = proxy
         self._object_channel = self.get_object_youtube(self._link, self._proxy)
         self.name = self._object_channel.channel_name
@@ -41,7 +41,8 @@ class YouTubeChannel(RecipientYouTubeAbstract):
 
     @staticmethod
     def get_object_youtube(link, proxies) -> Channel:
-        channel = Channel(link, proxies)
+        channel = Channel(link, "WEB", proxies, use_po_token=True)
+        channel = Channel(channel.featured_url, "WEB", proxies, use_po_token=True)
         return channel
 
     @staticmethod
@@ -210,7 +211,7 @@ class YouTubeContent(RecipientYouTubeAbstract):
 
     @staticmethod
     def get_object_youtube(link, proxy) -> YouTube:
-        youtube = YouTube(link, proxies=proxy)
+        youtube = YouTube(link, "WEB", proxies=proxy)
         return youtube
 
     @staticmethod
@@ -250,8 +251,11 @@ class YouTubeContent(RecipientYouTubeAbstract):
 class Convert:
     @staticmethod
     def convert_views_to_int(views_str: str) -> int:
-        clean_str = views_str.replace(",", "").replace(" views", "").strip()
-        return int(clean_str)
+        try:
+            clean_str = views_str.replace(",", "").replace(" views", "").strip()
+            return int(clean_str)
+        except Exception:
+            return 0
 
     @staticmethod
     def convert_subscribers_to_int(subscribers_str: str) -> int:
@@ -266,7 +270,13 @@ class Convert:
 
     @staticmethod
     def convert_number_videos(number_videos: str) -> int:
-        return int(number_videos.split(" ")[0])
+        try:
+            return int(number_videos.split(" ")[0])
+        except ValueError:
+            long_int = number_videos.split(" ")[0].split(",")
+            return int(f"{long_int[0]}{long_int[1]}")
+        except Exception:
+            return 0
 
     @staticmethod
     def convert_data_create(data_create: str) -> datetime.date:

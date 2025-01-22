@@ -20,7 +20,6 @@ class ContentAnalyzer:
     @staticmethod
     def get_social_network_object(link: str) -> Type[AnalyzerModuleStrategy] | None:
         pars_link = urllib.parse.urlparse(link)
-        print(pars_link)
         match pars_link.netloc:
             case "youtu.be":
                 return YouTubeAnalyzer

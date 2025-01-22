@@ -1,5 +1,7 @@
 # from foxycon.search_services import DataGoogleSearch, LanguageGoogle, TimeGoogle, CountryGoogle
 # data = DataGoogleSearch(language = 'lang_e', country = 'CA', period = 'year')
+import asyncio
+
 from foxycon import StatisticianSocNet
 # Нужно найти воронки по гео чили перу Аргентина Колумбия Бангладеш
 # Суть рекламы будет «заработай со мной»
@@ -53,7 +55,7 @@ print(ca.get_data("https://t.me/Blazzerfox/6708"))
 # print(ca.get_data("https://youtu.be/dMPPMmUrYQM?si=_uGQVE6wtTXnVULv&t=32"))
 # print(ca.get_data("https://youtu.be/GhXMLM7vUJI2"))
 # print(ca.get_data("https://drive.google.com/file/d/1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs/view?usp=sharing"))
-# print(ca.get_data("fasfdszfs"))ruff check
+# print(ca.get_data("fasfdszfs"))
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
 # print(ca.get_data("https://www.instagram.com/blyea_u/"))
 # print(ca.get_data("https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw"))
@@ -91,18 +93,19 @@ ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 # print(ca.get_data("https://www.youtube.com/@4ekaku"))
 
 
-# async def main_corut():
-#     ssn = StatisticianSocNet(proxy=proxy)
-#
-#     data = await ssn.get_data('https://t.me/Blazzerfox/6708')
-#     print(data)
+async def main_corut():
+    ssn = StatisticianSocNet(proxy=proxy)
 
-# data = await ssn.get_data("https://m.youtube.com/@KhaaneMeinKyaHai")
-# print(data)
-# data = await ssn.get_data('https://www.youtube.com/shorts/S8FjjoLTwYo')
-# print(data)
-# data = await ssn.get_data('https://www.youtube.com/watch?v=YgsmFeawp-E')
-# print(data)
+    # data = await ssn.get_data('https://t.me/Blazzerfox/6708')
+    # print(data)
+
+    data = await ssn.get_data("https://www.youtube.com/@basitrind")
+    print(data)
+    data = await ssn.get_data("https://www.youtube.com/shorts/S8FjjoLTwYo")
+    print(data)
+    data = await ssn.get_data("https://www.youtube.com/watch?v=YgsmFeawp-E")
+    print(data)
+
 
 #     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
 #     print(data)
@@ -114,7 +117,7 @@ ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 # print(search)
 
 
-# asyncio.run(main_corut())
+asyncio.run(main_corut())
 
 # print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
 # print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
