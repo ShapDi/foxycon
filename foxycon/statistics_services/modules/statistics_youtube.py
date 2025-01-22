@@ -163,7 +163,6 @@ class YouTubeChannel(RecipientYouTubeAbstract):
         data_create = Convert.convert_data_create(data_create)
         return data_create
 
-
     def get_description(self):
         data = self.get_base_con()
         text_description = (
@@ -267,7 +266,7 @@ class Convert:
 
     @staticmethod
     def convert_number_videos(number_videos: str) -> int:
-        return int(number_videos.split(' ')[0])
+        return int(number_videos.split(" ")[0])
 
     @staticmethod
     def convert_data_create(data_create: str) -> datetime.date:

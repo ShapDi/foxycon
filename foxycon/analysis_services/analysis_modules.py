@@ -63,7 +63,7 @@ class InstagramAnalyzer(AnalyzerModuleStrategy):
         return {
             "clean_link": self.clean_link(link),
             "type_content": self.get_type_content(link),
-            "social_network": 'instagram',
+            "social_network": "instagram",
             "code": self.get_code(link),
         }
 
@@ -103,7 +103,7 @@ class TikTokAnalyzer(AnalyzerModuleStrategy):
         return {
             "clean_link": self.clean_link(link),
             "type_content": self.get_type_content(link),
-            "social_network": 'tiktok',
+            "social_network": "tiktok",
             "code": self.get_code(link),
         }
 
@@ -115,7 +115,7 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         parsed_url = urllib.parse.urlparse(link)
         if "watch" in parsed_url.path:
             query_params = urllib.parse.parse_qs(parsed_url.query)
-            return query_params.get('v')[0].split('?')[0]
+            return query_params.get("v")[0].split("?")[0]
         elif "shorts" in parsed_url.path:
             return parsed_url.path.split("/shorts/")[1].split("?")[0]
         elif "@" in parsed_url.path:
@@ -133,7 +133,9 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         if "watch" in parsed_url.path:
             # Return clean URL for video
             query_params = urllib.parse.parse_qs(parsed_url.query)
-            return f"https://youtube.com/watch?v={query_params.get('v')[0].split('?')[0]}"
+            return (
+                f"https://youtube.com/watch?v={query_params.get('v')[0].split('?')[0]}"
+            )
         elif "shorts" in parsed_url.path:
             # Convert shorts link to watch link
             shorts_id = parsed_url.path.split("/shorts/")[1].split("?")[0]
@@ -169,7 +171,7 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         return {
             "clean_link": self.clean_link(link),
             "type_content": self.get_type_content(link),
-            "social_network": 'youtube',
+            "social_network": "youtube",
             "code": self.get_code(link),
         }
 
@@ -178,7 +180,7 @@ class GoogleDriveAnalyzer(AnalyzerModuleStrategy):
     @staticmethod
     def get_code(link):
         parsed_url = urllib.parse.urlparse(link)
-        code = parsed_url.path.split('/')[3]
+        code = parsed_url.path.split("/")[3]
         return code
 
     @staticmethod
@@ -188,13 +190,13 @@ class GoogleDriveAnalyzer(AnalyzerModuleStrategy):
 
     @staticmethod
     def get_type_content(link):
-        return 'meet'
+        return "meet"
 
     def get_data(self, link):
         return {
             "clean_link": self.clean_link(link),
             "type_content": self.get_type_content(link),
-            "social_network": 'google_drive',
+            "social_network": "google_drive",
             "code": self.get_code(link),
         }
 
@@ -203,7 +205,7 @@ class TelegramAnalyzer(AnalyzerModuleStrategy):
     @staticmethod
     def get_code(link):
         parsed_url = urllib.parse.urlparse(link)
-        code = parsed_url.path.split('/')[2]
+        code = parsed_url.path.split("/")[2]
         return code
 
     @staticmethod
@@ -213,12 +215,12 @@ class TelegramAnalyzer(AnalyzerModuleStrategy):
 
     @staticmethod
     def get_type_content(link):
-        return 'post'
+        return "post"
 
     def get_data(self, link):
         return {
             "clean_link": self.clean_link(link),
             "type_content": self.get_type_content(link),
-            "social_network": 'telegram',
+            "social_network": "telegram",
             "code": self.get_code(link),
         }

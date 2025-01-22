@@ -20,15 +20,22 @@ class TelegramHandler(ClientsHandler):
         accounts = settings.get_telegram_accounts()
         clients = []
         for account in accounts:
-            api_id = account['api_id']
-            api_hash = account['api_hash']
-            session = account['session']
-            string_session = StringSession(session) if session is not None or session != '' else StringSession()
-            client = TelegramClient(api_id=api_id, api_hash=api_hash, session=string_session)
-            if session is None or session == '':
+            api_id = account["api_id"]
+            api_hash = account["api_hash"]
+            session = account["session"]
+            string_session = (
+                StringSession(session)
+                if session is not None or session != ""
+                else StringSession()
+            )
+            client = TelegramClient(
+                api_id=api_id, api_hash=api_hash, session=string_session
+            )
+            if session is None or session == "":
                 with client as temp_client:
                     print(
-                        f'ВАЖНО! Сессия для {api_id} такая:\n {temp_client.session.save()} \n ОБЯЗАТЕЛЬНО СОХРАНИ ЕЁ!')
+                        f"ВАЖНО! Сессия для {api_id} такая:\n {temp_client.session.save()} \n ОБЯЗАТЕЛЬНО СОХРАНИ ЕЁ!"
+                    )
             clients.append(client)
 
         return clients
@@ -39,4 +46,4 @@ class TelegramHandler(ClientsHandler):
         return client
 
     def __str__(self):
-        return 'telegram_clients_handler'
+        return "telegram_clients_handler"

@@ -8,10 +8,7 @@ from foxycon import StatisticianSocNet
 from foxycon.data_structures.statistician_type import ContentData
 
 
-
 class Algorithm(ABC):
-
-
     @staticmethod
     @abstractmethod
     def create_generator():
@@ -21,16 +18,18 @@ class Algorithm(ABC):
     def get_search_generator(self):
         pass
 
-class AlgorithmRecommendation(Algorithm):
 
-    def __init__(self, statistician_socnet_object,object_statistic: ContentData):
-        self._statistician_socnet_object: StatisticianSocNet = statistician_socnet_object
+class AlgorithmRecommendation(Algorithm):
+    def __init__(self, statistician_socnet_object, object_statistic: ContentData):
+        self._statistician_socnet_object: StatisticianSocNet = (
+            statistician_socnet_object
+        )
         self._object_statistic = object_statistic
-        self._parsing_object_controller =  ParsingObjectController(object_statistic)
+        self._parsing_object_controller = ParsingObjectController(object_statistic)
 
     @staticmethod
     def extract_json(text):
-        json_pattern = regex.compile(r'\{(?:[^{}]|(?R))*\}')
+        json_pattern = regex.compile(r"\{(?:[^{}]|(?R))*\}")
         json_matches = json_pattern.findall(str(text))
         extracted_json = []
         for match in json_matches:
@@ -42,17 +41,33 @@ class AlgorithmRecommendation(Algorithm):
         return extracted_json
 
     def get_soup_json_object(self, object_statistic):
-        soup = BeautifulSoup(object_statistic.pytube_ob.watch_html, 'html.parser')
+        soup = BeautifulSoup(object_statistic.pytube_ob.watch_html, "html.parser")
         list_link = []
         try:
-            for data in self.extract_json(str(soup.html))[5].get("playerOverlays").get('playerOverlayRenderer').get(
-                    'endScreen').get('watchNextEndScreenRenderer').get('results'):
-                list_link.append(f'https://www.youtube.com/watch?v={data.get("endScreenVideoRenderer").get("videoId")}')
+            for data in (
+                self.extract_json(str(soup.html))[5]
+                .get("playerOverlays")
+                .get("playerOverlayRenderer")
+                .get("endScreen")
+                .get("watchNextEndScreenRenderer")
+                .get("results")
+            ):
+                list_link.append(
+                    f"https://www.youtube.com/watch?v={data.get('endScreenVideoRenderer').get('videoId')}"
+                )
 
         except Exception:
-            for data in self.extract_json(str(soup.html))[6].get("playerOverlays").get('playerOverlayRenderer').get(
-                    'endScreen').get('watchNextEndScreenRenderer').get('results'):
-                list_link.append(f'https://www.youtube.com/watch?v={data.get("endScreenVideoRenderer").get("videoId")}')
+            for data in (
+                self.extract_json(str(soup.html))[6]
+                .get("playerOverlays")
+                .get("playerOverlayRenderer")
+                .get("endScreen")
+                .get("watchNextEndScreenRenderer")
+                .get("results")
+            ):
+                list_link.append(
+                    f"https://www.youtube.com/watch?v={data.get('endScreenVideoRenderer').get('videoId')}"
+                )
         return list_link
 
     async def get_list_object_statistic(self):
@@ -62,10 +77,11 @@ class AlgorithmRecommendation(Algorithm):
             list_object_statistic.append(object_statistic)
         return list_object_statistic
 
-
     async def create_generator(self):
         while True:
-            list_object_statistic = self._parsing_object_controller.search_statistics_object()
+            list_object_statistic = (
+                self._parsing_object_controller.search_statistics_object()
+            )
             self._list_link = self.get_soup_json_object(list_object_statistic[0])
 
             list_object_statistic_data = await self.get_list_object_statistic()
@@ -73,10 +89,7 @@ class AlgorithmRecommendation(Algorithm):
             self._parsing_object_controller.add_object_statistic(list_object_statistic)
             yield list_object_statistic
 
-
-
     async def get_search_generator(self):
-        gen = self.create_generator()
         return self.create_generator
 
 
@@ -89,7 +102,9 @@ class ParsingObjectController:
 
     def search_statistics_object(self):
         if not self._search_structure:
-            return None  # Return None if _search_structure is empty to prevent IndexError
+            return (
+                None  # Return None if _search_structure is empty to prevent IndexError
+            )
 
         object_statistic_list = self._search_structure.pop(0)
         if object_statistic_list[1] is None:
@@ -98,8 +113,6 @@ class ParsingObjectController:
             self._search_structure.append(object_statistic_list)
             self.changing_search_structure()
             return self.search_statistics_object()
-
-
 
     def add_object_statistic(self, object_statistic_list: list):
         self._search_structure.append(object_statistic_list)
@@ -112,8 +125,3 @@ class ParsingObjectController:
                 new_search_structure.append([object_statistic, None])
 
         self._search_structure = new_search_structure
-
-
-
-
-

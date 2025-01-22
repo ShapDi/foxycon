@@ -49,7 +49,7 @@ class InstagramStatistician(StatisticianModuleStrategy):
                     user_id=data.author.user_id,
                     username=data.author.username,
                     full_name=data.author.full_name,
-                    page_url=f"https://www.instagram.com/" f"{data.author.username}",
+                    page_url=f"https://www.instagram.com/{data.author.username}",
                 ),
                 analytics_obj=object_sn,
             )
@@ -81,7 +81,7 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                 view_count=data.view_count,
                 subscriber=data.subscriber,
                 data_create=data.data_create,
-                number_videos = data.number_videos,
+                number_videos=data.number_videos,
                 analytics_obj=object_sn,
                 pytube_ob=data.object_channel,
             )
@@ -130,11 +130,10 @@ class TelegramStatistician(StatisticianModuleStrategy):
         self._proxy = proxy
 
     async def get_data(self, object_sn: ResultAnalytics, clients_handlers=None):
-        data = await TelegramPost(object_sn.url, clients_handlers.get('telegram_clients_handler')).get_data()
-        return TelegramContentData(
-            analytics_obj=object_sn,
-            data=data
-        )
+        data = await TelegramPost(
+            object_sn.url, clients_handlers.get("telegram_clients_handler")
+        ).get_data()
+        return TelegramContentData(analytics_obj=object_sn, data=data)
 
     def __str__(self):
-        return 'telegram'
+        return "telegram"

@@ -1,4 +1,8 @@
-from telethon.errors import UserPrivacyRestrictedError, ChatWriteForbiddenError, FloodWaitError
+from telethon.errors import (
+    UserPrivacyRestrictedError,
+    ChatWriteForbiddenError,
+    FloodWaitError,
+)
 from telethon.tl.functions.channels import JoinChannelRequest, GetParticipantRequest
 
 from foxycon.data_structures.error_type import Telegram
@@ -12,11 +16,7 @@ class TelegramPost:
         self.client = clients_handler.get_next()
 
     async def get_data(self):
-        data = {
-            'views': None,
-            'error': Telegram.NoError,
-            'error_message': None
-        }
+        data = {"views": None, "error": Telegram.NoError, "error_message": None}
         try:
             async with self.client as client:
                 parts = self.url.replace("https://t.me/", "").split("/")
@@ -33,42 +33,42 @@ class TelegramPost:
                         except Exception:
                             try:
                                 await client(JoinChannelRequest(channel))
-                                data['error'] = Telegram.JoinChannelRequestSend
+                                data["error"] = Telegram.JoinChannelRequestSend
                                 return data
                             except UserPrivacyRestrictedError:
-                                data['error'] = Telegram.UserPrivacyRestrictedError
+                                data["error"] = Telegram.UserPrivacyRestrictedError
                                 return data
                             except ChatWriteForbiddenError:
-                                data['error'] = Telegram.ChatWriteForbiddenError
+                                data["error"] = Telegram.ChatWriteForbiddenError
                                 return data
                             except Exception as e:
-                                data['error'] = Telegram.General
-                                data['error_message'] = e
+                                data["error"] = Telegram.General
+                                data["error_message"] = e
                                 return data
 
                     try:
                         message = await client.get_messages(channel, ids=message_id)
                         if message:
-                            data['views'] = message.views
+                            data["views"] = message.views
                             return data
                         else:
-                            data['error'] = Telegram.PostNotFound
+                            data["error"] = Telegram.PostNotFound
                             return data
                     except Exception as e:
-                        data['error'] = Telegram.General
-                        data['error_message'] = e
+                        data["error"] = Telegram.General
+                        data["error_message"] = e
                         return data
 
                 except Exception as e:
-                    data['error'] = Telegram.General
-                    data['error_message'] = e
+                    data["error"] = Telegram.General
+                    data["error_message"] = e
                     return data
 
         except FloodWaitError as e:
-            data['error'] = Telegram.FloodWaitError
-            data['error_message'] = e
+            data["error"] = Telegram.FloodWaitError
+            data["error_message"] = e
             return data
         except Exception as e:
-            data['error'] = Telegram.General
-            data['error_message'] = e
+            data["error"] = Telegram.General
+            data["error_message"] = e
             return data

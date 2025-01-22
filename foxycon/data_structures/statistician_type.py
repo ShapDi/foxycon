@@ -2,7 +2,6 @@ import datetime
 from dataclasses import dataclass
 from pytubefix import YouTube, Channel
 from foxycon.data_structures.analysis_type import ResultAnalytics
-from foxycon.data_structures.error_type import Telegram
 
 
 @dataclass
