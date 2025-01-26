@@ -7,13 +7,11 @@ from telethon.tl.functions.channels import JoinChannelRequest, GetParticipantReq
 
 from foxycon.data_structures.error_type import Telegram
 
-from foxycon.utils.clients_handler import TelegramHandler
-
 
 class TelegramPost:
-    def __init__(self, url: str, clients_handler: TelegramHandler):
+    def __init__(self, url: str, clients_handler):
         self.url = url
-        self.client = clients_handler.get_next()
+        self.client = clients_handler
 
     async def get_data(self):
         data = {"views": None, "error": Telegram.NoError, "error_message": None}
@@ -50,6 +48,7 @@ class TelegramPost:
                         message = await client.get_messages(channel, ids=message_id)
                         if message:
                             data["views"] = message.views
+                            data["text"] = message.text
                             return data
                         else:
                             data["error"] = Telegram.PostNotFound

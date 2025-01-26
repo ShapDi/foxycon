@@ -46,8 +46,8 @@ proxy = [
 #
 ca = ContentAnalyzer()
 
-print(ca.get_data("https://t.me/Blazzerfox/6708"))
-
+# print(ca.get_data("https://t.me/Blazzerfox/6708"))
+print(ca.get_data("https://youtu.be/gfYN5Ck9gV8?feature=shared"))
 
 # print(ca.get_data("fasfdszfs"))
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
@@ -75,7 +75,7 @@ print(ca.get_data("https://t.me/Blazzerfox/6708"))
 # print(ca.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
 # print(ca.get_data("https://www.youtube.com/watch?v=M4HCrPSU0C0?start=92.40&end=96.30"))
 #
-ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
+# ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 
 
 # print(asyncio.run(ssn.get_data('https://www.youtube.com/@basitrind')))
@@ -94,23 +94,34 @@ ssn = StatisticianSocNet(proxy=proxy, subtitles=True)
 
 
 async def main_corut():
-    ssn = StatisticianSocNet(proxy=proxy)
+    ssn = StatisticianSocNet(
+        proxy=proxy,
+        telegram_account=[
+            {
+                "api_id": 25490814,
+                "api_hash": "0789de556a85e76bf48bd2f65fe1856d",
+                "phone": "+79152092024",
+            }
+        ],
+    )
 
-    # data = await ssn.get_data('https://t.me/Blazzerfox/6708')
+    data = await ssn.get_data("https://t.me/Blazzerfox/6708")
+    print(data)
+
+    # data = await ssn.get_data("https://www.youtube.com/@basitrind")
+    # print(data)
+    # data = await ssn.get_data("https://www.youtube.com/shorts/S8FjjoLTwYo")
+    # print(data)
+    # data = await ssn.get_data("https://www.youtube.com/watch?v=YgsmFeawp-E")
+    # print(data)
+    #
+    #
+    # data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
+    # print(data)
+    # data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
     # print(data)
 
-    data = await ssn.get_data("https://www.youtube.com/@basitrind")
-    print(data)
-    data = await ssn.get_data("https://www.youtube.com/shorts/S8FjjoLTwYo")
-    print(data)
-    data = await ssn.get_data("https://www.youtube.com/watch?v=YgsmFeawp-E")
-    print(data)
 
-
-#     data = await ssn.get_data('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
-#     print(data)
-#     data = await ssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/')
-#     print(data)
 # search = await Search(proxy=proxy, subtitles=True).search('https://www.youtube.com/watch?v=yydTXyC9StM&t=139s')
 # async for i in search():
 #     print(i)

@@ -7,6 +7,7 @@ from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 from foxycon.statistics_services.modules.statistics_social_network import (
     StatisticianModuleStrategy,
 )
+from foxycon.utils.balancers import TelegramBalancer
 
 
 class StatisticianSocNet:
@@ -19,10 +20,10 @@ class StatisticianSocNet:
     # }
 
     def __init__(
-        self, proxy=None, file_settings=None, clients_handlers=None, subtitles=None
+        self, proxy=None, file_settings=None, telegram_account=None, subtitles=None
     ):
         self._proxy = proxy
-        self._clients_handlers = clients_handlers
+        self._telegram_account = telegram_account
 
         # (
         #     clients_handlers if clients_handlers is not None else self.clients_handlers
@@ -34,6 +35,11 @@ class StatisticianSocNet:
             self._proxy_balancer = CallBalancer(self._proxy)
         else:
             self._proxy_balancer = None
+
+        if self._telegram_account is not None:
+            self._telegram_account_balancer = TelegramBalancer(self._telegram_account)
+        else:
+            self._telegram_account_balancer = None
 
     @staticmethod
     def is_coroutine(func: Callable):
@@ -48,12 +54,16 @@ class StatisticianSocNet:
         if self._proxy_balancer is not None:
             self._proxy = self._proxy_balancer.call_next()
 
+        if self._telegram_account_balancer is not None:
+            self._telegram_account = await self._telegram_account_balancer.init_call()
+            print(self.statistics_modules)
+
         data = self.get_basic_data(link)
 
         class_statistics = self.statistics_modules.get(f"{data.social_network}")
         if self.is_coroutine(class_statistics().get_data):
             data = await class_statistics(proxy=self._proxy).get_data(
-                data, clients_handlers=self._clients_handlers
+                data, clients_handlers=self._telegram_account
             )
 
         else:

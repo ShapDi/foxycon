@@ -130,9 +130,7 @@ class TelegramStatistician(StatisticianModuleStrategy):
         self._proxy = proxy
 
     async def get_data(self, object_sn: ResultAnalytics, clients_handlers=None):
-        data = await TelegramPost(
-            object_sn.url, clients_handlers.get("telegram_clients_handler")
-        ).get_data()
+        data = await TelegramPost(object_sn.url, clients_handlers).get_data()
         return TelegramContentData(analytics_obj=object_sn, data=data)
 
     def __str__(self):
