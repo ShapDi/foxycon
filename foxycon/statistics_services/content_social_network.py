@@ -7,7 +7,7 @@ from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 from foxycon.statistics_services.modules.statistics_social_network import (
     StatisticianModuleStrategy,
 )
-from foxycon.utils.balancers import TelegramBalancer
+from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer
 
 
 class StatisticianSocNet:
@@ -32,7 +32,7 @@ class StatisticianSocNet:
         self._file_settings = file_settings
 
         if self._proxy is not None:
-            self._proxy_balancer = CallBalancer(self._proxy)
+            self._proxy_balancer = ProxyBalancer(self._proxy)
         else:
             self._proxy_balancer = None
 

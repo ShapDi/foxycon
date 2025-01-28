@@ -23,6 +23,8 @@ class ContentAnalyzer:
         match pars_link.netloc:
             case "youtu.be":
                 return YouTubeAnalyzer
+            case "youtube.com":
+                return YouTubeAnalyzer
             case "www.youtube.com":
                 return YouTubeAnalyzer
             case "www.instagram.com":

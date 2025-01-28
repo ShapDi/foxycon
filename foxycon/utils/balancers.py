@@ -74,8 +74,6 @@ class TelegramBalancer(ClientsHandler):
                 {"balanc_ob": client, "num_requests": self.get_number_requests()}
             )
 
-
-
     @staticmethod
     def save_token(token, phone, api_id, api_hash):
         data = {api_id: {"token": token, "phone": phone, "api_hash": api_hash}}

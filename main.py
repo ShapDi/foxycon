@@ -90,23 +90,23 @@ print(ca.get_data("https://youtu.be/gfYN5Ck9gV8?feature=shared"))
 #
 # print(asyncio.runssn.get_data('https://www.instagram.com/reels/DAh0fmFos5w/'))
 # print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
-# print(ca.get_data("https://www.youtube.com/@4ekaku"))
+print(ca.get_data("https://youtube.com/watch?v=Tb0bPeLC7NA"))
 
 
-async def main_corut():
-    ssn = StatisticianSocNet(
-        proxy=proxy,
-        telegram_account=[
-            {
-                "api_id": 25490814,
-                "api_hash": "0789de556a85e76bf48bd2f65fe1856d",
-                "phone": "+79152092024",
-            }
-        ],
-    )
-
-    data = await ssn.get_data("https://t.me/Blazzerfox/6708")
-    print(data)
+# async def main_corut():
+#     ssn = StatisticianSocNet(
+#         proxy=proxy,
+#         telegram_account=[
+#             {
+#                 "api_id": 25490814,
+#                 "api_hash": "0789de556a85e76bf48bd2f65fe1856d",
+#                 "phone": "+79152092024",
+#             }
+#         ],
+#     )
+#
+#     data = await ssn.get_data("https://t.me/Blazzerfox/6708")
+#     print(data)
 
     # data = await ssn.get_data("https://www.youtube.com/@basitrind")
     # print(data)
@@ -128,7 +128,7 @@ async def main_corut():
 # print(search)
 
 
-asyncio.run(main_corut())
+# asyncio.run(main_corut())
 
 # print(ssn.get_data('https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw'))
 # print(ssn.get_data("https://www.youtube.com/channel/UC5C088kVlcF5ras7cBbdWxw"))
