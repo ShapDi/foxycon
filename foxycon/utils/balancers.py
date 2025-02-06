@@ -4,18 +4,19 @@ import random
 import time
 from abc import ABC, abstractmethod
 
-from requests import session
 from telethon import TelegramClient
 from telethon.sessions import StringSession
 
+from foxycon.data_structures.utils_type import TelegramAccount, BalancingObject
 
-class ClientsHandler(ABC):
+
+class Balancer(ABC):
     @abstractmethod
     def call_next(self):
         pass
 
 
-class ProxyBalancer(ClientsHandler):
+class ProxyBalancer(Balancer):
     def __init__(self, balancing_objects: list):
         self.balancing_objects = []
 
@@ -44,13 +45,89 @@ class ProxyBalancer(ClientsHandler):
         return random.randrange(2, 5, 1)
 
 
-class TelegramBalancer(ClientsHandler):
+
+class TelegBalancer(Balancer):
+    NOT_HACKING_PROTECTION = False
+
+    def __init__(self, balancing_objects: list[TelegramAccount | dict]):
+        self.balancing_objects = self.get_acc_th(balancing_objects)
+
+    @staticmethod
+    def get_number_requests():
+        return random.randrange(2, 5, 1)
+
+    def get_acc_th(self, accounts):
+        list_accounts = []
+        for account in accounts:
+            if type(account) == list:
+                account = TelegramAccount(
+                    api_id=account.get("api_id"),
+                    api_hash=account.get("api_hash"),
+                    session_token=account.get("session_token"),
+                    phone=account.get("phone"),
+                    bot_token=account.get("bot_token"),
+                    proxy=account.get("proxy"),
+                )
+            if account is None:
+                self.NOT_HACKING_PROTECTION = True
+            list_accounts.append(
+                BalancingObject(
+                    torsion_object=account, num_requests=self.get_number_requests()
+                )
+            )
+        return list_accounts
+
+    @staticmethod
+    def storage_check() -> bool:
+        return os.path.exists(f"{os.getcwd()}/storage/tg_account.json")
+
+    @staticmethod
+    def account_inside_storage_check(
+        api_id: int, session_token: str | None = None
+    ) -> TelegramAccount | bool:
+        pass
+
+    @staticmethod
+    async def add_account_storage(telegram_account: TelegramAccount):
+        async with open(f"{os.getcwd()}/storage/tg_account.json") as tg_account_file:
+            tg_account_file
+
+    @staticmethod
+    async def get_account_storage(telegram_account: TelegramAccount):
+        pass
+
+    async def initialization_account(self):
+        if self.storage_check():
+            pass
+        else:
+            pass
+
+    async def call_next(self):
+        if self.NOT_HACKING_PROTECTION:
+            await self.initialization_account()
+
+        bal_obj = self.balancing_objects.pop(0)
+        if bal_obj.get("num_requests") == 0:
+            bal_obj["num_requests"] = self.get_number_requests()
+            self.balancing_objects.append(bal_obj)
+            bal_obj = self.balancing_objects.pop(0)
+
+        return self.get_element(bal_obj)
+
+
+
+
+class TelegramBalancer(Balancer):
     init_status = False
 
     def __init__(self, balancing_objects: list):
         self.balancing_objects = balancing_objects
+        self._clients = []
 
     async def init_call(self):
+        """
+        Инициализация всех аккаунтов из балансира
+        """
         for balanc_ob in self.balancing_objects:
             client = TelegramClient(
                 api_id=balanc_ob.get("api_id"),
@@ -58,74 +135,138 @@ class TelegramBalancer(ClientsHandler):
                 session=balanc_ob.get("session"),
             )
 
-            print(balanc_ob)
-            if balanc_ob.get("session") is None:
+            print(f"Инициализация аккаунта: {balanc_ob.get('phone')}")
+            session_data = self.get_session_data(api_id=balanc_ob.get("api_id"))
+
+            if session_data is None or session_data.get("session") is None:
+                print(f"Нет сессии для {balanc_ob.get('phone')}, выполняем аутентификацию...")
                 async with client as temp_client:
-                    data_tg_save = self.get_token(api_id=balanc_ob.get("api_id"))
-                    if data_tg_save is None:
-                        string_session = temp_client.session.save()
-                        self.save_token(
-                            token=string_session,
-                            phone=balanc_ob.get("phone"),
-                            api_id=balanc_ob.get("api_id"),
-                            api_hash=balanc_ob.get("api_hash"),
-                        )
-            self.balancing_objects.append(
-                {"balanc_ob": client, "num_requests": self.get_number_requests()}
-            )
+                    string_session = temp_client.session.save()
+                    self.save_session(
+                        session=string_session,
+                        phone=balanc_ob.get("phone"),
+                        api_id=balanc_ob.get("api_id"),
+                        api_hash=balanc_ob.get("api_hash"),
+                    )
+            else:
+                print(f"Используем сохраненную сессию для {balanc_ob.get('phone')}")
+                string_session = session_data.get("session")
+                client.session = StringSession(string_session)
+
+            self._clients.append(client)
 
     @staticmethod
-    def save_token(token, phone, api_id, api_hash):
-        data = {api_id: {"token": token, "phone": phone, "api_hash": api_hash}}
-        path_dir = f"{os.getcwd()}/save_token"
-        os.mkdir(path_dir)
-        with open(f"{path_dir}/token_tg.json", "w+") as token_file:
-            token_file.write(json.dumps(data))
+    def save_session(session, phone, api_id, api_hash):
+        """
+        Сохранение сессий Telegram аккаунтов в единственный файл
+        """
+        data = {api_id: {"session": session, "phone": phone, "api_hash": api_hash}}
+        path_dir = f"{os.getcwd()}/save_sessions"
+        os.makedirs(path_dir, exist_ok=True)
+
+        # Загружаем данные, если файл уже существует, чтобы обновить информацию
+        file_path = f"{path_dir}/token_tg.json"
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, "r+") as session_file:
+                    data_existing = json.load(session_file)
+                    data_existing.update(data)
+                    session_file.seek(0)
+                    session_file.write(json.dumps(data_existing))
+            except json.JSONDecodeError:
+                print(f"Ошибка чтения файла {file_path}")
+                with open(file_path, "w+") as session_file:
+                    session_file.write(json.dumps(data))
+        else:
+            with open(file_path, "w+") as session_file:
+                session_file.write(json.dumps(data))
 
     @staticmethod
-    def get_token(api_id):
-        path_dir = f"{os.getcwd()}/save_token"
-        with open(f"{path_dir}/token_tg.json", "w+") as token_file:
-            data = json.load(token_file)
-            info = data.get(api_id)
-        return info
+    def get_session_data(api_id):
+        """
+        Получение сохраненной сессии для указанного api_id
+        """
+        path_dir = f"{os.getcwd()}/save_sessions"
+        file_path = f"{path_dir}/token_tg.json"
+
+        # Проверяем существует ли файл с сессиями
+        if os.path.exists(file_path):
+            try:
+                with open(file_path, "r") as session_file:
+                    data = json.load(session_file)
+                    return data.get(str(api_id))  # Возвращаем данные сессии для этого api_id
+            except json.JSONDecodeError:
+                print(f"Ошибка чтения файла {file_path}")
+                return None
+        else:
+            print(f"Файл {file_path} не найден.")
+            return None
 
     def get_clients(self):
-        if self.init_status is not False:
-            self.init_call()
-        clients = []
-        for account in self._accounts:
-            api_id = account["api_id"]
-            api_hash = account["api_hash"]
-            session = account["session"]
-            phone = account["phone"]
-            string_session = (
-                StringSession(session)
-                if session is not None or session != ""
-                else StringSession()
-            )
-            client = TelegramClient(
-                api_id=api_id,
-                api_hash=api_hash,
-                session=string_session,
-            )
-            clients.append(client)
+        """
+        Получение всех инициализированных клиентов
+        """
+        if not self.init_status:
+            raise Exception("Аккаунты еще не инициализированы!")
 
-        return clients
+        return self._clients
 
     def call_next(self) -> TelegramClient:
-        if self.init_status is not False:
-            pass
-        client = self.clients.pop(0)
-        self.clients.append(client)
-        client.start(phone="+79152092024")
-        # async with client as temp_client:
-        #     temp_client
-        #     print(
-        #         f"ВАЖНО! Сессия для {temp_client.api_id} такая:\n {temp_client.session.save()} \n ОБЯЗАТЕЛЬНО СОХРАНИ ЕЁ!"
-        #     )
+        """
+        Возвращает следующий аккаунт из списка для использования
+        """
+        if not self.init_status:
+            raise Exception("Аккаунты еще не инициализированы!")
+
+        client = self._clients.pop(0)
+        self._clients.append(client)
         return client
 
-    @staticmethod
-    def get_number_requests():
-        return random.randrange(2, 5, 1)
+    async def use_multiple_accounts(self):
+        """
+        Использует несколько аккаунтов для выполнения операций.
+        """
+        if not self.init_status:
+            await self.init_call()
+
+        for account in self._clients:
+            async with account as client:
+                me = await client.get_me()
+                print(f"Используем аккаунт {me.username}")
+                await self.some_action(client)
+
+    async def some_action(self, client):
+        """
+        Пример действия с аккаунтом.
+        """
+        print("Выполняем действие с аккаунтом...")
+        # Пример действия: получение информации о текущем пользователе
+        me = await client.get_me()
+        print(f"Информация о пользователе: {me.username}")
+
+
+# Пример использования:
+
+async def main():
+    # Ваши аккаунты
+    accounts = [
+        {
+            "api_id": 25490814,
+            "api_hash": "0789de556a85e76bf48bd2f65fe1856d",
+            "session": None,
+            "phone": "+79152092024",
+        },
+    ]
+
+    # Создаем объект TelegramBalancer с аккаунтами
+    balancer = TelegramBalancer(accounts)
+
+    # Инициализируем аккаунты
+    await balancer.init_call()
+
+    # Используем несколько аккаунтов
+    await balancer.use_multiple_accounts()
+
+# Запуск
+import asyncio
+asyncio.run(main())
