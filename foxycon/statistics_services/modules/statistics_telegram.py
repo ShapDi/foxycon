@@ -4,6 +4,7 @@ from telethon.errors import (
     FloodWaitError,
 )
 from telethon.tl.functions.channels import JoinChannelRequest, GetParticipantRequest
+from telethon.tl.functions.messages import GetFullChatRequest
 
 from foxycon.data_structures.error_type import Telegram
 
@@ -20,9 +21,14 @@ class TelegramPost:
                 parts = self.url.replace("https://t.me/", "").split("/")
 
                 channel_username, message_id = parts[0], int(parts[1])
+                # participants = await client.get_participants(int(channel_username))
+                # print(participants)
+                # for participant in participants:
+                #     print(f"User ID: {participant.id}, Username: {participant.username}")
 
                 try:
                     channel = await client.get_entity(channel_username)
+
 
                     if not channel.username:
                         try:
@@ -71,3 +77,7 @@ class TelegramPost:
             data["error"] = Telegram.General
             data["error_message"] = e
             return data
+
+
+class TelegramGroup:
+    pass

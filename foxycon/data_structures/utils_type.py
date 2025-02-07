@@ -10,9 +10,7 @@ class Proxy:
 class TelegramAccount:
     api_id: int
     api_hash: str
-    session_token: str
-    phone: str | None
-    bot_token: str | None
+    session: str | None
     proxy: list | None
 
 

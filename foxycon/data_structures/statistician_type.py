@@ -20,7 +20,6 @@ class YouTubeContentData(ContentData):
     channel_url: str
     publish_date: str
     subtitles: str
-    # analytics_obj: ResultAnalytics
     pytube_ob: YouTube
 
 
@@ -35,7 +34,6 @@ class YouTubeChannelsData(ContentData):
     subscriber: int
     number_videos: int
     data_create: datetime.date
-    # analytics_obj: ResultAnalytics
     pytube_ob: Channel
 
 
@@ -58,7 +56,6 @@ class InstagramContentData(ContentData):
     duration: int
     code_id: str
     author: InstagramPageData
-    # analytics_obj: ResultAnalytics
 
 
 @dataclass

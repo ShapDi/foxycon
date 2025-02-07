@@ -1,6 +1,9 @@
 # from foxycon.search_services import DataGoogleSearch, LanguageGoogle, TimeGoogle, CountryGoogle
 # data = DataGoogleSearch(language = 'lang_e', country = 'CA', period = 'year')
 import asyncio
+from typing import Annotated
+
+Annotated
 
 from foxycon import StatisticianSocNet
 # Нужно найти воронки по гео чили перу Аргентина Колумбия Бангладеш
@@ -37,6 +40,8 @@ from foxycon import StatisticianSocNet
 # for i in reqvest:
 #     print(dad.get_instagram('mostbet'))
 
+
+
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 
 proxy = [
@@ -47,7 +52,7 @@ proxy = [
 ca = ContentAnalyzer()
 
 # print(ca.get_data("https://t.me/Blazzerfox/6708"))
-print(ca.get_data("https://youtu.be/gfYN5Ck9gV8?feature=shared"))
+print(ca.get_data.__code__)
 
 # print(ca.get_data("fasfdszfs"))
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
@@ -98,15 +103,19 @@ async def main_corut():
         proxy=proxy,
         telegram_account=[
             {
-                "api_id": 25490814,
-                "api_hash": "0789de556a85e76bf48bd2f65fe1856d",
+                "api_id": 22810893,
+                "api_hash": "cf16ee6136d10d41a98e8398fa42e6d8",
+                "session": "1ApWapzMBu1q0fH1WHPUFiMhb4UKZd1KO4ACWhOypt4mmbKWKOBsgI-9nuWcen9humyKg_L99HPTPVrpVF7XnY3hBRrvr8FG0bi8_wvIoXwvsDH0Eg-8KNS07RYPq0ehsXm5ZaZ_Z4MWYB53mc0nrgI2OGWnXAZNUARpUkB6DG5QefLclZAGvmZ2rxx2Pdy3x8pbeB8pdFth6mFYzroXo7XFfZzyDn6x6x9TnhUm8X9Sx8imaSgOArJ0sckP3yPE8xshNFv-OFGiGLTUw5a80y3xP6qanRh6jISXq7ZYkOeGsNNwktP1VVH2-Pa4nTAIXVf2TWwyjfI8_Vx-r77V14oG0r6ngh6M="
             }
         ],
     )
-    #
-    data = await ssn.get_data("https://t.me/Blazzerfox/6708")
-    #     print(data)
 
+    #
+    # data = await ssn.get_data("https://t.me/gregjgeek/958")
+    data = await ssn.get_data("https://t.me/-4767368554/6708")
+    #     print(data)
+    # https: // t.me / 4767368554 / 6708
+    # "
     # data = await ssn.get_data("https://www.youtube.com/watch?v=WikF9bhMQLs&t=113s")
     print(data)
     # data = await ssn.get_data("https://www.youtube.com/shorts/S8FjjoLTwYo")
