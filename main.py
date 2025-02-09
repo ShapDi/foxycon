@@ -93,8 +93,10 @@ async def main_corut():
         ],
     )
 
-    data = await ssn.get_data("https://t.me/gregjgeek/957")
-    #     print(data)
+    # data = await ssn.get_data("https://t.me/gregjgeek/957")
+    # print(data)
+    data = await ssn.get_data("https://t.me/-4767368554")
+    print(data)
     # https: // t.me / 4767368554 / 6708
     # "
     # data = await ssn.get_data("https://www.youtube.com/watch?v=WikF9bhMQLs&t=113s")

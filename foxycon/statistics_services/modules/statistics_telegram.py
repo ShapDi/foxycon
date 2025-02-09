@@ -50,9 +50,12 @@ class TelegramPost:
 
                     try:
                         message = await client.get_messages(channel, ids=message_id)
+                        print(message)
                         if message:
                             data["views"] = message.views
                             data["text"] = message.text
+                            data["channel_id"] = message.peer_id.channel_id
+                            data["date"] = message.peer_id.date
                             return data
                         else:
                             data["error"] = Telegram.PostNotFound
@@ -85,9 +88,15 @@ class TelegramGroup:
     async def get_data(self):
         async with self.client as client:
             parts = self.url.replace("https://t.me/", "").split("/")
-
-            channel_username, message_id = parts[0], int(parts[1])
-            participants = await client.get_participants(int(channel_username))
-            print(participants)
-            for participant in participants:
-                print(f"User ID: {participant.id}, Username: {participant.username}")
+            chat = await client.get_entity((int(parts[0])))
+            participants = await client.get_participants(int(parts[0]))
+            for i in participants:
+                print(i)
+            data = {
+                "chat_id": chat.id,
+                "title": chat.title,
+                "participants_count": chat.participants_count,
+                "date_create": chat.date,
+                "users": participants,
+            }
+            return data

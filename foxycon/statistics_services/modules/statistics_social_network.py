@@ -8,6 +8,7 @@ from foxycon.data_structures.statistician_type import (
     InstagramPageData,
     TelegramPostData,
     TelegramChatData,
+    TelegramUserData,
 )
 from foxycon.statistics_services.modules.statistics_instagram import InstagramReels
 from foxycon.statistics_services.modules.statistics_youtube import (
@@ -127,12 +128,30 @@ class TelegramStatistician(StatisticianModuleStrategy):
         super().__init__(proxy)
         self._proxy = proxy
 
-    async def get_data(self, object_sn: ResultAnalytics, clients_handlers=None):
+    async def get_data(
+        self, object_sn: ResultAnalytics, clients_handlers=None
+    ) -> TelegramPostData | TelegramChatData:
         if object_sn.content_type == "post":
             data = await TelegramPost(object_sn.url, clients_handlers).get_data()
+            return TelegramPostData(
+                analytics_obj=object_sn, text=data.get("text"), views=data.get("views")
+            )
         else:
             data = await TelegramGroup(object_sn.url, clients_handlers).get_data()
-
-        return TelegramPostData(
-            analytics_obj=object_sn, text=data.text, views=data.views
-        )
+            return TelegramChatData(
+                analytics_obj=object_sn,
+                chat_id=data.get("chat_id"),
+                title=data.get("title"),
+                participants_count=data.get("participants_count"),
+                date_create=data.get("date_create"),
+                users=[
+                    TelegramUserData(
+                        user_id=user.id,
+                        bot=user.bot,
+                        first_name=user.first_name,
+                        last_name=user.last_name,
+                        username=user.username
+                    )
+                    for user in data.get("users")
+                ],
+            )

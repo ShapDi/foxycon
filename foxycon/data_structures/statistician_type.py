@@ -59,8 +59,12 @@ class InstagramContentData(ContentData):
 
 
 @dataclass
-class TelegramUserData(ContentData):
-    pass
+class TelegramUserData:
+    user_id: int
+    bot: bool
+    first_name: str | None
+    last_name: str | None
+    username: str | None
 
 
 @dataclass
@@ -71,6 +75,8 @@ class TelegramPostData(ContentData):
 
 @dataclass
 class TelegramChatData(ContentData):
-    text: str
-    views: int
+    chat_id: int
+    title: str
+    participants_count: int
+    date_create: datetime.datetime
     users: list[TelegramUserData]
