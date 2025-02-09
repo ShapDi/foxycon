@@ -13,7 +13,10 @@ from foxycon.statistics_services.modules.statistics_youtube import (
     YouTubeChannel,
     YouTubeContent,
 )
-from foxycon.statistics_services.modules.statistics_telegram import TelegramPost
+from foxycon.statistics_services.modules.statistics_telegram import (
+    TelegramPost,
+    TelegramGroup,
+)
 
 
 class StatisticianModuleStrategy(ABC):
@@ -53,9 +56,6 @@ class InstagramStatistician(StatisticianModuleStrategy):
                 ),
                 analytics_obj=object_sn,
             )
-
-    def __str__(self):
-        return "instagram"
 
 
 class YouTubeStatistician(StatisticianModuleStrategy):
@@ -120,9 +120,6 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                 pytube_ob=data.object_youtube,
             )
 
-    def __str__(self):
-        return "youtube"
-
 
 class TelegramStatistician(StatisticianModuleStrategy):
     def __init__(self, proxy=None):
@@ -130,8 +127,9 @@ class TelegramStatistician(StatisticianModuleStrategy):
         self._proxy = proxy
 
     async def get_data(self, object_sn: ResultAnalytics, clients_handlers=None):
-        data = await TelegramPost(object_sn.url, clients_handlers).get_data()
-        return TelegramContentData(analytics_obj=object_sn, data=data)
+        if object_sn.content_type == "post":
+            data = await TelegramPost(object_sn.url, clients_handlers).get_data()
+        else:
+            data = await TelegramGroup(object_sn.url, clients_handlers).get_data()
 
-    def __str__(self):
-        return "telegram"
+        return TelegramContentData(analytics_obj=object_sn, data=data)

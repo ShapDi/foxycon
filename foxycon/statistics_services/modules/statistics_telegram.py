@@ -4,7 +4,6 @@ from telethon.errors import (
     FloodWaitError,
 )
 from telethon.tl.functions.channels import JoinChannelRequest, GetParticipantRequest
-from telethon.tl.functions.messages import GetFullChatRequest
 
 from foxycon.data_structures.error_type import Telegram
 
@@ -79,4 +78,9 @@ class TelegramPost:
 
 
 class TelegramGroup:
-    pass
+    def __init__(self, url: str, clients_handler):
+        self.url = url
+        self.client = clients_handler
+
+    async def get_data(self):
+        pass

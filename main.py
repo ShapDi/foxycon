@@ -50,9 +50,6 @@ proxy = [
 #
 ca = ContentAnalyzer()
 
-# print(ca.get_data("https://t.me/Blazzerfox/6708"))
-print(ca.get_data.__code__)
-
 # print(ca.get_data("fasfdszfs"))
 # print(ca.get_data("https://github.com/technology-department-mb/bot_papich"))
 # print(ca.get_data("https://www.instagram.com/blyea_u/"))
@@ -109,14 +106,11 @@ async def main_corut():
         ],
     )
 
-    #
-    data = await ssn.get_data("https://t.me/gregjgeek/958")
     # data = await ssn.get_data("https://t.me/-4767368554/6708")
     #     print(data)
     # https: // t.me / 4767368554 / 6708
     # "
     # data = await ssn.get_data("https://www.youtube.com/watch?v=WikF9bhMQLs&t=113s")
-    print(data)
     # data = await ssn.get_data("https://www.youtube.com/shorts/S8FjjoLTwYo")
     # print(data)
     # data = await ssn.get_data("https://www.youtube.com/watch?v=YgsmFeawp-E")

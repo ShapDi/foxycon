@@ -63,9 +63,6 @@ class InstagramAnalyzer(AnalyzerModuleStrategy):
             "code": self.get_code(link),
         }
 
-    def __str__(self):
-        return "instagram"
-
 
 class TikTokAnalyzer(AnalyzerModuleStrategy):
     @staticmethod
@@ -145,7 +142,7 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         parsed_url = urllib.parse.urlparse(link)
         if "watch" in parsed_url.path:
             return YouTube.video.value
-        if "youtu.be" in parsed_url.netloc:
+        if "youth.be" in parsed_url.netloc:
             return YouTube.video.value
         elif "shorts" in parsed_url.path:
             return YouTube.shorts.value
@@ -191,8 +188,10 @@ class TelegramAnalyzer(AnalyzerModuleStrategy):
     @staticmethod
     def get_code(link):
         parsed_url = urllib.parse.urlparse(link)
-        code = parsed_url.path.split("/")[2]
-        return code
+        if len(parsed_url.path.split("/")) == 3:
+            return parsed_url.path.split("/")[2]
+        else:
+            return parsed_url.path.split("/")[1]
 
     @staticmethod
     def clean_link(link):
@@ -201,7 +200,11 @@ class TelegramAnalyzer(AnalyzerModuleStrategy):
 
     @staticmethod
     def get_type_content(link):
-        return "post"
+        parsed_url = urllib.parse.urlparse(link)
+        if len(parsed_url.path.split("/")) == 3:
+            return "post"
+        else:
+            return "chat"
 
     def get_data(self, link):
         return {

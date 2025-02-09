@@ -6,8 +6,4 @@ from foxycon.analysis_services.сontent_analyzer import (
 )
 from foxycon.search_services.search import Search as Search
 
-__all__ = [
-    "ContentAnalyzer",
-    "StatisticianSocNet",
-    "Search"
-]
+__all__ = ["ContentAnalyzer", "StatisticianSocNet", "Search"]

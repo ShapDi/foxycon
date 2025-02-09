@@ -15,9 +15,6 @@ class StatisticianSocNet:
         subclass().__str__(): subclass
         for subclass in StatisticianModuleStrategy.__subclasses__()
     }
-    # clients_handlers = {
-    #     subclass().__str__(): subclass() for subclass in ClientsHandler.__subclasses__()
-    # }
 
     def __init__(
         self, proxy=None, file_settings=None, telegram_account=None, subtitles=None
