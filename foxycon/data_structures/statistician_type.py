@@ -59,5 +59,18 @@ class InstagramContentData(ContentData):
 
 
 @dataclass
-class TelegramContentData(ContentData):
-    data: dict
+class TelegramUserData(ContentData):
+    pass
+
+
+@dataclass
+class TelegramPostData(ContentData):
+    text: str
+    views: int
+
+
+@dataclass
+class TelegramChatData(ContentData):
+    text: str
+    views: int
+    users: list[TelegramUserData]

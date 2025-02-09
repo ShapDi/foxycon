@@ -14,7 +14,7 @@ class TelegramPost:
         self.client = clients_handler
 
     async def get_data(self):
-        data = {"views": None, "error": Telegram.NoError, "error_message": None}
+        data = {}
         try:
             async with self.client as client:
                 parts = self.url.replace("https://t.me/", "").split("/")
@@ -32,7 +32,7 @@ class TelegramPost:
                         try:
                             me = await client.get_me()
                             await client(GetParticipantRequest(channel, me))
-                        except Exception:
+                        except Exception as ex:
                             try:
                                 await client(JoinChannelRequest(channel))
                                 data["error"] = Telegram.JoinChannelRequestSend
@@ -83,4 +83,11 @@ class TelegramGroup:
         self.client = clients_handler
 
     async def get_data(self):
-        pass
+        async with self.client as client:
+            parts = self.url.replace("https://t.me/", "").split("/")
+
+            channel_username, message_id = parts[0], int(parts[1])
+            participants = await client.get_participants(int(channel_username))
+            print(participants)
+            for participant in participants:
+                print(f"User ID: {participant.id}, Username: {participant.username}")

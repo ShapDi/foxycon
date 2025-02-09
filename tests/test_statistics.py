@@ -1,8 +1,3 @@
-import pytest
-
-from foxycon import StatisticianSocNet
-
-
 def test_youtube_video():
     pass
 

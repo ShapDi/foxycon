@@ -142,7 +142,7 @@ class YouTubeAnalyzer(AnalyzerModuleStrategy):
         parsed_url = urllib.parse.urlparse(link)
         if "watch" in parsed_url.path:
             return YouTube.video.value
-        if "youth.be" in parsed_url.netloc:
+        if "youtu.be" in parsed_url.netloc:
             return YouTube.video.value
         elif "shorts" in parsed_url.path:
             return YouTube.shorts.value

@@ -6,7 +6,8 @@ from foxycon.data_structures.statistician_type import (
     YouTubeContentData,
     InstagramContentData,
     InstagramPageData,
-    TelegramContentData,
+    TelegramPostData,
+    TelegramChatData,
 )
 from foxycon.statistics_services.modules.statistics_instagram import InstagramReels
 from foxycon.statistics_services.modules.statistics_youtube import (
@@ -132,4 +133,6 @@ class TelegramStatistician(StatisticianModuleStrategy):
         else:
             data = await TelegramGroup(object_sn.url, clients_handlers).get_data()
 
-        return TelegramContentData(analytics_obj=object_sn, data=data)
+        return TelegramPostData(
+            analytics_obj=object_sn, text=data.text, views=data.views
+        )

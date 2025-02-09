@@ -1,10 +1,13 @@
 import inspect
 
-from typing import Callable
+from typing import Callable, Type
 
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 from foxycon.statistics_services.modules.statistics_social_network import (
     StatisticianModuleStrategy,
+    TelegramStatistician,
+    YouTubeStatistician,
+    InstagramStatistician,
 )
 from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer
 from telethon.sync import TelegramClient
@@ -16,15 +19,14 @@ class StatisticianSocNet:
         for subclass in StatisticianModuleStrategy.__subclasses__()
     }
 
+    print(statistics_modules)
+
     def __init__(
         self, proxy=None, file_settings=None, telegram_account=None, subtitles=None
     ):
         self._proxy = proxy
         self._telegram_account = telegram_account
 
-        # (
-        #     clients_handlers if clients_handlers is not None else self.clients_handlers
-        # )
         self._subtitles = subtitles
         self._file_settings = file_settings
 
@@ -47,6 +49,18 @@ class StatisticianSocNet:
         data = ContentAnalyzer().get_data(link)
         return data
 
+    @staticmethod
+    def get_statistician_module_strategy(
+        social_network: str,
+    ) -> Type[StatisticianModuleStrategy] | None:
+        match social_network:
+            case "youtube":
+                return YouTubeStatistician
+            case "instagram":
+                return InstagramStatistician
+            case "telegram":
+                return TelegramStatistician
+
     async def get_data(self, link):
         if self._proxy_balancer is not None:
             self._proxy = self._proxy_balancer.call_next()
@@ -57,7 +71,7 @@ class StatisticianSocNet:
 
         data = self.get_basic_data(link)
 
-        class_statistics = self.statistics_modules.get(f"{data.social_network}")
+        class_statistics = self.get_statistician_module_strategy(data.social_network)
         if self.is_coroutine(class_statistics().get_data):
             data = await class_statistics(proxy=self._proxy).get_data(
                 data, clients_handlers=self._telegram_account
