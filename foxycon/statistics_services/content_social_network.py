@@ -9,6 +9,7 @@ from foxycon.statistics_services.modules.statistics_social_network import (
 from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer
 from telethon.sync import TelegramClient
 
+
 class StatisticianSocNet:
     statistics_modules = {
         subclass().__str__(): subclass
@@ -56,7 +57,6 @@ class StatisticianSocNet:
         if self._telegram_account_balancer is not None:
             self._telegram_account = await self._telegram_account_balancer.init_call()
             self._telegram_account = self._telegram_account_balancer.call_next()
-            print(self._telegram_account)
 
         data = self.get_basic_data(link)
 

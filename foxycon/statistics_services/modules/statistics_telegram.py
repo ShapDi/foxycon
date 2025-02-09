@@ -29,7 +29,6 @@ class TelegramPost:
                 try:
                     channel = await client.get_entity(channel_username)
 
-
                     if not channel.username:
                         try:
                             me = await client.get_me()

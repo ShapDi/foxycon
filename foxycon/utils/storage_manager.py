@@ -1,6 +1,7 @@
 import os
 import json
 
+
 class StorageManager:
     PATH_DIR = os.getcwd()
 
@@ -26,6 +27,3 @@ class StorageManager:
                 return None
             data_group.get(name_data)
         return data_group
-
-
-

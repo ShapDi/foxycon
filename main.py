@@ -41,7 +41,6 @@ from foxycon import StatisticianSocNet
 #     print(dad.get_instagram('mostbet'))
 
 
-
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 
 proxy = [
@@ -105,14 +104,14 @@ async def main_corut():
             {
                 "api_id": 22810893,
                 "api_hash": "cf16ee6136d10d41a98e8398fa42e6d8",
-                "session": "1ApWapzMBu1q0fH1WHPUFiMhb4UKZd1KO4ACWhOypt4mmbKWKOBsgI-9nuWcen9humyKg_L99HPTPVrpVF7XnY3hBRrvr8FG0bi8_wvIoXwvsDH0Eg-8KNS07RYPq0ehsXm5ZaZ_Z4MWYB53mc0nrgI2OGWnXAZNUARpUkB6DG5QefLclZAGvmZ2rxx2Pdy3x8pbeB8pdFth6mFYzroXo7XFfZzyDn6x6x9TnhUm8X9Sx8imaSgOArJ0sckP3yPE8xshNFv-OFGiGLTUw5a80y3xP6qanRh6jISXq7ZYkOeGsNNwktP1VVH2-Pa4nTAIXVf2TWwyjfI8_Vx-r77V14oG0r6ngh6M="
+                "session": "1ApWapzMBu1q0fH1WHPUFiMhb4UKZd1KO4ACWhOypt4mmbKWKOBsgI-9nuWcen9humyKg_L99HPTPVrpVF7XnY3hBRrvr8FG0bi8_wvIoXwvsDH0Eg-8KNS07RYPq0ehsXm5ZaZ_Z4MWYB53mc0nrgI2OGWnXAZNUARpUkB6DG5QefLclZAGvmZ2rxx2Pdy3x8pbeB8pdFth6mFYzroXo7XFfZzyDn6x6x9TnhUm8X9Sx8imaSgOArJ0sckP3yPE8xshNFv-OFGiGLTUw5a80y3xP6qanRh6jISXq7ZYkOeGsNNwktP1VVH2-Pa4nTAIXVf2TWwyjfI8_Vx-r77V14oG0r6ngh6M=",
             }
         ],
     )
 
     #
-    # data = await ssn.get_data("https://t.me/gregjgeek/958")
-    data = await ssn.get_data("https://t.me/-4767368554/6708")
+    data = await ssn.get_data("https://t.me/gregjgeek/958")
+    # data = await ssn.get_data("https://t.me/-4767368554/6708")
     #     print(data)
     # https: // t.me / 4767368554 / 6708
     # "
