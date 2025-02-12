@@ -10,17 +10,9 @@ from foxycon.statistics_services.modules.statistics_social_network import (
     InstagramStatistician,
 )
 from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer
-from telethon.sync import TelegramClient
 
 
 class StatisticianSocNet:
-    statistics_modules = {
-        subclass().__str__(): subclass
-        for subclass in StatisticianModuleStrategy.__subclasses__()
-    }
-
-    print(statistics_modules)
-
     def __init__(
         self, proxy=None, file_settings=None, telegram_account=None, subtitles=None
     ):

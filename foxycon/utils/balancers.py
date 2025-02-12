@@ -44,39 +44,37 @@ class ProxyBalancer(Balancer):
         return random.randrange(2, 5, 1)
 
 
-class TelegramBalancer(Balancer):
+class TelegramBalancer:
     def __init__(self, balancing_objects: list):
         self.balancing_objects = balancing_objects
-
-    @staticmethod
-    def updata(data_tg: TelegramAccount):
-        pass
 
     async def init_call(self):
         old_balancing_objects = self.balancing_objects
         self.balancing_objects = []
+
         try:
             for balancing_object in old_balancing_objects:
+                stored_data = StorageManager.get_data_storage("telegram", balancing_object["api_id"])
+                session = balancing_object.get("session") or (stored_data["session"] if stored_data else None)
+
                 data_tg = TelegramAccount(
-                    api_id=balancing_object.get("api_id"),
-                    api_hash=balancing_object.get("api_hash"),
-                    session=balancing_object.get("session"),
+                    api_id=balancing_object["api_id"],
+                    api_hash=balancing_object["api_hash"],
+                    session=session,
                     proxy=balancing_object.get("proxy"),
                 )
-                print(data_tg)
-                async with TelegramClient(
-                    StringSession(data_tg.session), data_tg.api_id, data_tg.api_hash
-                ) as client:
-                    string = client.session.save()
-                    print(string)
-                    data_tg.session = string
-                    print(data_tg.session)
-                    self.updata(data_tg)
+
+                async with TelegramClient(StringSession(data_tg.session), data_tg.api_id, data_tg.api_hash) as client:
+                    data_tg.session = client.session.save()
+                    StorageManager.add_data_storage("telegram", data_tg)
                     self.balancing_objects.append(client)
         except Exception as ex:
-            print(ex)
+            print(f"Error initializing TelegramBalancer: {ex}")
 
     def call_next(self):
+        if not self.balancing_objects:
+            raise RuntimeError("No available Telegram clients")
         client = self.balancing_objects.pop(0)
         self.balancing_objects.append(client)
         return client
+

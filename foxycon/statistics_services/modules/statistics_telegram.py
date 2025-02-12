@@ -20,11 +20,6 @@ class TelegramPost:
                 parts = self.url.replace("https://t.me/", "").split("/")
 
                 channel_username, message_id = parts[0], int(parts[1])
-                # participants = await client.get_participants(int(channel_username))
-                # print(participants)
-                # for participant in participants:
-                #     print(f"User ID: {participant.id}, Username: {participant.username}")
-
                 try:
                     channel = await client.get_entity(channel_username)
 
@@ -50,7 +45,6 @@ class TelegramPost:
 
                     try:
                         message = await client.get_messages(channel, ids=message_id)
-                        print(message)
                         if message:
                             data["views"] = message.views
                             data["text"] = message.text
@@ -90,8 +84,6 @@ class TelegramGroup:
             parts = self.url.replace("https://t.me/", "").split("/")
             chat = await client.get_entity((int(parts[0])))
             participants = await client.get_participants(int(parts[0]))
-            for i in participants:
-                print(i)
             data = {
                 "chat_id": chat.id,
                 "title": chat.title,
