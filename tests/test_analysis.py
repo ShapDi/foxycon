@@ -74,11 +74,43 @@ def test_youtube_channel_type_link_two():
 
 
 def test_instagram_page():
-    pass
+    assert ca.get_data("https://www.instagram.com/prikol.pedro/") == ResultAnalytics(
+        url="https://www.instagram.com/prikol.pedro/",
+        social_network="instagram",
+        content_type="page",
+        code="prikol.pedro",
+    )
+
+
+def test_instagram_post():
+    assert ca.get_data("https://www.instagram.com/p/C9HMrwooyGW/") == ResultAnalytics(
+        url="https://www.instagram.com/p/C9HMrwooyGW/",
+        social_network="instagram",
+        content_type="post",
+        code="C9HMrwooyGW",
+    )
 
 
 def test_instagram_reel():
-    pass
+    assert ca.get_data(
+        "https://www.instagram.com/reel/C9kE36uxz_v/?igsh=YXF2NXVmaG9pOWZt"
+    ) == ResultAnalytics(
+        url="https://www.instagram.com/reel/C9kE36uxz_v/",
+        social_network="instagram",
+        content_type="reel",
+        code="C9kE36uxz_v",
+    )
+
+
+def test_google_drive():
+    assert ca.get_data(
+        "https://drive.google.com/file/d/1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs/view?usp=sharing"
+    ) == ResultAnalytics(
+        url="https://drive.google.com/file/d/1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs/view",
+        social_network="google_drive",
+        content_type="meet",
+        code="1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs",
+    )
 
 
 def test_telegram_channel():

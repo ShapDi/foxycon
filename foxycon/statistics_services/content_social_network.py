@@ -28,6 +28,7 @@ class StatisticianSocNet:
             self._proxy_balancer = None
 
         if self._telegram_account is not None:
+            print(self._telegram_account)
             self._telegram_account_balancer = TelegramBalancer(self._telegram_account)
         else:
             self._telegram_account_balancer = None

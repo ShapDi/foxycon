@@ -88,9 +88,12 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                 pytube_ob=data.object_channel,
             )
         elif object_sn.content_type == "video":
-            data = YouTubeContent(
-                object_sn.url, proxy=self._proxy, subtitles=self._subtitles
-            )
+            try:
+                data = YouTubeContent(
+                    object_sn.url, proxy=self._proxy, subtitles=self._subtitles
+                )
+            except Exception as ex:
+                return ex
             return YouTubeContentData(
                 title=data.title,
                 likes=data.likes,

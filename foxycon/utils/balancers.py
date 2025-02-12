@@ -45,17 +45,25 @@ class ProxyBalancer(Balancer):
 
 
 class TelegramBalancer:
+    init_status = False
+
     def __init__(self, balancing_objects: list):
         self.balancing_objects = balancing_objects
 
     async def init_call(self):
+        if self.init_status:
+            return None
         old_balancing_objects = self.balancing_objects
         self.balancing_objects = []
 
         try:
             for balancing_object in old_balancing_objects:
-                stored_data = StorageManager.get_data_storage("telegram", balancing_object["api_id"])
-                session = balancing_object.get("session") or (stored_data["session"] if stored_data else None)
+                stored_data = StorageManager.get_data_storage(
+                    "telegram", balancing_object["api_id"]
+                )
+                session = balancing_object.get("session") or (
+                    stored_data["session"] if stored_data else None
+                )
 
                 data_tg = TelegramAccount(
                     api_id=balancing_object["api_id"],
@@ -64,10 +72,13 @@ class TelegramBalancer:
                     proxy=balancing_object.get("proxy"),
                 )
 
-                async with TelegramClient(StringSession(data_tg.session), data_tg.api_id, data_tg.api_hash) as client:
+                async with TelegramClient(
+                    StringSession(data_tg.session), data_tg.api_id, data_tg.api_hash
+                ) as client:
                     data_tg.session = client.session.save()
                     StorageManager.add_data_storage("telegram", data_tg)
                     self.balancing_objects.append(client)
+            self.init_status = True
         except Exception as ex:
             print(f"Error initializing TelegramBalancer: {ex}")
 
@@ -77,4 +88,3 @@ class TelegramBalancer:
         client = self.balancing_objects.pop(0)
         self.balancing_objects.append(client)
         return client
-

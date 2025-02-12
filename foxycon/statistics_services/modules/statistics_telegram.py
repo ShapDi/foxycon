@@ -82,7 +82,11 @@ class TelegramGroup:
     async def get_data(self):
         async with self.client as client:
             parts = self.url.replace("https://t.me/", "").split("/")
+
             chat = await client.get_entity((int(parts[0])))
+            # except:
+            #     chat = await client.get_entity(parts[0])
+            #     print(chat)
             participants = await client.get_participants(int(parts[0]))
             data = {
                 "chat_id": chat.id,

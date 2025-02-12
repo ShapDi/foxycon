@@ -1,6 +1,7 @@
 import os
 import json
-from dataclasses import dataclass, asdict
+from dataclasses import asdict
+
 
 class StorageManager:
     PATH_FILE = "storage.json"

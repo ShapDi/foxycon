@@ -38,7 +38,7 @@ class YouTubeChannelsData(ContentData):
 
 
 @dataclass
-class InstagramPageData(ContentData):
+class InstagramPageData:
     user_id: str
     username: str
     full_name: str
