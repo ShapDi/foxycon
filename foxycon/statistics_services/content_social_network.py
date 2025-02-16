@@ -54,24 +54,37 @@ class StatisticianSocNet:
             case "telegram":
                 return TelegramStatistician
 
-    async def get_data(self, link):
+    async def get_data_async(self, link):
         if self._proxy_balancer is not None:
             self._proxy = self._proxy_balancer.call_next()
 
         if self._telegram_account_balancer is not None:
-            self._telegram_account = await self._telegram_account_balancer.init_call()
+            await self._telegram_account_balancer.init_call_async()
             self._telegram_account = self._telegram_account_balancer.call_next()
 
         data = self.get_basic_data(link)
 
         class_statistics = self.get_statistician_module_strategy(data.social_network)
-        if self.is_coroutine(class_statistics().get_data):
-            data = await class_statistics(proxy=self._proxy).get_data(
-                data, clients_handlers=self._telegram_account
-            )
 
-        else:
-            data = class_statistics(
-                proxy=self._proxy, subtitles=self._subtitles
-            ).get_data(data)
+        data = await class_statistics(proxy=self._proxy).get_data_async(
+            data, clients_handlers=self._telegram_account
+        )
+        return data
+
+    def get_data(self, link):
+        if self._proxy_balancer is not None:
+            self._proxy = self._proxy_balancer.call_next()
+
+        if self._telegram_account_balancer is not None:
+            self._telegram_account_balancer.init_call()
+            self._telegram_account = self._telegram_account_balancer.call_next()
+
+        data = self.get_basic_data(link)
+
+        class_statistics = self.get_statistician_module_strategy(data.social_network)
+
+        data = class_statistics(proxy=self._proxy, subtitles=self._subtitles).get_data(
+            data, clients_handlers=self._telegram_account
+        )
+
         return data

@@ -2,7 +2,7 @@ import random
 import time
 from abc import ABC, abstractmethod
 
-from telethon import TelegramClient
+from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 
 from foxycon.data_structures.utils_type import TelegramAccount
@@ -50,7 +50,7 @@ class TelegramBalancer:
     def __init__(self, balancing_objects: list):
         self.balancing_objects = balancing_objects
 
-    async def init_call(self):
+    async def init_call_async(self):
         if self.init_status:
             return None
         old_balancing_objects = self.balancing_objects
@@ -76,6 +76,40 @@ class TelegramBalancer:
                     StringSession(data_tg.session), data_tg.api_id, data_tg.api_hash
                 ) as client:
                     data_tg.session = client.session.save()
+                    print(data_tg.session)
+                    StorageManager.add_data_storage("telegram", data_tg)
+                    self.balancing_objects.append(client)
+            self.init_status = True
+        except Exception as ex:
+            print(f"Error initializing TelegramBalancer: {ex}")
+
+    def init_call(self):
+        if self.init_status:
+            return None
+        old_balancing_objects = self.balancing_objects
+        self.balancing_objects = []
+
+        try:
+            for balancing_object in old_balancing_objects:
+                stored_data = StorageManager.get_data_storage(
+                    "telegram", balancing_object["api_id"]
+                )
+                session = balancing_object.get("session") or (
+                    stored_data["session"] if stored_data else None
+                )
+
+                data_tg = TelegramAccount(
+                    api_id=balancing_object["api_id"],
+                    api_hash=balancing_object["api_hash"],
+                    session=session,
+                    proxy=balancing_object.get("proxy"),
+                )
+
+                with TelegramClient(
+                    StringSession(data_tg.session), data_tg.api_id, data_tg.api_hash
+                ) as client:
+                    data_tg.session = client.session.save()
+                    print(data_tg.session)
                     StorageManager.add_data_storage("telegram", data_tg)
                     self.balancing_objects.append(client)
             self.init_status = True

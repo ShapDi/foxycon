@@ -1,28 +1,43 @@
 import re
+from abc import ABC, abstractmethod
 
-from instagram_reels.main.InstagramAPIClientImpl import InstagramAPIClientImpl
+from instagram_tail import InstagramApi
 
 
-class InstagramReels:
+class SocialNetworkParsingObject(ABC):
+
+    @abstractmethod
+    def get_statistics(self):
+        pass
+
+    @abstractmethod
+    async def get_statistics_async(self):
+        pass
+
+
+class InstagramReels(SocialNetworkParsingObject):
     def __init__(self, link, proxy):
         self._link = link
         self._proxy = proxy
 
     @staticmethod
-    async def get_client():
-        client = await InstagramAPIClientImpl().reels()
-        return client
-
-    @staticmethod
-    async def get_code(url):
+    def get_code(url):
+        # , proxy = self._proxy
         match = re.search(r"/reel[s]?/([^/?#&]+)", url)
         if match:
             return match.group(1)
         else:
             return None
 
-    async def get_data(self):
-        code = await self.get_code(self._link)
-        client = await self.get_client()
-        data = await client.get(code, proxy=self._proxy)
+    def get_statistics(self):
+        client = InstagramApi().get_client()
+        code = self.get_code(self._link)
+        data = client.get(code)
         return data
+
+    async def get_statistics_async(self):
+        client = InstagramApi().get_client()
+        code = self.get_code(self._link)
+        data = client().get(code)
+        return data
+
