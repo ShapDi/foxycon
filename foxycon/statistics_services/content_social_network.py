@@ -63,7 +63,7 @@ class StatisticianSocNet:
             self._telegram_account = self._telegram_account_balancer.call_next()
 
         data = self.get_basic_data(link)
-
+        print(data)
         class_statistics = self.get_statistician_module_strategy(data.social_network)
 
         data = await class_statistics(proxy=self._proxy).get_data_async(

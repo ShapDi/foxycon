@@ -1,7 +1,15 @@
+from abc import ABC
 from typing import Generator
+
+from aiohttp.log import client_logger
+
 from foxycon import StatisticianSocNet
+from foxycon.search_services.modules.algorithm_search import SearchTg
 from foxycon.search_services.modules.search_soc_net import YoutubeSearch
 
+
+class SearchStrategy(ABC):
+    pass
 
 class Search:
     def __init__(
@@ -47,3 +55,15 @@ class Search:
             object_statistic=data_base_link,
         ).create_generator()
         return generator_socnet_object
+
+class TelegramSearch(SearchStrategy):
+    def __init__(self, statistician_object: StatisticianSocNet):
+        self.statistician_object = statistician_object
+
+    def channel_search(self, link, text):
+        pass
+
+    async def channel_search_async(self, link, text):
+        client = self.statistician_object.telegram_account_balancer.call_next()
+        data = SearchTg()
+        pass

@@ -37,8 +37,6 @@ class StatisticianModuleStrategy(ABC):
         pass
 
 
-
-
 class InstagramStatistician(StatisticianModuleStrategy):
     def __init__(self, proxy=None, subtitles=None):
         super().__init__(proxy)
@@ -47,7 +45,9 @@ class InstagramStatistician(StatisticianModuleStrategy):
 
     async def get_data_async(self, object_sn: ResultAnalytics, clients_handlers=None):
         if object_sn.content_type == "reel":
-            data = await InstagramReels(object_sn.url, proxy=self._proxy).get_statistics_async()
+            data = await InstagramReels(
+                object_sn.url, proxy=self._proxy
+            ).get_statistics_async()
 
             return InstagramContentData(
                 system_id=data.media_id,
@@ -209,6 +209,7 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                 pytube_ob=data.object_youtube,
             )
 
+
 class TelegramStatistician(StatisticianModuleStrategy):
     def __init__(self, proxy=None, subtitles=None):
         super().__init__(proxy)
@@ -219,54 +220,48 @@ class TelegramStatistician(StatisticianModuleStrategy):
         self, object_sn: ResultAnalytics, clients_handlers=None
     ) -> TelegramPostData | TelegramChatData:
         if object_sn.content_type == "post":
-            data = TelegramPost(object_sn.url, clients_handlers).get_data()
+            data = TelegramPost(object_sn.url, clients_handlers).get_statistics()
             return TelegramPostData(
                 analytics_obj=object_sn, text=data.get("text"), views=data.get("views")
             )
         else:
-            data = TelegramGroup(object_sn.url, clients_handlers).get_data()
+            data = TelegramGroup(object_sn.url, clients_handlers).get_statistics()
             return TelegramChatData(
                 analytics_obj=object_sn,
                 chat_id=data.get("chat_id"),
                 title=data.get("title"),
                 participants_count=data.get("participants_count"),
                 date_create=data.get("date_create"),
-                users=[
-                    TelegramUserData(
-                        user_id=user.id,
-                        bot=user.bot,
-                        first_name=user.first_name,
-                        last_name=user.last_name,
-                        username=user.username,
-                    )
-                    for user in data.get("users")
-                ],
             )
 
     async def get_data_async(
         self, object_sn: ResultAnalytics, clients_handlers=None
     ) -> TelegramPostData | TelegramChatData:
         if object_sn.content_type == "post":
-            data = await TelegramPost(object_sn.url, clients_handlers).get_statistics_async()
+            data = await TelegramPost(
+                object_sn.url, clients_handlers
+            ).get_statistics_async()
             return TelegramPostData(
                 analytics_obj=object_sn, text=data.get("text"), views=data.get("views")
             )
         else:
-            data = await TelegramGroup(object_sn.url, clients_handlers).get_statistics_async()
+            data = await TelegramGroup(
+                object_sn.url, clients_handlers
+            ).get_statistics_async()
             return TelegramChatData(
                 analytics_obj=object_sn,
                 chat_id=data.get("chat_id"),
                 title=data.get("title"),
                 participants_count=data.get("participants_count"),
                 date_create=data.get("date_create"),
-                users=[
-                    TelegramUserData(
-                        user_id=user.id,
-                        bot=user.bot,
-                        first_name=user.first_name,
-                        last_name=user.last_name,
-                        username=user.username,
-                    )
-                    for user in data.get("users")
-                ],
+                # users=[
+                #     TelegramUserData(
+                #         user_id=user.id,
+                #         bot=user.bot,
+                #         first_name=user.first_name,
+                #         last_name=user.last_name,
+                #         username=user.username,
+                #     )
+                #     for user in data.get("users")
+                # ],
             )

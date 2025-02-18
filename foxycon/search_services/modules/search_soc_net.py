@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from typing import Generator
 
 from foxycon import StatisticianSocNet
@@ -22,6 +22,8 @@ class YoutubeSearch(SearchStrategy):
     def get_algorithm(self) -> Algorithm:
         pass
 
+
+
     async def create_generator(self) -> Generator:
         return await AlgorithmRecommendation(
             statistician_socnet_object=self._statistician_socnet_object,
@@ -30,8 +32,12 @@ class YoutubeSearch(SearchStrategy):
 
 
 class InstagramSearch(SearchStrategy):
-    pass
+    @abstractmethod
+    def get_algorithm(self) -> Algorithm:
+        pass
 
 
 class TelegramSearch(SearchStrategy):
     pass
+
+

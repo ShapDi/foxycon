@@ -10,8 +10,10 @@ from foxycon.data_structures.error_type import Telegram
 from telethon import functions as functions_async
 from telethon.sync import functions
 
-from foxycon.statistics_services.modules.statistics_instagram import SocialNetworkParsingObject
-
+from foxycon.statistics_services.modules.statistics_instagram import (
+    SocialNetworkParsingObject,
+)
+from telethon.tl.functions.channels import GetFullChannelRequest
 
 
 class TelegramPost(SocialNetworkParsingObject):
@@ -24,20 +26,21 @@ class TelegramPost(SocialNetworkParsingObject):
         try:
             with self.client as client:
                 parts = self.url.replace("https://t.me/", "").split("/")
-                search = "winline"
-
-                try:
-                    result = client(
-                        functions.contacts.SearchRequest(q=search, limit=100)
-                    )
-                    print(result)
-                except Exception as ex:
-                    print(ex)
                 channel_username, message_id = parts[0], int(parts[1])
-                text = "winline"
-                for message in client.iter_messages(channel_username, search=text):
-                    parts
-                    print(message)
+                # search = "winline"
+                #
+                # try:
+                #     result = client(
+                #         functions.contacts.SearchRequest(q=search, limit=100)
+                #     )
+                #     print(result)
+                # except Exception as ex:
+                #     print(ex)
+
+                # text = "winline"
+                # for message in client.iter_messages(channel_username, search=text):
+                #     parts
+                #     print(message)
                 try:
                     channel = client.get_entity(channel_username)
 
@@ -87,7 +90,6 @@ class TelegramPost(SocialNetworkParsingObject):
             data["error_message"] = e
             return data
         except Exception as e:
-            print(e)
             data["error"] = Telegram.General
             data["error_message"] = e
             return data
@@ -95,22 +97,9 @@ class TelegramPost(SocialNetworkParsingObject):
     async def get_statistics_async(self):
         data = {}
         try:
-           async with self.client as client:
+            async with self.client as client:
                 parts = self.url.replace("https://t.me/", "").split("/")
-                search = "winline"
-
-                try:
-                    result = await client(
-                        functions.contacts.SearchRequest(q=search, limit=100)
-                    )
-                    print(result)
-                except Exception as ex:
-                    print(ex)
                 channel_username, message_id = parts[0], int(parts[1])
-                text = "winline"
-                async for message in client.iter_messages(channel_username, search=text):
-                    parts
-                    print(message)
                 try:
                     channel = await client.get_entity(channel_username)
 
@@ -160,11 +149,9 @@ class TelegramPost(SocialNetworkParsingObject):
             data["error_message"] = e
             return data
         except Exception as e:
-            print(e)
             data["error"] = Telegram.General
             data["error_message"] = e
             return data
-
 
 
 class TelegramGroup:
@@ -175,34 +162,43 @@ class TelegramGroup:
     async def get_statistics_async(self):
         async with self.client as client:
             parts = self.url.replace("https://t.me/", "").split("/")
-
-            chat = await client.get_entity((int(parts[0])))
+            try:
+                chat = await client.get_entity((int(parts[0])))
+            except:
+                chat = await client.get_entity(parts[0])
+            result = await client(functions.channels.GetFullChannelRequest(
+                channel=parts[0]
+            ))
+            # try:
+            #     participants = await client.get_participants(int(parts[0]))
             # except:
-            #     chat = await client.get_entity(parts[0])
-            #     print(chat)
-            participants = await client.get_participants(int(parts[0]))
+            #     participants = await client.get_participants(parts[0])
+            #"users": participants,
             data = {
                 "chat_id": chat.id,
                 "title": chat.title,
-                "participants_count": chat.participants_count,
+                "participants_count": result.full_chat.participants_count,
                 "date_create": chat.date,
-                "users": participants,
+
             }
             return data
 
     def get_statistics(self):
         with self.client as client:
             parts = self.url.replace("https://t.me/", "").split("/")
-
-            chat = client.get_entity((int(parts[0])))
-            # except:
-            #     chat = await client.get_entity(parts[0])
-            #     print(chat)
-            participants = client.get_participants(int(parts[0]))
+            try:
+                chat = client.get_entity((int(parts[0])))
+                participants = client.get_participants(int(parts[0]))
+            except:
+                chat = client.get_entity(parts[0])
+                participants = client.get_participants(parts[0])
+            result = client(functions.channels.GetFullChannelRequest(
+                channel=parts[0]
+            ))
             data = {
                 "chat_id": chat.id,
                 "title": chat.title,
-                "participants_count": chat.participants_count,
+                "participants_count": result.full_chat.participants_count,
                 "date_create": chat.date,
                 "users": participants,
             }

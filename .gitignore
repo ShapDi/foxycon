@@ -50,7 +50,7 @@ coverage.xml
 *,cover
 .hypothesis/
 
-test_file.py
+tefile.py
 # Translations
 *.mo
 *.pot

@@ -125,3 +125,10 @@ class ParsingObjectController:
                 new_search_structure.append([object_statistic, None])
 
         self._search_structure = new_search_structure
+
+
+class SearchTg:
+
+    @staticmethod
+    def channel_search(client, word, link):
+        pass

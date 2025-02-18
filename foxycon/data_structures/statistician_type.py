@@ -79,4 +79,4 @@ class TelegramChatData(ContentData):
     title: str
     participants_count: int
     date_create: datetime.datetime
-    users: list[TelegramUserData]
+    # users: list[TelegramUserData]

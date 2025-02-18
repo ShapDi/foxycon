@@ -5,7 +5,6 @@ from instagram_tail import InstagramApi
 
 
 class SocialNetworkParsingObject(ABC):
-
     @abstractmethod
     def get_statistics(self):
         pass
@@ -22,7 +21,6 @@ class InstagramReels(SocialNetworkParsingObject):
 
     @staticmethod
     def get_code(url):
-        # , proxy = self._proxy
         match = re.search(r"/reel[s]?/([^/?#&]+)", url)
         if match:
             return match.group(1)
@@ -32,12 +30,11 @@ class InstagramReels(SocialNetworkParsingObject):
     def get_statistics(self):
         client = InstagramApi().get_client()
         code = self.get_code(self._link)
-        data = client.get(code)
+        data = client(proxy=self._proxy).reel(code)
         return data
 
     async def get_statistics_async(self):
         client = InstagramApi().get_client()
         code = self.get_code(self._link)
-        data = client().get(code)
+        data = client(proxy=self._proxy).reel(code)
         return data
-
