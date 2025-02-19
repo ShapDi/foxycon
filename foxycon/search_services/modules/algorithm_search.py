@@ -128,7 +128,10 @@ class ParsingObjectController:
 
 
 class SearchTg:
-
     @staticmethod
-    def channel_search(client, word, link):
+    def create_generator():
         pass
+
+    def get_search_generator(self):
+        pass
+

@@ -22,8 +22,6 @@ class YoutubeSearch(SearchStrategy):
     def get_algorithm(self) -> Algorithm:
         pass
 
-
-
     async def create_generator(self) -> Generator:
         return await AlgorithmRecommendation(
             statistician_socnet_object=self._statistician_socnet_object,
@@ -39,5 +37,3 @@ class InstagramSearch(SearchStrategy):
 
 class TelegramSearch(SearchStrategy):
     pass
-
-

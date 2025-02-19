@@ -27,20 +27,11 @@ class TelegramPost(SocialNetworkParsingObject):
             with self.client as client:
                 parts = self.url.replace("https://t.me/", "").split("/")
                 channel_username, message_id = parts[0], int(parts[1])
-                # search = "winline"
-                #
-                # try:
-                #     result = client(
-                #         functions.contacts.SearchRequest(q=search, limit=100)
-                #     )
-                #     print(result)
-                # except Exception as ex:
-                #     print(ex)
+
 
                 # text = "winline"
-                # for message in client.iter_messages(channel_username, search=text):
-                #     parts
-                #     print(message)
+
+
                 try:
                     channel = client.get_entity(channel_username)
 
@@ -166,20 +157,15 @@ class TelegramGroup:
                 chat = await client.get_entity((int(parts[0])))
             except:
                 chat = await client.get_entity(parts[0])
-            result = await client(functions.channels.GetFullChannelRequest(
-                channel=parts[0]
-            ))
-            # try:
-            #     participants = await client.get_participants(int(parts[0]))
-            # except:
-            #     participants = await client.get_participants(parts[0])
-            #"users": participants,
+            result = await client(
+                functions.channels.GetFullChannelRequest(channel=parts[0])
+            )
+
             data = {
                 "chat_id": chat.id,
                 "title": chat.title,
                 "participants_count": result.full_chat.participants_count,
                 "date_create": chat.date,
-
             }
             return data
 
@@ -192,9 +178,7 @@ class TelegramGroup:
             except:
                 chat = client.get_entity(parts[0])
                 participants = client.get_participants(parts[0])
-            result = client(functions.channels.GetFullChannelRequest(
-                channel=parts[0]
-            ))
+            result = client(functions.channels.GetFullChannelRequest(channel=parts[0]))
             data = {
                 "chat_id": chat.id,
                 "title": chat.title,

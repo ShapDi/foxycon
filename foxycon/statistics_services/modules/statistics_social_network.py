@@ -8,7 +8,6 @@ from foxycon.data_structures.statistician_type import (
     InstagramPageData,
     TelegramPostData,
     TelegramChatData,
-    TelegramUserData,
 )
 from foxycon.statistics_services.modules.statistics_instagram import InstagramReels
 from foxycon.statistics_services.modules.statistics_youtube import (

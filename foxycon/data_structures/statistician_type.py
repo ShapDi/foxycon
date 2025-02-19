@@ -58,13 +58,7 @@ class InstagramContentData(ContentData):
     author: InstagramPageData
 
 
-@dataclass
-class TelegramUserData:
-    user_id: int
-    bot: bool
-    first_name: str | None
-    last_name: str | None
-    username: str | None
+
 
 
 @dataclass
