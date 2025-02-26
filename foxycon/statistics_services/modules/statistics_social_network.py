@@ -25,14 +25,12 @@ class StatisticianModuleStrategy(ABC):
         self._proxy = proxy
         self._subtitles = subtitles
 
-    @staticmethod
     @abstractmethod
-    def get_data(object_sn, clients_handlers=None):
+    def get_data(self, object_sn, clients_handlers=None):
         pass
 
-    @staticmethod
     @abstractmethod
-    async def get_data_async(object_sn, clients_handlers=None):
+    async def get_data_async(self, object_sn, clients_handlers=None):
         pass
 
 
@@ -68,7 +66,7 @@ class InstagramStatistician(StatisticianModuleStrategy):
 
     def get_data(self, object_sn: ResultAnalytics, clients_handlers=None):
         if object_sn.content_type == "reel":
-            data = InstagramReels(object_sn.url, proxy=self._proxy).get_data()
+            data = InstagramReels(object_sn.url, proxy=self._proxy).get_statistics()
 
             return InstagramContentData(
                 system_id=data.media_id,
@@ -100,41 +98,41 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                 "https": self._proxy,
             }
 
-    def get_data(self, object_sn: ResultAnalytics, clients_handlers=None):
+    def get_data(self, object_sn: ResultAnalytics, clients_handlers=None) -> None | YouTubeContentData | YouTubeChannelsData | Exception:
         if object_sn.content_type == "channel":
-            data = YouTubeChannel(object_sn.url, proxy=self._proxy)
+            data_channel = YouTubeChannel(object_sn.url, proxy=self._proxy)
             return YouTubeChannelsData(
-                name=data.name,
-                link=data.link,
-                description=data.name,
-                country=data.country,
-                channel_id=data.code,
-                view_count=data.view_count,
-                subscriber=data.subscriber,
-                data_create=data.data_create,
-                number_videos=data.number_videos,
+                name=data_channel.name,
+                link=data_channel.link,
+                description=data_channel.name,
+                country=data_channel.country,
+                channel_id=data_channel.code,
+                view_count=data_channel.view_count,
+                subscriber=data_channel.subscriber,
+                data_create=data_channel.data_create,
+                number_videos=data_channel.number_videos,
                 analytics_obj=object_sn,
-                pytube_ob=data.object_channel,
+                pytube_ob=data_channel.object_channel,
             )
         elif object_sn.content_type == "video":
             try:
-                data = YouTubeContent(
+                data_content = YouTubeContent(
                     object_sn.url, proxy=self._proxy, subtitles=self._subtitles
                 )
             except Exception as ex:
                 return ex
             return YouTubeContentData(
-                title=data.title,
-                likes=data.likes,
-                link=data.link,
-                channel_id=data.code,
-                views=data.views,
-                system_id=data.system_id,
-                channel_url=data.channel_url,
-                publish_date=data.publish_date,
-                subtitles=data.subtitles,
+                title=data_content.title,
+                likes=data_content.likes,
+                link=data_content.link,
+                channel_id=data_content.code,
+                views=data_content.views,
+                system_id=data_content.system_id,
+                channel_url=data_content.channel_url,
+                publish_date=data_content.publish_date,
+                subtitles=data_content.subtitles,
                 analytics_obj=object_sn,
-                pytube_ob=data.object_youtube,
+                pytube_ob=data_content.object_youtube,
             )
         elif object_sn.content_type == "shorts":
             data = YouTubeContent(
@@ -153,42 +151,43 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                 analytics_obj=object_sn,
                 pytube_ob=data.object_youtube,
             )
+        return None
 
     async def get_data_async(self, object_sn: ResultAnalytics, clients_handlers=None):
         if object_sn.content_type == "channel":
-            data = YouTubeChannel(object_sn.url, proxy=self._proxy)
+            data_channel = YouTubeChannel(object_sn.url, proxy=self._proxy)
             return YouTubeChannelsData(
-                name=data.name,
-                link=data.link,
-                description=data.name,
-                country=data.country,
-                channel_id=data.code,
-                view_count=data.view_count,
-                subscriber=data.subscriber,
-                data_create=data.data_create,
-                number_videos=data.number_videos,
+                name=data_channel.name,
+                link=data_channel.link,
+                description=data_channel.name,
+                country=data_channel.country,
+                channel_id=data_channel.code,
+                view_count=data_channel.view_count,
+                subscriber=data_channel.subscriber,
+                data_create=data_channel.data_create,
+                number_videos=data_channel.number_videos,
                 analytics_obj=object_sn,
-                pytube_ob=data.object_channel,
+                pytube_ob=data_channel.object_channel,
             )
         elif object_sn.content_type == "video":
             try:
-                data = YouTubeContent(
+                data_content = YouTubeContent(
                     object_sn.url, proxy=self._proxy, subtitles=self._subtitles
                 )
             except Exception as ex:
                 return ex
             return YouTubeContentData(
-                title=data.title,
-                likes=data.likes,
-                link=data.link,
-                channel_id=data.code,
-                views=data.views,
-                system_id=data.system_id,
-                channel_url=data.channel_url,
-                publish_date=data.publish_date,
-                subtitles=data.subtitles,
+                title=data_content.title,
+                likes=data_content.likes,
+                link=data_content.link,
+                channel_id=data_content.code,
+                views=data_content.views,
+                system_id=data_content.system_id,
+                channel_url=data_content.channel_url,
+                publish_date=data_content.publish_date,
+                subtitles=data_content.subtitles,
                 analytics_obj=object_sn,
-                pytube_ob=data.object_youtube,
+                pytube_ob=data_content.object_youtube,
             )
         elif object_sn.content_type == "shorts":
             data = YouTubeContent(

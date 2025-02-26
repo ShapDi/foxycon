@@ -1,11 +1,8 @@
-from abc import ABC, abstractmethod
-from typing import Generator
+from abc import ABC
+
 from foxycon import StatisticianSocNet
 from foxycon.data_structures.search_types import TgStatMessage, TelegramUserData
-from foxycon.search_services.modules.algorithm_search import SearchTg
-from foxycon.search_services.modules.search_soc_net import YoutubeSearch
-from telethon import functions as functions_async
-from telethon.sync import functions
+
 
 
 class SearchStrategy(ABC):

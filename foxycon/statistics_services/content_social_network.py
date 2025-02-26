@@ -53,6 +53,7 @@ class StatisticianSocNet:
                 return InstagramStatistician
             case "telegram":
                 return TelegramStatistician
+        return None
 
     async def get_data_async(self, link):
         if self._proxy_balancer is not None:

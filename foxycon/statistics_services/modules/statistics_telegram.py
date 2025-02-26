@@ -7,13 +7,11 @@ from telethon.tl.functions.channels import JoinChannelRequest, GetParticipantReq
 
 from foxycon.data_structures.error_type import Telegram
 
-from telethon import functions as functions_async
 from telethon.sync import functions
 
 from foxycon.statistics_services.modules.statistics_instagram import (
     SocialNetworkParsingObject,
 )
-from telethon.tl.functions.channels import GetFullChannelRequest
 
 
 class TelegramPost(SocialNetworkParsingObject):
@@ -39,7 +37,7 @@ class TelegramPost(SocialNetworkParsingObject):
                         try:
                             me = client.get_me()
                             client(GetParticipantRequest(channel, me))
-                        except Exception as ex:
+                        except Exception:
                             try:
                                 client(JoinChannelRequest(channel))
                                 data["error"] = Telegram.JoinChannelRequestSend
@@ -98,7 +96,7 @@ class TelegramPost(SocialNetworkParsingObject):
                         try:
                             me = client.get_me()
                             client(GetParticipantRequest(channel, me))
-                        except Exception as ex:
+                        except Exception:
                             try:
                                 client(JoinChannelRequest(channel))
                                 data["error"] = Telegram.JoinChannelRequestSend
@@ -175,7 +173,7 @@ class TelegramGroup:
             try:
                 chat = client.get_entity((int(parts[0])))
                 participants = client.get_participants(int(parts[0]))
-            except:
+            except Exception:
                 chat = client.get_entity(parts[0])
                 participants = client.get_participants(parts[0])
             result = client(functions.channels.GetFullChannelRequest(channel=parts[0]))

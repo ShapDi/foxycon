@@ -25,4 +25,5 @@ distribution = false
 [dependency-groups]
 test = [
     "pytest>=8.3.4",
+    "mypy>=1.15.0",
 ]
