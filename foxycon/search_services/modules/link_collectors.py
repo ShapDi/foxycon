@@ -89,7 +89,6 @@ class YouTubeRecCollectorLink:
             yield list_object_statistic
 
     def get_search_generator_async(self):
-        print()
         return self.create_generator_async
 
     #
