@@ -12,6 +12,8 @@ class SearchStrategy(ABC):
     pass
 
 
+
+
 class YoutubeSearch(SearchStrategy):
     def __init__(self, statistician_socnet_object, object_statistic):
         self._statistician_socnet_object: StatisticianSocNet = (

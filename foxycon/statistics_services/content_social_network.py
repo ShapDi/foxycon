@@ -28,7 +28,6 @@ class StatisticianSocNet:
             self._proxy_balancer = None
 
         if self._telegram_account is not None:
-            print(self._telegram_account)
             self._telegram_account_balancer = TelegramBalancer(self._telegram_account)
         else:
             self._telegram_account_balancer = None
@@ -64,7 +63,6 @@ class StatisticianSocNet:
             self._telegram_account = self._telegram_account_balancer.call_next()
 
         data = self.get_basic_data(link)
-        print(data)
         class_statistics = self.get_statistician_module_strategy(data.social_network)
 
         data = await class_statistics(proxy=self._proxy).get_data_async(
