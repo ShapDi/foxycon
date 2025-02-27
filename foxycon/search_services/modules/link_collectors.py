@@ -4,22 +4,21 @@ from abc import ABC, abstractmethod
 from bs4 import BeautifulSoup
 from regex import regex
 
-from foxycon import StatisticianSocNet
 from foxycon.data_structures.statistician_type import ContentData
+from foxycon.statistics_services.content_social_network import StatisticianSocNet
 
 
-class Algorithm(ABC):
-    @staticmethod
+class CollectorLink(ABC):
     @abstractmethod
-    def create_generator():
+    def get_link(self):
         pass
 
     @abstractmethod
-    def get_search_generator(self):
+    async def get_link_async(self):
         pass
 
 
-class AlgorithmRecommendation(Algorithm):
+class YouTubeRecCollectorLink:
     def __init__(self, statistician_socnet_object, object_statistic: ContentData):
         self._statistician_socnet_object: StatisticianSocNet = (
             statistician_socnet_object
@@ -73,11 +72,11 @@ class AlgorithmRecommendation(Algorithm):
     async def get_list_object_statistic(self):
         list_object_statistic = []
         for link in self._list_link:
-            object_statistic = await self._statistician_socnet_object.get_data(link)
+            object_statistic = await self._statistician_socnet_object.get_data_async(link)
             list_object_statistic.append(object_statistic)
         return list_object_statistic
 
-    async def create_generator(self):
+    async def create_generator_async(self):
         while True:
             list_object_statistic = (
                 self._parsing_object_controller.search_statistics_object()
@@ -89,8 +88,20 @@ class AlgorithmRecommendation(Algorithm):
             self._parsing_object_controller.add_object_statistic(list_object_statistic)
             yield list_object_statistic
 
-    async def get_search_generator(self):
-        return self.create_generator
+    def get_search_generator_async(self):
+        print()
+        return self.create_generator_async
+
+    #
+    # def get_search_generator(self):
+    #     return self.create_generator_async
+
+    def get_link(self):
+        pass
+
+    @abstractmethod
+    async def get_link_async(self):
+        pass
 
 
 class ParsingObjectController:

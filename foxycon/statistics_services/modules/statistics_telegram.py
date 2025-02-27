@@ -26,9 +26,7 @@ class TelegramPost(SocialNetworkParsingObject):
                 parts = self.url.replace("https://t.me/", "").split("/")
                 channel_username, message_id = parts[0], int(parts[1])
 
-
                 # text = "winline"
-
 
                 try:
                     channel = client.get_entity(channel_username)

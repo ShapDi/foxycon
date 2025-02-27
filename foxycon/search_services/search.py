@@ -3,14 +3,17 @@ from typing import Generator
 
 from foxycon import StatisticianSocNet
 from foxycon.data_structures.search_types import TgStatMessage, TelegramUserData
+from foxycon.search_services.modules.link_collectors import YouTubeRecCollectorLink
 from foxycon.search_services.modules.search_soc_net import YoutubeSearch
 
 
 class SearchStrategy(ABC):
     pass
 
+
 class YouTubeSearch(SearchStrategy):
     pass
+
 
 class Search:
     def __init__(
@@ -58,6 +61,21 @@ class Search:
         return generator_socnet_object
 
 
+class YouTubeSearch1:
+    def __init__(self, statistician_object: StatisticianSocNet):
+        self.statistician_object = statistician_object
+
+    def search_recommendation(self):
+        pass
+
+    async def search_recommendation_async(self, link):
+        data_youtube = await self.statistician_object.get_data_async(link)
+        return YouTubeRecCollectorLink(
+            statistician_socnet_object=self.statistician_object,
+            object_statistic=data_youtube,
+        ).get_search_generator_async()
+
+
 class TelegramSearch(SearchStrategy):
     def __init__(self, statistician_object: StatisticianSocNet):
         self.statistician_object = statistician_object
@@ -72,8 +90,16 @@ class TelegramSearch(SearchStrategy):
         print(client)
         async with client as client:
             base = []
-            async for message in client.iter_messages(data.analytics_obj.code, search=text):
-                ms = TgStatMessage(telegram_chat_data = data , link_message= f"{data.analytics_obj.url}/{message.id}" , date_publication=message.date ,message= message.message,views=message.views)
+            async for message in client.iter_messages(
+                data.analytics_obj.code, search=text
+            ):
+                ms = TgStatMessage(
+                    telegram_chat_data=data,
+                    link_message=f"{data.analytics_obj.url}/{message.id}",
+                    date_publication=message.date,
+                    message=message.message,
+                    views=message.views,
+                )
                 base.append(ms)
                 print(ms)
             return base
@@ -88,6 +114,13 @@ class TelegramSearch(SearchStrategy):
                 participants = await client.get_participants(parts[0])
             users = []
             for user in participants:
-                users.append(TelegramUserData(user_id=user.id, bot=user.bot, username=user.username, first_name=user.first_name, last_name=user.last_name))
+                users.append(
+                    TelegramUserData(
+                        user_id=user.id,
+                        bot=user.bot,
+                        username=user.username,
+                        first_name=user.first_name,
+                        last_name=user.last_name,
+                    )
+                )
             return users
-

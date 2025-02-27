@@ -58,9 +58,6 @@ class InstagramContentData(ContentData):
     author: InstagramPageData
 
 
-
-
-
 @dataclass
 class TelegramPostData(ContentData):
     text: str

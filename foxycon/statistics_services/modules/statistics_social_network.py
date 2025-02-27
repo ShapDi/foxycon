@@ -98,7 +98,9 @@ class YouTubeStatistician(StatisticianModuleStrategy):
                 "https": self._proxy,
             }
 
-    def get_data(self, object_sn: ResultAnalytics, clients_handlers=None) -> None | YouTubeContentData | YouTubeChannelsData | Exception:
+    def get_data(
+        self, object_sn: ResultAnalytics, clients_handlers=None
+    ) -> None | YouTubeContentData | YouTubeChannelsData | Exception:
         if object_sn.content_type == "channel":
             data_channel = YouTubeChannel(object_sn.url, proxy=self._proxy)
             return YouTubeChannelsData(

@@ -6,11 +6,12 @@ from foxycon.data_structures.statistician_type import TelegramChatData
 
 @dataclass
 class TgStatMessage:
-    telegram_chat_data:TelegramChatData
-    link_message:str
+    telegram_chat_data: TelegramChatData
+    link_message: str
     date_publication: datetime
     message: str
     views: int
+
 
 @dataclass
 class TelegramUserData:

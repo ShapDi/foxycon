@@ -12,7 +12,6 @@ from foxycon.data_structures.analysis_type import ResultAnalytics
 
 
 class ContentAnalyzer:
-
     @staticmethod
     def get_social_network_object(link: str) -> Type[AnalyzerModuleStrategy] | None:
         pars_link = urllib.parse.urlparse(link)
