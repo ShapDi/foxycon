@@ -112,11 +112,12 @@ class TelegramPost(SocialNetworkParsingObject):
 
                     try:
                         message = await client.get_messages(channel, ids=message_id)
+                        print(message)
                         if message:
                             data["views"] = message.views
                             data["text"] = message.text
                             data["channel_id"] = message.peer_id.channel_id
-                            data["date"] = message.peer_id.date
+                            data["date"] = message.date
                             return data
                         else:
                             data["error"] = Telegram.PostNotFound
@@ -156,7 +157,6 @@ class TelegramGroup:
             result = await client(
                 functions.channels.GetFullChannelRequest(channel=parts[0])
             )
-
             data = {
                 "chat_id": chat.id,
                 "title": chat.title,

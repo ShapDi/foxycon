@@ -27,7 +27,7 @@ class ProxyBalancer(Balancer):
     def get_element(self, bal_obj):
         bal_obj["num_requests"] = bal_obj["num_requests"] - 1
         self.balancing_objects.insert(0, bal_obj)
-        time.sleep(random.randrange(2, 6, 1))
+        time.sleep(random.randrange(2, 4, 1))
         return bal_obj.get("balanc_ob")
 
     def call_next(self):

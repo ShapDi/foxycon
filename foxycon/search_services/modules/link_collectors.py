@@ -81,8 +81,9 @@ class YouTubeRecCollectorLink:
             list_object_statistic = (
                 self._parsing_object_controller.search_statistics_object()
             )
-            self._list_link = self.get_soup_json_object(list_object_statistic[0])
 
+            self._list_link = self.get_soup_json_object(list_object_statistic[0])
+            print(self._list_link)
             list_object_statistic_data = await self.get_list_object_statistic()
             list_object_statistic[1] = list_object_statistic_data
             self._parsing_object_controller.add_object_statistic(list_object_statistic)
@@ -93,7 +94,7 @@ class YouTubeRecCollectorLink:
 
     #
     # def get_search_generator(self):
-    #     return self.create_generator_async
+    #     return self.create_generator
 
     def get_link(self):
         pass
