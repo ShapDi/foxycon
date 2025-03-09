@@ -60,9 +60,11 @@ class InstagramContentData(ContentData):
 
 @dataclass
 class TelegramPostData(ContentData):
+    chat_id: int
     text: str
     views: int
     date: datetime
+
 
 
 @dataclass

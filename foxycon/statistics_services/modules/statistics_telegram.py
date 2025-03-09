@@ -116,7 +116,7 @@ class TelegramPost(SocialNetworkParsingObject):
                         if message:
                             data["views"] = message.views
                             data["text"] = message.text
-                            data["channel_id"] = message.peer_id.channel_id
+                            data["chat_id"] = message.peer_id.channel_id
                             data["date"] = message.date
                             return data
                         else:
