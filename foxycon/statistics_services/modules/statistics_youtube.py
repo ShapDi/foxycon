@@ -62,7 +62,10 @@ class YouTubeChannel(RecipientYouTubeAbstract):
         soup = BeautifulSoup(self._object_channel.about_html, "html.parser")
         script = soup.find_all("script")
         data = self.extract_json(script)
-        return data[4].get("onResponseReceivedEndpoints")
+        try:
+            return data[4].get("onResponseReceivedEndpoints")
+        except:
+            return data[3].get("onResponseReceivedEndpoints")
 
     def get_country(self):
         data = self.get_base_con()
