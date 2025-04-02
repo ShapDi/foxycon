@@ -11,8 +11,22 @@ class SearchStrategy(ABC):
     pass
 
 
-class YouTubeSearch(SearchStrategy):
-    pass
+class Search:
+    def __init__(self, statistician_object: StatisticianSocNet):
+        self.statistician_object = statistician_object
+
+    def youtube_search_recommendation(self):
+        pass
+
+    async def youtube_search_recommendation_async(self, link):
+        data_youtube = await self.statistician_object.get_data_async(link)
+        return YouTubeRecCollectorLink(
+            statistician_socnet_object=self.statistician_object,
+            object_statistic=data_youtube,
+        ).get_search_generator_async()
+
+
+
 
 
 class Search:
@@ -61,7 +75,7 @@ class Search:
         return generator_socnet_object
 
 
-class YouTubeSearch1:
+class YouTubeSearch:
     def __init__(self, statistician_object: StatisticianSocNet):
         self.statistician_object = statistician_object
 
