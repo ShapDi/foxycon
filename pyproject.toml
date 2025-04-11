@@ -5,7 +5,7 @@ build-backend = "pdm.backend"
 [project]
 name = "foxycon"
 version = "0.3.2"
-description = "Default template for PDM package"
+description = "python is a library that performs the tasks of parsing data from social networks with an emphasis on statistics"
 authors = [
     {name = "shapranov dmitrii", email = "shapranov.work@gmail.com"},
 ]
@@ -20,7 +20,7 @@ dev = [
     "ruff>=0.8.1",
 ]
 [tool.pdm]
-distribution = false
+distribution = true
 
 [dependency-groups]
 test = [

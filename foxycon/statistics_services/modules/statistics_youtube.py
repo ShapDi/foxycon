@@ -41,6 +41,7 @@ class YouTubeChannel(RecipientYouTubeAbstract):
 
     @staticmethod
     def get_object_youtube(link, proxies) -> Channel:
+        print(proxies)
         channel = Channel(link, "WEB", proxies, use_po_token=True)
         channel = Channel(channel.featured_url, "WEB", proxies, use_po_token=True)
         return channel
