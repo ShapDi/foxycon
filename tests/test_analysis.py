@@ -102,17 +102,6 @@ def test_instagram_reel():
     )
 
 
-def test_google_drive():
-    assert ca.get_data(
-        "https://drive.google.com/file/d/1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs/view?usp=sharing"
-    ) == ResultAnalytics(
-        url="https://drive.google.com/file/d/1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs/view",
-        social_network="google_drive",
-        content_type="meet",
-        code="1-RlcfHoyOnnxVa-aMks7nq-ex3Cy5lCs",
-    )
-
-
 def test_telegram_channel():
     assert ca.get_data("https://t.me/gregjgeek") == ResultAnalytics(
         url="https://t.me/gregjgeek",

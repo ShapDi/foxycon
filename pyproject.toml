@@ -27,4 +27,7 @@ test = [
     "pytest>=8.3.4",
     "mypy>=1.15.0",
 ]
+docs = [
+    "mkdocs-material>=9.6.12",
+]
 

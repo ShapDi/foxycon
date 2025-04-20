@@ -1,7 +1,6 @@
 # **Foxycon**
 
-This project is conceived as a universal platform for parsing statistical data from various subjects, as well as for the formation of automated search methods for the accumulation of this data in personal databases.
-
+This is a python library that aims to create a universal tool for analyzing statistical data from various social media objects and creating algorithms for searching and accumulating these objectsThis is a python library that aims to create a universal tool for analyzing statistical data from various social media objects and creating algorithms for searching and accumulating these objects
 ---
 
 ## **Supported Parameters**

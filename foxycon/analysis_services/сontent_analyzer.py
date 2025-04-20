@@ -4,7 +4,6 @@ from typing import Type
 from foxycon.analysis_services.analysis_modules import (
     AnalyzerModuleStrategy,
     YouTubeAnalyzer,
-    GoogleDriveAnalyzer,
     InstagramAnalyzer,
     TelegramAnalyzer,
 )
@@ -24,8 +23,6 @@ class ContentAnalyzer:
                 return YouTubeAnalyzer
             case "www.instagram.com":
                 return InstagramAnalyzer
-            case "drive.google.com":
-                return GoogleDriveAnalyzer
             case "t.me":
                 return TelegramAnalyzer
         return None
