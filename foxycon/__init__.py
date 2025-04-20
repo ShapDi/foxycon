@@ -4,6 +4,14 @@ from foxycon.statistics_services.content_social_network import (
 from foxycon.analysis_services.сontent_analyzer import (
     ContentAnalyzer as ContentAnalyzer,
 )
-# from foxycon.search_services.search import Search as Search
+from foxycon.search_services.search import Search, SearchBuilder
 
-__all__ = ["ContentAnalyzer", "StatisticianSocNet"]
+from foxycon.search_services.algorithms import YouTubeAlgorithmRecommendation
+
+__all__ = [
+    "ContentAnalyzer",
+    "StatisticianSocNet",
+    "Search",
+    "SearchBuilder",
+    "YouTubeAlgorithmRecommendation",
+]

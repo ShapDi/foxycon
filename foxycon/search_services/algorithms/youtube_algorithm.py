@@ -1,30 +1,27 @@
 import json
-from abc import ABC, abstractmethod
 
 from bs4 import BeautifulSoup
 from regex import regex
+from typing_extensions import override
 
 from foxycon.data_structures.statistician_type import ContentData
+from foxycon.search_services.algorithms.algorithm_interface import SearchAlgorithm
 from foxycon.statistics_services.content_social_network import StatisticianSocNet
 
 
-class CollectorLink(ABC):
-    @abstractmethod
-    def get_link(self):
-        pass
+class YouTubeAlgorithmRecommendation(SearchAlgorithm):
+    def __init__(self, link_start: str):
+        self._link_start = link_start
+        self._statistician_socnet_object = None
+        self._parsing_object_controller = None
+        self._list_link = None
 
-    @abstractmethod
-    async def get_link_async(self):
-        pass
-
-
-class YouTubeRecCollectorLink:
-    def __init__(self, statistician_socnet_object, object_statistic: ContentData):
-        self._statistician_socnet_object: StatisticianSocNet = (
-            statistician_socnet_object
-        )
-        self._object_statistic = object_statistic
+    @override
+    def init_statistic_engine(self, statistician_socnet_object: StatisticianSocNet):
+        object_statistic = statistician_socnet_object.get_data(self._link_start)
+        self._statistician_socnet_object = statistician_socnet_object
         self._parsing_object_controller = ParsingObjectController(object_statistic)
+        return self
 
     @staticmethod
     def extract_json(text):
@@ -69,41 +66,29 @@ class YouTubeRecCollectorLink:
                 )
         return list_link
 
-    async def get_list_object_statistic(self):
+    def get_list_object_statistic(self):
         list_object_statistic = []
         for link in self._list_link:
-            object_statistic = await self._statistician_socnet_object.get_data_async(link)
+            object_statistic = self._statistician_socnet_object.get_data(link)
             list_object_statistic.append(object_statistic)
         return list_object_statistic
 
-    async def create_generator_async(self):
+    @override
+    def create_generator(self):
         while True:
             list_object_statistic = (
                 self._parsing_object_controller.search_statistics_object()
             )
 
             self._list_link = self.get_soup_json_object(list_object_statistic[0])
-            print(self._list_link)
-            list_object_statistic_data = await self.get_list_object_statistic()
-            print(list_object_statistic)
+            list_object_statistic_data = self.get_list_object_statistic()
             list_object_statistic[1] = list_object_statistic_data
             self._parsing_object_controller.add_object_statistic(list_object_statistic)
-            print(self._parsing_object_controller)
             yield list_object_statistic
 
-    def get_search_generator_async(self):
-        return self.create_generator_async
-
-    #
-    # def get_search_generator(self):
-    #     return self.create_generator
-
-    def get_link(self):
-        pass
-
-    @abstractmethod
-    async def get_link_async(self):
-        pass
+    @override
+    def get_search_generator(self):
+        return self.create_generator
 
 
 class ParsingObjectController:
@@ -115,9 +100,7 @@ class ParsingObjectController:
 
     def search_statistics_object(self):
         if not self._search_structure:
-            return (
-                None  # Return None if _search_structure is empty to prevent IndexError
-            )
+            return None
 
         object_statistic_list = self._search_structure.pop(0)
         if object_statistic_list[1] is None:
@@ -128,7 +111,6 @@ class ParsingObjectController:
             return self.search_statistics_object()
 
     def add_object_statistic(self, object_statistic_list: list):
-        print(self._search_structure)
         self._search_structure.append(object_statistic_list)
 
     def changing_search_structure(self):

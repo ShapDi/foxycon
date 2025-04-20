@@ -66,7 +66,6 @@ class TelegramPostData(ContentData):
     date: datetime
 
 
-
 @dataclass
 class TelegramChatData(ContentData):
     chat_id: int

@@ -242,7 +242,11 @@ class TelegramStatistician(StatisticianModuleStrategy):
                 object_sn.url, clients_handlers
             ).get_statistics_async()
             return TelegramPostData(
-                analytics_obj=object_sn, chat_id=data.get("chat_id"),text=data.get("text"), views=data.get("views"), date=data.get('date'),
+                analytics_obj=object_sn,
+                chat_id=data.get("chat_id"),
+                text=data.get("text"),
+                views=data.get("views"),
+                date=data.get("date"),
             )
         else:
             data = await TelegramGroup(
@@ -253,4 +257,5 @@ class TelegramStatistician(StatisticianModuleStrategy):
                 chat_id=data.get("chat_id"),
                 title=data.get("title"),
                 participants_count=data.get("participants_count"),
-                date_create=data.get("date_create"))
+                date_create=data.get("date_create"),
+            )
