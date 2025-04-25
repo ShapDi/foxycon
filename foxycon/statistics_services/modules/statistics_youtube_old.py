@@ -7,11 +7,12 @@ from pytubefix import YouTube, Channel
 from bs4 import BeautifulSoup
 from regex import regex
 
-from .interface_statistics_module import StatisticianModuleStrategy
-from ...data_structures.statistician_type import YouTubeChannelsData, YouTubeContentData
+
+class RecipientYouTubeAbstract(ABC):
+    pass
 
 
-class YouTubeChannel(StatisticianModuleStrategy):
+class YouTubeChannel(RecipientYouTubeAbstract):
     def __init__(self, link, proxy=None):
         self._link = link
         self._proxy = proxy
@@ -190,39 +191,9 @@ class YouTubeChannel(StatisticianModuleStrategy):
     def object_channel(self):
         return self._object_channel
 
-    def get_data(self, object_sn, clients_handlers=None):
-        return YouTubeChannelsData(
-            name=self.name,
-            link=self.link,
-            description=self.name,
-            country=self.country,
-            channel_id=self.code,
-            view_count=self.view_count,
-            subscriber=self.subscriber,
-            data_create=self.data_create,
-            number_videos=self.number_videos,
-            analytics_obj=object_sn,
-            pytube_ob=self.object_channel,
-        )
 
-    async def get_data_async(self, object_sn, clients_handlers=None):
-        return YouTubeChannelsData(
-            name=self.name,
-            link=self.link,
-            description=self.name,
-            country=self.country,
-            channel_id=self.code,
-            view_count=self.view_count,
-            subscriber=self.subscriber,
-            data_create=self.data_create,
-            number_videos=self.number_videos,
-            analytics_obj=object_sn,
-            pytube_ob=self.object_channel,
-        )
-
-
-class YouTubeContent(StatisticianModuleStrategy):
-    def __init__(self, link, proxy=None):
+class YouTubeContent(RecipientYouTubeAbstract):
+    def __init__(self, link, proxy=None, subtitles=None):
         self._proxy = proxy
         self._object_youtube = self.get_object_youtube(link, self._proxy)
         self.title = self._object_youtube.title
@@ -233,6 +204,14 @@ class YouTubeContent(StatisticianModuleStrategy):
         self.system_id = self._object_youtube.video_id
         self.channel_url = self._object_youtube.channel_url
         self.publish_date = self._object_youtube.publish_date
+
+        if subtitles:
+            try:
+                self.subtitles = self.get_subtitles(self._object_youtube)[1]
+            except Exception:
+                self.subtitles = None
+        else:
+            self.subtitles = None
 
     @staticmethod
     def get_object_youtube(link, proxy) -> YouTube:
@@ -271,79 +250,6 @@ class YouTubeContent(StatisticianModuleStrategy):
     @property
     def object_youtube(self):
         return self._object_youtube
-
-    def get_data(self, object_sn, clients_handlers=None):
-        return YouTubeContentData(
-            title=self.title,
-            likes=self.likes,
-            link=self.link,
-            channel_id=self.code,
-            views=self.views,
-            system_id=self.system_id,
-            channel_url=self.channel_url,
-            publish_date=self.publish_date,
-            subtitles=self.subtitles,
-            analytics_obj=object_sn,
-            pytube_ob=self.object_youtube,
-        )
-
-    async def get_data_async(self, object_sn, clients_handlers=None):
-        return YouTubeContentData(
-            title=self.title,
-            likes=self.likes,
-            link=self.link,
-            channel_id=self.code,
-            views=self.views,
-            system_id=self.system_id,
-            channel_url=self.channel_url,
-            publish_date=self.publish_date,
-            subtitles=self.subtitles,
-            analytics_obj=object_sn,
-            pytube_ob=self.object_youtube,
-        )
-
-
-class Convert:
-    @staticmethod
-    def convert_views_to_int(views_str: str) -> int:
-        try:
-            clean_str = views_str.replace(",", "").replace(" views", "").strip()
-            return int(clean_str)
-        except Exception:
-            return 0
-
-    @staticmethod
-    def convert_subscribers_to_int(subscribers_str: str) -> int:
-        clean_str = subscribers_str.replace(" subscribers", "").strip()
-
-        if "K" in clean_str:
-            return int(float(clean_str.replace("K", "")) * 1000)
-        elif "M" in clean_str:
-            return int(float(clean_str.replace("M", "")) * 1000000)
-        else:
-            return int(clean_str)
-
-    @staticmethod
-    def convert_number_videos(number_videos: str) -> int:
-        try:
-            return int(number_videos.split(" ")[0])
-        except ValueError:
-            long_int = number_videos.split(" ")[0].split(",")
-            return int(f"{long_int[0]}{long_int[1]}")
-        except Exception:
-            return 0
-
-    @staticmethod
-    def convert_data_create(data_create: str) -> datetime.date:
-        date_part = data_create.replace("Joined ", "")
-        joined_date = datetime.strptime(date_part, "%b %d, %Y").date()
-        return joined_date
-
-    def get_data(self, object_sn, clients_handlers=None):
-        pass
-
-    async def get_data_async(self, object_sn, clients_handlers=None):
-        pass
 
 
 class Convert:

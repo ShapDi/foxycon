@@ -1,15 +1,23 @@
 import inspect
 
-from typing import Callable, Type
+from typing import Callable, Type, Union
 
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
+from foxycon.data_structures.analysis_type import ResultAnalytics
+from foxycon.data_structures.statistician_type import (
+    YouTubeContentData,
+    YouTubeChannelsData,
+    TelegramPostData,
+    TelegramChatData,
+    InstagramContentData,
+)
 from foxycon.statistics_services.modules.statistics_social_network import (
     StatisticianModuleStrategy,
-    TelegramStatistician,
-    YouTubeStatistician,
-    InstagramStatistician,
 )
+from .modules.statistics_telegram import TelegramGroup
+from .modules.statistics_youtube import YouTubeChannel, YouTubeContent
 from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer
+from .statistics_exceptions import RequiredTelegramAccount
 
 
 class StatisticianSocNet:
@@ -41,20 +49,43 @@ class StatisticianSocNet:
         data = ContentAnalyzer().get_data(link)
         return data
 
-    @staticmethod
+    # @staticmethod
+    # def get_statistician_module_strategy(
+    #     social_network: str,
+    # ) -> Type[StatisticianModuleStrategy] | None:
+    #     match social_network:
+    #         case "youtube":
+    #             return YouTubeStatistician
+    #         case "instagram":
+    #             return InstagramStatistician
+    #         case "telegram":
+    #             return TelegramStatistician
+    #     return None
+
     def get_statistician_module_strategy(
-        social_network: str,
+        self,
+        social_network: ResultAnalytics,
     ) -> Type[StatisticianModuleStrategy] | None:
-        match social_network:
-            case "youtube":
-                return YouTubeStatistician
-            case "instagram":
-                return InstagramStatistician
-            case "telegram":
-                return TelegramStatistician
+        match (social_network.social_network, social_network.content_type):
+            case ("youtube", "video"):
+                return YouTubeContent
+            case ("youtube", "channel"):
+                return YouTubeChannel
+            case ("telegram", "channel"):
+                if self._telegram_account is None:
+                    raise RequiredTelegramAccount()
+                return TelegramGroup
         return None
 
-    async def get_data_async(self, link):
+    async def get_data_async(
+        self, link
+    ) -> Union[
+        YouTubeContentData,
+        YouTubeChannelsData,
+        InstagramContentData,
+        TelegramPostData,
+        TelegramChatData,
+    ]:
         if self._proxy_balancer is not None:
             self._proxy = self._proxy_balancer.call_next()
 
@@ -62,15 +93,23 @@ class StatisticianSocNet:
             await self._telegram_account_balancer.init_call_async()
             self._telegram_account = self._telegram_account_balancer.call_next()
 
-        data = self.get_basic_data(link)
-        class_statistics = self.get_statistician_module_strategy(data.social_network)
+        link_analytics = self.get_basic_data(link)
+        class_statistics = self.get_statistician_module_strategy(link_analytics)
 
         data = await class_statistics(proxy=self._proxy).get_data_async(
-            data, clients_handlers=self._telegram_account
+            link_analytics, clients_handlers=self._telegram_account
         )
         return data
 
-    def get_data(self, link):
+    def get_data(
+        self, link
+    ) -> Union[
+        YouTubeContentData,
+        YouTubeChannelsData,
+        InstagramContentData,
+        TelegramPostData,
+        TelegramChatData,
+    ]:
         if self._proxy_balancer is not None:
             self._proxy = self._proxy_balancer.call_next()
 
@@ -78,12 +117,12 @@ class StatisticianSocNet:
             self._telegram_account_balancer.init_call()
             self._telegram_account = self._telegram_account_balancer.call_next()
 
-        data = self.get_basic_data(link)
+        link_analytics = self.get_basic_data(link)
 
-        class_statistics = self.get_statistician_module_strategy(data.social_network)
+        class_statistics = self.get_statistician_module_strategy(link_analytics)
 
         data = class_statistics(proxy=self._proxy, subtitles=self._subtitles).get_data(
-            data, clients_handlers=self._telegram_account
+            link_analytics, clients_handlers=self._telegram_account
         )
 
         return data

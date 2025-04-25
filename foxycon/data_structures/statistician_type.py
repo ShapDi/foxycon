@@ -14,11 +14,11 @@ class YouTubeContentData(ContentData):
     system_id: str
     channel_id: str
     title: str
-    likes: str
+    likes: int
     link: str
-    views: str
+    views: int
     channel_url: str
-    publish_date: str
+    publish_date: datetime
     subtitles: str
     pytube_ob: YouTube
 

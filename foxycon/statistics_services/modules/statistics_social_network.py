@@ -9,8 +9,9 @@ from foxycon.data_structures.statistician_type import (
     TelegramPostData,
     TelegramChatData,
 )
+from .interface_statistics_module import StatisticianModuleStrategy
 from foxycon.statistics_services.modules.statistics_instagram import InstagramReels
-from foxycon.statistics_services.modules.statistics_youtube import (
+from foxycon.statistics_services.modules.statistics_youtube_old import (
     YouTubeChannel,
     YouTubeContent,
 )
@@ -20,18 +21,18 @@ from foxycon.statistics_services.modules.statistics_telegram import (
 )
 
 
-class StatisticianModuleStrategy(ABC):
-    def __init__(self, proxy=None, subtitles=None):
-        self._proxy = proxy
-        self._subtitles = subtitles
-
-    @abstractmethod
-    def get_data(self, object_sn, clients_handlers=None):
-        pass
-
-    @abstractmethod
-    async def get_data_async(self, object_sn, clients_handlers=None):
-        pass
+# class StatisticianModuleStrategy(ABC):
+#     def __init__(self, proxy=None, subtitles=None):
+#         self._proxy = proxy
+#         self._subtitles = subtitles
+#
+#     @abstractmethod
+#     def get_data(self, object_sn, clients_handlers=None):
+#         pass
+#
+#     @abstractmethod
+#     async def get_data_async(self, object_sn, clients_handlers=None):
+#         pass
 
 
 class InstagramStatistician(StatisticianModuleStrategy):
