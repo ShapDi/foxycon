@@ -24,7 +24,6 @@ class SearchBuilder:
     def with_statistics_engine(self, statistics_engine: StatisticianSocNet):
         self._list_statistics_engine.append(statistics_engine)
 
-
     def with_search_algorithm(self, search_algorithm: SearchAlgorithm):
         self._list_search_algorithm.append(search_algorithm)
 

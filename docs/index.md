@@ -4,15 +4,43 @@ foxycon - This is a python library that aims to create a universal tool for anal
 
 ## **Basic usage**
 
-### Using ContentAnalyzer 
+## Using StatisticianSocNet
+
+StatisticianSocNet class that is a universal way to collect data from social platforms
+
+### StatisticianSocNet supports
+* YouTube Channels  
+* YouTube Shorts  
+* YouTube Videos  
+* Instagram Reels  
+
+## Using ContentAnalyzer
 
 ContentAnalyzer is a class that represents a universal way to classify links social platforms
 
-#### 🛠️ ContentAnalyzer supports
-1. YouTube Channels  
-2. YouTube Shorts  
-3. YouTube Videos  
-4. Instagram Pages  
-5. Instagram Reels  
-6. Telegram Post 
-7. Telegram Chat
+### ContentAnalyzer supports
+* YouTube Channels  
+* YouTube Shorts  
+* YouTube Videos  
+* Instagram Pages  
+* Instagram Reels  
+* Telegram Post 
+* Telegram Chat
+
+```python
+from foxycon import ContentAnalyzer
+
+ca = ContentAnalyzer()
+
+ca.get_data("https://www.youtube.com/watch?v=6fty5yB7bFo")
+```
+### **output**
+
+```python
+
+ResultAnalytics(url='https://youtube.com/watch?v=6fty5yB7bFo', 
+                social_network='youtube', 
+                content_type='video', 
+                code='6fty5yB7bFo')
+
+```

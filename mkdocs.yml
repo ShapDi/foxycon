@@ -1,4 +1,19 @@
 site_name: foxycon
 theme:
-  name: material
+    name: 'material'
+    palette:
+      - scheme: 'default'
+        media: '(prefers-color-scheme: light)'
+        primary: 'red'
+        toggle:
+          icon: 'material/lightbulb'
+          name: "Switch to dark mode"
+      - scheme: 'slate'
+        media: '(prefers-color-scheme: dark)'
+        primary: 'red'
+        toggle:
+          icon: 'material/lightbulb-outline'
+          name: 'Switch to light mode'
 nav:
+    - Introduction: 'index.md'
+    - Link Analysis: 'link_analysis.md'
