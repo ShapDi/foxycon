@@ -2,14 +2,10 @@ from abc import ABC, abstractmethod
 
 
 class StatisticianModuleStrategy(ABC):
-    # def __init__(self, proxy=None, subtitles=None):
-    #     self._proxy = proxy
-    #     self._subtitles = subtitles
-
     @abstractmethod
-    def get_data(self, object_sn, clients_handlers=None):
+    def get_data(self):
         pass
 
     @abstractmethod
-    async def get_data_async(self, object_sn, clients_handlers=None):
+    async def get_data_async(self):
         pass

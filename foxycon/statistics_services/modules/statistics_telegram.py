@@ -9,24 +9,20 @@ from foxycon.data_structures.error_type import Telegram
 
 from telethon.sync import functions
 
-from foxycon.statistics_services.modules.statistics_instagram import (
-    SocialNetworkParsingObject,
-)
+from .interface_statistics_module import StatisticianModuleStrategy
 
 
-class TelegramPost(SocialNetworkParsingObject):
+class TelegramPost(StatisticianModuleStrategy):
     def __init__(self, url: str, clients_handler):
         self.url = url
         self.client = clients_handler
 
-    def get_statistics(self):
+    def get_data(self):
         data = {}
         try:
             with self.client as client:
                 parts = self.url.replace("https://t.me/", "").split("/")
                 channel_username, message_id = parts[0], int(parts[1])
-
-                # text = "winline"
 
                 try:
                     channel = client.get_entity(channel_username)
@@ -81,7 +77,7 @@ class TelegramPost(SocialNetworkParsingObject):
             data["error_message"] = e
             return data
 
-    async def get_statistics_async(self):
+    async def get_data_async(self):
         data = {}
         try:
             async with self.client as client:
@@ -142,12 +138,12 @@ class TelegramPost(SocialNetworkParsingObject):
             return data
 
 
-class TelegramGroup:
+class TelegramGroup(StatisticianModuleStrategy):
     def __init__(self, url: str, clients_handler):
         self.url = url
         self.client = clients_handler
 
-    async def get_statistics_async(self):
+    async def get_data_async(self):
         async with self.client as client:
             parts = self.url.replace("https://t.me/", "").split("/")
             try:
@@ -165,7 +161,7 @@ class TelegramGroup:
             }
             return data
 
-    def get_statistics(self):
+    def get_data(self):
         with self.client as client:
             parts = self.url.replace("https://t.me/", "").split("/")
             try:

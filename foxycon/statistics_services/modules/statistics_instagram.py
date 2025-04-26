@@ -3,18 +3,10 @@ from abc import ABC, abstractmethod
 
 from instagram_tail import InstagramApi
 
-
-class SocialNetworkParsingObject(ABC):
-    @abstractmethod
-    def get_statistics(self):
-        pass
-
-    @abstractmethod
-    async def get_statistics_async(self):
-        pass
+from .interface_statistics_module import StatisticianModuleStrategy
 
 
-class InstagramReels(SocialNetworkParsingObject):
+class InstagramReels(StatisticianModuleStrategy):
     def __init__(self, link, proxy):
         self._link = link
         self._proxy = proxy
@@ -27,13 +19,13 @@ class InstagramReels(SocialNetworkParsingObject):
         else:
             return None
 
-    def get_statistics(self):
+    def get_data(self):
         client = InstagramApi().get_client()
         code = self.get_code(self._link)
         data = client(proxy=self._proxy).reel(code)
         return data
 
-    async def get_statistics_async(self):
+    async def get_data_async(self):
         client = InstagramApi().get_client()
         code = self.get_code(self._link)
         data = client(proxy=self._proxy).reel(code)

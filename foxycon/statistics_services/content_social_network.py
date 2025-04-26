@@ -21,13 +21,20 @@ from .statistics_exceptions import RequiredTelegramAccount
 
 
 class StatisticianSocNet:
+    def __init__(self, proxy: list[str] | None = None):
+        self._proxy = proxy
+
+
+class StatisticianSocNetOld:
     def __init__(
-        self, proxy=None, file_settings=None, telegram_account=None, subtitles=None
+        self,
+        proxy=None,
+        file_storage: str | None = None,
+        telegram_account=None,
     ):
         self._proxy = proxy
         self._telegram_account = telegram_account
 
-        self._subtitles = subtitles
         self._file_settings = file_settings
 
         if self._proxy is not None:
@@ -49,20 +56,7 @@ class StatisticianSocNet:
         data = ContentAnalyzer().get_data(link)
         return data
 
-    # @staticmethod
-    # def get_statistician_module_strategy(
-    #     social_network: str,
-    # ) -> Type[StatisticianModuleStrategy] | None:
-    #     match social_network:
-    #         case "youtube":
-    #             return YouTubeStatistician
-    #         case "instagram":
-    #             return InstagramStatistician
-    #         case "telegram":
-    #             return TelegramStatistician
-    #     return None
-
-    def get_statistician_module_strategy(
+    def get_statistician_object(
         self,
         social_network: ResultAnalytics,
     ) -> Type[StatisticianModuleStrategy] | None:
@@ -71,7 +65,7 @@ class StatisticianSocNet:
                 return YouTubeContent
             case ("youtube", "channel"):
                 return YouTubeChannel
-            case ("telegram", "channel"):
+            case ("telegram", "chat"):
                 if self._telegram_account is None:
                     raise RequiredTelegramAccount()
                 return TelegramGroup

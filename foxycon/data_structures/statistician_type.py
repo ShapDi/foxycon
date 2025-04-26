@@ -19,7 +19,6 @@ class YouTubeContentData(ContentData):
     views: int
     channel_url: str
     publish_date: datetime
-    subtitles: str
     pytube_ob: YouTube
 
 
