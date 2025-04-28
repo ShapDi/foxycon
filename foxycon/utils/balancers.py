@@ -5,7 +5,9 @@ from abc import ABC, abstractmethod
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 
-from foxycon.data_structures.utils_type import TelegramAccount
+# from foxycon.data_structures.utils_type import TelegramAccount, Proxy
+
+from foxycon.data_structures.balancer_type import Proxy, InstagramAccount, TelegramAccount
 from foxycon.utils.storage_manager import StorageManager
 
 
@@ -14,8 +16,55 @@ class Balancer(ABC):
     def call_next(self):
         pass
 
-
 class ProxyBalancer(Balancer):
+    def __init__(self, balancing_objects: list[Proxy]):
+        self._balancing_objects = []
+
+        for balancing_object in balancing_objects:
+            if balancing_object.num_requests is None:
+                balancing_object.num_requests = self.get_number_requests()
+            self._balancing_objects = balancing_object
+
+    @staticmethod
+    def get_number_requests():
+        return random.randrange(2, 4, 1)
+
+    def call_next(self):
+        pass
+
+class InstagramBalancer(Balancer):
+    def __init__(self, balancing_objects: list[InstagramAccount]):
+        self._balancing_objects = []
+
+        for balancing_object in balancing_objects:
+            if balancing_object.num_requests is None:
+                balancing_object.num_requests = self.get_number_requests()
+            self._balancing_objects = balancing_object
+
+    @staticmethod
+    def get_number_requests():
+        return random.randrange(2, 4, 1)
+
+    def call_next(self):
+        pass
+
+class TelegramBalancer(Balancer):
+    def __init__(self, balancing_objects: list[TelegramAccount]):
+        self._balancing_objects = []
+
+        for balancing_object in balancing_objects:
+            if balancing_object.num_requests is None:
+                balancing_object.num_requests = self.get_number_requests()
+            self._balancing_objects = balancing_object
+
+    @staticmethod
+    def get_number_requests():
+        return random.randrange(2, 4, 1)
+
+    def call_next(self):
+        pass
+
+class ProxyBalancerOld(Balancer):
     def __init__(self, balancing_objects: list):
         self.balancing_objects = []
 
@@ -23,6 +72,10 @@ class ProxyBalancer(Balancer):
             self.balancing_objects.append(
                 {"balanc_ob": balanc_ob, "num_requests": self.get_number_requests()}
             )
+
+    @staticmethod
+    def get_number_requests():
+        return random.randrange(2, 5, 1)
 
     def get_element(self, bal_obj):
         bal_obj["num_requests"] = bal_obj["num_requests"] - 1
@@ -44,7 +97,7 @@ class ProxyBalancer(Balancer):
         return random.randrange(2, 5, 1)
 
 
-class TelegramBalancer:
+class TelegramBalancerOld:
     init_status = False
 
     def __init__(self, balancing_objects: list):

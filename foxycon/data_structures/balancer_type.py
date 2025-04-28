@@ -12,16 +12,19 @@ class BalancerType:
 class Proxy(BalancerType):
     proxy_str: str
 
+@dataclass
+class InstagramAccount(BalancerType):
+    login: str
+    password: str
+    token_session: str | None
+    initialization_status: bool | None
+
 
 @dataclass
 class TelegramAccount(BalancerType):
     api_id: int
     api_hash: str
     token_session: str | None
+    initialization_status: bool | None
 
 
-@dataclass
-class InstagramAccount(BalancerType):
-    login: str
-    password: str
-    token_session: str | None

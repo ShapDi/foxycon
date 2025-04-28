@@ -4,6 +4,17 @@ from dataclasses import asdict
 
 
 class StorageManager:
+    def __init__(self, path_file: str):
+        self._path_file = path_file
+
+    def add_balance_object(self):
+        pass
+
+    def get_balance_object(self):
+        pass
+
+
+class StorageManagerOld:
     PATH_FILE = "storage.json"
 
     @staticmethod

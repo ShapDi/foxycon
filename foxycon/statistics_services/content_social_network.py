@@ -16,14 +16,58 @@ from foxycon.statistics_services.modules.statistics_social_network import (
 )
 from .modules.statistics_telegram import TelegramGroup
 from .modules.statistics_youtube import YouTubeChannel, YouTubeContent
-from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer
+from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer, InstagramBalancer
 from .statistics_exceptions import RequiredTelegramAccount
+from ..data_structures.balancer_type import Proxy, TelegramAccount, InstagramAccount
+from ..utils.storage_manager import StorageManager
 
 
 class StatisticianSocNet:
-    def __init__(self, proxy: list[str] | None = None):
+    def __init__(
+        self,
+        proxy: list[Proxy] | None = None,
+        telegram_account: list[TelegramAccount] = None,
+        instagram_account: list[InstagramAccount] = None,
+        file_storage: str | None = None,
+    ):
         self._proxy = proxy
+        self._instagram_account = instagram_account
+        self._telegram_account = telegram_account
+        self._file_storage = file_storage
 
+        if proxy is not None:
+            self._proxy_balancer = ProxyBalancer(proxy)
+
+        if instagram_account is not None:
+            self._instagram_balancer = InstagramBalancer(instagram_account)
+
+        if telegram_account is not None:
+            self._telegram_balancer = TelegramBalancer(telegram_account)
+
+        if file_storage is not None:
+            storage = StorageManager(file_storage)
+
+    async def get_data_async(
+        self, link
+    ) -> Union[
+        YouTubeContentData,
+        YouTubeChannelsData,
+        InstagramContentData,
+        TelegramPostData,
+        TelegramChatData,
+    ]:
+        pass
+
+    def get_data(
+        self, link
+    ) -> Union[
+        YouTubeContentData,
+        YouTubeChannelsData,
+        InstagramContentData,
+        TelegramPostData,
+        TelegramChatData,
+    ]:
+        pass
 
 class StatisticianSocNetOld:
     def __init__(
@@ -35,7 +79,9 @@ class StatisticianSocNetOld:
         self._proxy = proxy
         self._telegram_account = telegram_account
 
-        self._file_settings = file_settings
+        self._file_settings = (
+            StorageManager(file_storage) if file_storage is not None else None
+        )
 
         if self._proxy is not None:
             self._proxy_balancer = ProxyBalancer(self._proxy)
@@ -46,6 +92,28 @@ class StatisticianSocNetOld:
             self._telegram_account_balancer = TelegramBalancer(self._telegram_account)
         else:
             self._telegram_account_balancer = None
+
+    def get_data(
+        self, link
+    ) -> Union[
+        YouTubeContentData,
+        YouTubeChannelsData,
+        InstagramContentData,
+        TelegramPostData,
+        TelegramChatData,
+    ]:
+        pass
+
+    async def get_data_async(
+        self, link
+    ) -> Union[
+        YouTubeContentData,
+        YouTubeChannelsData,
+        InstagramContentData,
+        TelegramPostData,
+        TelegramChatData,
+    ]:
+        pass
 
     @staticmethod
     def is_coroutine(func: Callable):
