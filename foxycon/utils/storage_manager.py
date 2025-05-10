@@ -2,12 +2,19 @@ import os
 import json
 from dataclasses import asdict
 
+from foxycon.data_structures.balancer_type import BalancerType
+from foxycon.utils.balancers import Balancer
+
 
 class StorageManager:
     def __init__(self, path_file: str):
         self._path_file = path_file
+        self._balancers: list[Balancer] = []
 
-    def add_balance_object(self):
+    def add_balancer(self, balancer:Balancer):
+        self._balancers.append(balancer)
+
+    def add_balance_object(self, balance_object: BalancerType):
         pass
 
     def get_balance_object(self):
