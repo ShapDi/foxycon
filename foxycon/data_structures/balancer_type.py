@@ -8,13 +8,13 @@ class BalancerType:
     status_block: bool | None
 
 
-
 @dataclass
 class Proxy(BalancerType):
     proxy_str: str
 
     def __str__(self):
-        return 'proxy'
+        return "proxy"
+
 
 @dataclass
 class InstagramAccount(BalancerType):
@@ -24,7 +24,7 @@ class InstagramAccount(BalancerType):
     initialization_status: bool | None
 
     def __str__(self):
-        return 'instagram_account'
+        return "instagram_account"
 
 
 @dataclass
@@ -35,5 +35,4 @@ class TelegramAccount(BalancerType):
     initialization_status: bool | None
 
     def __str__(self):
-        return 'telegram_account'
-
+        return "telegram_account"

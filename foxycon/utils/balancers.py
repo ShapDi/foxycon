@@ -7,13 +7,18 @@ from telethon.sessions import StringSession
 
 # from foxycon.data_structures.utils_type import TelegramAccount, Proxy
 
-from foxycon.data_structures.balancer_type import Proxy, InstagramAccount, TelegramAccount, BalancerType
+from foxycon.data_structures.balancer_type import (
+    Proxy,
+    InstagramAccount,
+    TelegramAccount,
+    BalancerType,
+)
 from foxycon.utils.storage_manager import StorageManager
 
 
 class Balancer(ABC):
     def __init__(self):
-        self._storage:list[StorageManager] = []
+        self._storage: list[StorageManager] = []
 
     @abstractmethod
     def call_next(self):
@@ -45,6 +50,7 @@ class ProxyBalancer(Balancer):
     def call_next(self):
         pass
 
+
 class InstagramBalancer(Balancer):
     def __init__(self, balancing_objects: list[InstagramAccount]):
         self._balancing_objects = []
@@ -61,6 +67,7 @@ class InstagramBalancer(Balancer):
     def call_next(self):
         pass
 
+
 class TelegramBalancer(Balancer):
     def __init__(self, balancing_objects: list[TelegramAccount]):
         self._balancing_objects = []
@@ -76,6 +83,7 @@ class TelegramBalancer(Balancer):
 
     def call_next(self):
         pass
+
 
 class ProxyBalancerOld(Balancer):
     def __init__(self, balancing_objects: list):

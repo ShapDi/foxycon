@@ -16,36 +16,54 @@ from foxycon.statistics_services.modules.statistics_social_network import (
 )
 from .modules.statistics_telegram import TelegramGroup
 from .modules.statistics_youtube import YouTubeChannel, YouTubeContent
-from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer, InstagramBalancer
+
+# from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer, InstagramBalancer
 from .statistics_exceptions import RequiredTelegramAccount
 from ..data_structures.balancer_type import Proxy, TelegramAccount, InstagramAccount
-from ..utils.storage_manager import StorageManager
+
+from socnet_entitys import (
+    EntityPool,
+    AsyncEntityBalancer,
+    BaseEntityBalancer,
+    Proxy,
+    TelegramAccount,
+    InstagramAccount,
+)
+from socnet_entitys.entitys import Entity
 
 
 class StatisticianSocNet:
     def __init__(
         self,
-        proxy: list[Proxy] | None = None,
-        telegram_account: list[TelegramAccount] = None,
-        instagram_account: list[InstagramAccount] = None,
-        file_storage: str | None = None,
+        entity_pool: EntityPool | None = None,
+        entity_balancer: BaseEntityBalancer | None = None,
+        async_entity_balancer: AsyncEntityBalancer | None = None,
     ):
-        self._proxy = proxy
-        self._instagram_account = instagram_account
-        self._telegram_account = telegram_account
-        self._file_storage = file_storage
+        self._entity_pool = entity_pool
+        self._entity_balancer = entity_balancer
+        self._async_entity_balancer = async_entity_balancer
 
-        if proxy is not None:
-            self._proxy_balancer = ProxyBalancer(proxy)
+    def get_statistician_object(
+        self,
+        link,
+        social_network: ResultAnalytics,
+    ) -> StatisticianModuleStrategy | None:
+        match (social_network.social_network, social_network.content_type):
+            case ("youtube", "video"):
+                proxy = self._entity_balancer.get(Proxy)
+                return YouTubeContent(link=link, proxy=proxy, object_sn=social_network)
+            case ("youtube", "channel"):
+                proxy = self._entity_balancer.get(Proxy)
+                return YouTubeChannel(link=link, proxy=proxy, object_sn=social_network)
+            case ("telegram", "chat"):
+                telegram_account = self._entity_balancer.get(TelegramAccount)
+                return TelegramGroup(url=link, clients_handler=telegram_account)
+        return None
 
-        if instagram_account is not None:
-            self._instagram_balancer = InstagramBalancer(instagram_account)
-
-        if telegram_account is not None:
-            self._telegram_balancer = TelegramBalancer(telegram_account)
-
-        if file_storage is not None:
-            storage = StorageManager(file_storage)
+    @staticmethod
+    def get_basic_data(link: str):
+        data = ContentAnalyzer().get_data(link)
+        return data
 
     async def get_data_async(
         self, link
@@ -67,7 +85,11 @@ class StatisticianSocNet:
         TelegramPostData,
         TelegramChatData,
     ]:
-        pass
+        link_analytics = self.get_basic_data(link)
+        data = self.get_statistician_object(link, link_analytics).get_data()
+
+        return data
+
 
 class StatisticianSocNetOld:
     def __init__(
@@ -92,6 +114,7 @@ class StatisticianSocNetOld:
             self._telegram_account_balancer = TelegramBalancer(self._telegram_account)
         else:
             self._telegram_account_balancer = None
+
 
     def get_data(
         self, link

@@ -11,7 +11,7 @@ class StorageManager:
         self._path_file = path_file
         self._balancers: list[Balancer] = []
 
-    def add_balancer(self, balancer:Balancer):
+    def add_balancer(self, balancer: Balancer):
         self._balancers.append(balancer)
 
     def add_balance_object(self, balance_object: BalancerType):
