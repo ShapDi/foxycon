@@ -50,10 +50,16 @@ class StatisticianSocNet:
     ) -> StatisticianModuleStrategy | None:
         match (social_network.social_network, social_network.content_type):
             case ("youtube", "video"):
-                proxy = self._entity_balancer.get(Proxy)
+                try:
+                    proxy = self._entity_balancer.get(Proxy)
+                except (LookupError, AttributeError):
+                    proxy = None
                 return YouTubeContent(link=link, proxy=proxy, object_sn=social_network)
             case ("youtube", "channel"):
-                proxy = self._entity_balancer.get(Proxy)
+                try:
+                    proxy = self._entity_balancer.get(Proxy)
+                except (LookupError, AttributeError):
+                    proxy = None
                 return YouTubeChannel(link=link, proxy=proxy, object_sn=social_network)
             case ("telegram", "chat"):
                 telegram_account = self._entity_balancer.get(TelegramAccount)
@@ -74,7 +80,10 @@ class StatisticianSocNet:
         TelegramPostData,
         TelegramChatData,
     ]:
-        pass
+        link_analytics = self.get_basic_data(link)
+        data = await self.get_statistician_object(link, link_analytics).get_data_async()
+
+        return data
 
     def get_data(
         self, link
@@ -87,127 +96,5 @@ class StatisticianSocNet:
     ]:
         link_analytics = self.get_basic_data(link)
         data = self.get_statistician_object(link, link_analytics).get_data()
-
-        return data
-
-
-class StatisticianSocNetOld:
-    def __init__(
-        self,
-        proxy=None,
-        file_storage: str | None = None,
-        telegram_account=None,
-    ):
-        self._proxy = proxy
-        self._telegram_account = telegram_account
-
-        self._file_settings = (
-            StorageManager(file_storage) if file_storage is not None else None
-        )
-
-        if self._proxy is not None:
-            self._proxy_balancer = ProxyBalancer(self._proxy)
-        else:
-            self._proxy_balancer = None
-
-        if self._telegram_account is not None:
-            self._telegram_account_balancer = TelegramBalancer(self._telegram_account)
-        else:
-            self._telegram_account_balancer = None
-
-
-    def get_data(
-        self, link
-    ) -> Union[
-        YouTubeContentData,
-        YouTubeChannelsData,
-        InstagramContentData,
-        TelegramPostData,
-        TelegramChatData,
-    ]:
-        pass
-
-    async def get_data_async(
-        self, link
-    ) -> Union[
-        YouTubeContentData,
-        YouTubeChannelsData,
-        InstagramContentData,
-        TelegramPostData,
-        TelegramChatData,
-    ]:
-        pass
-
-    @staticmethod
-    def is_coroutine(func: Callable):
-        return inspect.iscoroutinefunction(func)
-
-    @staticmethod
-    def get_basic_data(link: str):
-        data = ContentAnalyzer().get_data(link)
-        return data
-
-    def get_statistician_object(
-        self,
-        social_network: ResultAnalytics,
-    ) -> Type[StatisticianModuleStrategy] | None:
-        match (social_network.social_network, social_network.content_type):
-            case ("youtube", "video"):
-                return YouTubeContent
-            case ("youtube", "channel"):
-                return YouTubeChannel
-            case ("telegram", "chat"):
-                if self._telegram_account is None:
-                    raise RequiredTelegramAccount()
-                return TelegramGroup
-        return None
-
-    async def get_data_async(
-        self, link
-    ) -> Union[
-        YouTubeContentData,
-        YouTubeChannelsData,
-        InstagramContentData,
-        TelegramPostData,
-        TelegramChatData,
-    ]:
-        if self._proxy_balancer is not None:
-            self._proxy = self._proxy_balancer.call_next()
-
-        if self._telegram_account_balancer is not None:
-            await self._telegram_account_balancer.init_call_async()
-            self._telegram_account = self._telegram_account_balancer.call_next()
-
-        link_analytics = self.get_basic_data(link)
-        class_statistics = self.get_statistician_module_strategy(link_analytics)
-
-        data = await class_statistics(proxy=self._proxy).get_data_async(
-            link_analytics, clients_handlers=self._telegram_account
-        )
-        return data
-
-    def get_data(
-        self, link
-    ) -> Union[
-        YouTubeContentData,
-        YouTubeChannelsData,
-        InstagramContentData,
-        TelegramPostData,
-        TelegramChatData,
-    ]:
-        if self._proxy_balancer is not None:
-            self._proxy = self._proxy_balancer.call_next()
-
-        if self._telegram_account_balancer is not None:
-            self._telegram_account_balancer.init_call()
-            self._telegram_account = self._telegram_account_balancer.call_next()
-
-        link_analytics = self.get_basic_data(link)
-
-        class_statistics = self.get_statistician_module_strategy(link_analytics)
-
-        data = class_statistics(proxy=self._proxy, subtitles=self._subtitles).get_data(
-            link_analytics, clients_handlers=self._telegram_account
-        )
 
         return data
