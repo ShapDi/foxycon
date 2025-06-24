@@ -16,7 +16,7 @@ from foxycon.data_structures.statistician_type import (
 from foxycon.statistics_services.modules.statistics_social_network import (
     StatisticianModuleStrategy,
 )
-from .modules.statistics_telegram import TelegramGroup
+from .modules.statistics_telegram import TelegramGroup, TelegramPost
 from .modules.statistics_youtube import YouTubeChannel, YouTubeContent
 
 from ..data_structures.balancer_type import Proxy, TelegramAccount, InstagramAccount
@@ -75,6 +75,18 @@ class StatisticianSocNet:
                 else:
                     pass
                 return TelegramGroup(url=link, clients_handler=telegram_client)
+            case ("telegram", "post"):
+                telegram_account = self._entity_balancer.get(TelegramAccount)
+                self._entity_balancer.release(telegram_account)
+                if telegram_account.token_session:
+                    telegram_client = TelegramClient(
+                        api_id=telegram_account.api_id,
+                        api_hash=telegram_account.api_hash,
+                        session=StringSession(telegram_account.token_session),
+                    )
+                else:
+                    pass
+                return TelegramPost(url=link, clients_handler=telegram_client)
         return None
 
     @staticmethod
