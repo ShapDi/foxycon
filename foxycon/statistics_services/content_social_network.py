@@ -2,6 +2,8 @@ import inspect
 
 from typing import Callable, Type, Union
 
+from telethon import TelegramClient
+from telethon.sessions import StringSession
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 from foxycon.data_structures.analysis_type import ResultAnalytics
 from foxycon.data_structures.statistician_type import (
@@ -17,8 +19,6 @@ from foxycon.statistics_services.modules.statistics_social_network import (
 from .modules.statistics_telegram import TelegramGroup
 from .modules.statistics_youtube import YouTubeChannel, YouTubeContent
 
-# from foxycon.utils.balancers import TelegramBalancer, ProxyBalancer, InstagramBalancer
-from .statistics_exceptions import RequiredTelegramAccount
 from ..data_structures.balancer_type import Proxy, TelegramAccount, InstagramAccount
 
 from socnet_entitys import (
@@ -51,19 +51,30 @@ class StatisticianSocNet:
         match (social_network.social_network, social_network.content_type):
             case ("youtube", "video"):
                 try:
-                    proxy = self._entity_balancer.get(Proxy)
+                    proxy = self._entity_balancer.get(Proxy).proxy_str
+                    self._entity_balancer.release(proxy)
                 except (LookupError, AttributeError):
                     proxy = None
                 return YouTubeContent(link=link, proxy=proxy, object_sn=social_network)
             case ("youtube", "channel"):
                 try:
-                    proxy = self._entity_balancer.get(Proxy)
-                except (LookupError, AttributeError):
+                    proxy = self._entity_balancer.get(Proxy).proxy_str
+                    self._entity_balancer.release(proxy)
+                except (LookupError, AttributeError) as e:
                     proxy = None
                 return YouTubeChannel(link=link, proxy=proxy, object_sn=social_network)
             case ("telegram", "chat"):
                 telegram_account = self._entity_balancer.get(TelegramAccount)
-                return TelegramGroup(url=link, clients_handler=telegram_account)
+                self._entity_balancer.release(telegram_account)
+                if telegram_account.token_session:
+                    telegram_client = TelegramClient(
+                        api_id=telegram_account.api_id,
+                        api_hash=telegram_account.api_hash,
+                        session=StringSession(telegram_account.token_session),
+                    )
+                else:
+                    pass
+                return TelegramGroup(url=link, clients_handler=telegram_client)
         return None
 
     @staticmethod

@@ -4,6 +4,7 @@ from telethon.errors import (
     FloodWaitError,
 )
 from telethon.tl.functions.channels import JoinChannelRequest, GetParticipantRequest
+from telethon import TelegramClient
 
 from foxycon.data_structures.error_type import Telegram
 
@@ -139,7 +140,7 @@ class TelegramPost(StatisticianModuleStrategy):
 
 
 class TelegramGroup(StatisticianModuleStrategy):
-    def __init__(self, url: str, clients_handler):
+    def __init__(self, url: str, clients_handler: TelegramClient):
         self.url = url
         self.client = clients_handler
 
@@ -148,7 +149,7 @@ class TelegramGroup(StatisticianModuleStrategy):
             parts = self.url.replace("https://t.me/", "").split("/")
             try:
                 chat = await client.get_entity((int(parts[0])))
-            except:
+            except Exception as ex:
                 chat = await client.get_entity(parts[0])
             result = await client(
                 functions.channels.GetFullChannelRequest(channel=parts[0])
@@ -166,16 +167,13 @@ class TelegramGroup(StatisticianModuleStrategy):
             parts = self.url.replace("https://t.me/", "").split("/")
             try:
                 chat = client.get_entity((int(parts[0])))
-                participants = client.get_participants(int(parts[0]))
-            except Exception:
+            except Exception as ex:
                 chat = client.get_entity(parts[0])
-                participants = client.get_participants(parts[0])
             result = client(functions.channels.GetFullChannelRequest(channel=parts[0]))
             data = {
                 "chat_id": chat.id,
                 "title": chat.title,
                 "participants_count": result.full_chat.participants_count,
                 "date_create": chat.date,
-                "users": participants,
             }
             return data
