@@ -13,9 +13,8 @@ from foxycon.data_structures.statistician_type import (
     TelegramChatData,
     InstagramContentData,
 )
-from foxycon.statistics_services.modules.statistics_social_network import (
-    StatisticianModuleStrategy,
-)
+from .modules.interface_statistics_module import StatisticianModuleStrategy
+
 from .modules.statistics_telegram import TelegramGroup, TelegramPost
 from .modules.statistics_youtube import YouTubeChannel, YouTubeContent
 
