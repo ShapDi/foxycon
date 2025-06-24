@@ -45,23 +45,23 @@ class StatisticianSocNet:
     def get_statistician_object(
         self,
         link,
-        social_network: ResultAnalytics,
+        result_analytic: ResultAnalytics,
     ) -> StatisticianModuleStrategy | None:
-        match (social_network.social_network, social_network.content_type):
+        match (result_analytic.social_network, result_analytic.content_type):
             case ("youtube", "video"):
                 try:
                     proxy = self._entity_balancer.get(Proxy).proxy_str
                     self._entity_balancer.release(proxy)
                 except (LookupError, AttributeError):
                     proxy = None
-                return YouTubeContent(link=link, proxy=proxy, object_sn=social_network)
+                return YouTubeContent(link=link, proxy=proxy, object_sn=result_analytic)
             case ("youtube", "channel"):
                 try:
                     proxy = self._entity_balancer.get(Proxy).proxy_str
                     self._entity_balancer.release(proxy)
                 except (LookupError, AttributeError) as e:
                     proxy = None
-                return YouTubeChannel(link=link, proxy=proxy, object_sn=social_network)
+                return YouTubeChannel(link=link, proxy=proxy, object_sn=result_analytic)
             case ("telegram", "chat"):
                 telegram_account = self._entity_balancer.get(TelegramAccount)
                 self._entity_balancer.release(telegram_account)
@@ -73,7 +73,11 @@ class StatisticianSocNet:
                     )
                 else:
                     pass
-                return TelegramGroup(url=link, clients_handler=telegram_client)
+                return TelegramGroup(
+                    url=link,
+                    clients_handler=telegram_client,
+                    analytics_obj=result_analytic,
+                )
             case ("telegram", "post"):
                 telegram_account = self._entity_balancer.get(TelegramAccount)
                 self._entity_balancer.release(telegram_account)
@@ -85,7 +89,11 @@ class StatisticianSocNet:
                     )
                 else:
                     pass
-                return TelegramPost(url=link, clients_handler=telegram_client)
+                return TelegramPost(
+                    url=link,
+                    clients_handler=telegram_client,
+                    analytics_obj=result_analytic,
+                )
         return None
 
     @staticmethod
