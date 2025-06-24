@@ -195,7 +195,7 @@ class YouTubeChannel(StatisticianModuleStrategy):
         return YouTubeChannelsData(
             name=self.name,
             link=self.link,
-            description=self.name,
+            description=self.description,
             country=self.country,
             channel_id=self.code,
             view_count=self.view_count,
@@ -210,7 +210,7 @@ class YouTubeChannel(StatisticianModuleStrategy):
         return YouTubeChannelsData(
             name=self.name,
             link=self.link,
-            description=self.name,
+            description=self.description,
             country=self.country,
             channel_id=self.code,
             view_count=self.view_count,
