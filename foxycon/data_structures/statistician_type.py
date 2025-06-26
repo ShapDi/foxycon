@@ -10,7 +10,7 @@ class ContentData:
 
 
 @dataclass
-class YouTubeContentData(ContentData):
+class CoreYouTubeContentData(ContentData):
     system_id: str
     channel_id: str
     title: str
@@ -19,11 +19,15 @@ class YouTubeContentData(ContentData):
     views: int
     channel_url: str
     publish_date: datetime
+
+
+@dataclass
+class YouTubeContentData(CoreYouTubeContentData):
     pytube_ob: YouTube
 
 
 @dataclass
-class YouTubeChannelsData(ContentData):
+class CoreYouTubeChannelsData(ContentData):
     channel_id: str
     name: str
     link: str
@@ -33,6 +37,10 @@ class YouTubeChannelsData(ContentData):
     subscriber: int
     number_videos: int
     data_create: datetime.date
+
+
+@dataclass
+class YouTubeChannelsData(CoreYouTubeChannelsData):
     pytube_ob: Channel
 
 

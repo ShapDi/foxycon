@@ -2,6 +2,7 @@ import pytest
 from foxycon import ContentAnalyzer
 from foxycon.data_structures.analysis_type import ResultAnalytics
 
+
 @pytest.fixture(scope="session")
 def content_analyzer():
     return ContentAnalyzer()
@@ -21,7 +22,9 @@ def test_youtube_video_type_link_one(content_analyzer):
 
 @pytest.mark.analysis
 def test_youtube_video_type_link_two(content_analyzer):
-    assert content_analyzer.get_data("https://youtu.be/GhXMLM7vUJI2") == ResultAnalytics(
+    assert content_analyzer.get_data(
+        "https://youtu.be/GhXMLM7vUJI2"
+    ) == ResultAnalytics(
         url="https://youtube.com/watch?v=GhXMLM7vUJI2",
         social_network="youtube",
         content_type="video",
@@ -31,7 +34,9 @@ def test_youtube_video_type_link_two(content_analyzer):
 
 @pytest.mark.analysis
 def test_youtube_video_type_link_thee(content_analyzer):
-    assert content_analyzer.get_data("https://www.youtube.com/shorts/J-m4POZFGyM") == ResultAnalytics(
+    assert content_analyzer.get_data(
+        "https://www.youtube.com/shorts/J-m4POZFGyM"
+    ) == ResultAnalytics(
         url="https://youtube.com/watch?v=J-m4POZFGyM",
         social_network="youtube",
         content_type="shorts",
@@ -53,7 +58,9 @@ def test_youtube_video_type_link_four(content_analyzer):
 
 @pytest.mark.analysis
 def test_youtube_shorts(content_analyzer):
-    assert content_analyzer.get_data("https://www.youtube.com/shorts/J-m4POZFGyM") == ResultAnalytics(
+    assert content_analyzer.get_data(
+        "https://www.youtube.com/shorts/J-m4POZFGyM"
+    ) == ResultAnalytics(
         url="https://youtube.com/watch?v=J-m4POZFGyM",
         social_network="youtube",
         content_type="shorts",
@@ -63,7 +70,9 @@ def test_youtube_shorts(content_analyzer):
 
 @pytest.mark.analysis
 def test_youtube_channel_type_link_one(content_analyzer):
-    assert content_analyzer.get_data("https://www.youtube.com/@AgnamoN") == ResultAnalytics(
+    assert content_analyzer.get_data(
+        "https://www.youtube.com/@AgnamoN"
+    ) == ResultAnalytics(
         url="https://www.youtube.com/@AgnamoN",
         social_network="youtube",
         content_type="channel",
@@ -85,7 +94,9 @@ def test_youtube_channel_type_link_two(content_analyzer):
 
 @pytest.mark.analysis
 def test_instagram_page(content_analyzer):
-    assert content_analyzer.get_data("https://www.instagram.com/prikol.pedro/") == ResultAnalytics(
+    assert content_analyzer.get_data(
+        "https://www.instagram.com/prikol.pedro/"
+    ) == ResultAnalytics(
         url="https://www.instagram.com/prikol.pedro/",
         social_network="instagram",
         content_type="page",
@@ -95,7 +106,9 @@ def test_instagram_page(content_analyzer):
 
 @pytest.mark.analysis
 def test_instagram_post(content_analyzer):
-    assert content_analyzer.get_data("https://www.instagram.com/p/C9HMrwooyGW/") == ResultAnalytics(
+    assert content_analyzer.get_data(
+        "https://www.instagram.com/p/C9HMrwooyGW/"
+    ) == ResultAnalytics(
         url="https://www.instagram.com/p/C9HMrwooyGW/",
         social_network="instagram",
         content_type="post",
