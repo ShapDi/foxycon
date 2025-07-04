@@ -9,9 +9,11 @@ This is a python library that aims to create a universal tool for analyzing stat
 1. YouTube Channels  
 2. YouTube Shorts  
 3. YouTube Videos  
-4. Instagram Pages  
-5. Instagram Reels  
-6. Google Meet  
+4. Instagram Pages (Temporarily unsupported)
+5. Instagram Reels (Temporarily unsupported)
+6. Telegram Post (Public channels only)
+7. Telegram Channels (Public channels only)
+
 
 ---
 
@@ -19,7 +21,9 @@ This is a python library that aims to create a universal tool for analyzing stat
 1. YouTube Channels  
 2. YouTube Shorts  
 3. YouTube Videos  
-4. Instagram Reels  
+4. Instagram Reels (Temporarily unsupported)
+5. Telegram Post (Public channels only)
+6. Telegram Channels (Public channels only)
 
 ---
 
@@ -41,9 +45,6 @@ ca = ContentAnalyzer()
 
 ca.get_data("https://youtu.be/dMPPMmUrYQM?si=_uGQVE6wtTXnVULv&t=32")
 ca.get_data("https://youtu.be/GhXMLM7vUJI2")
-ca.get_data("https://www.instagram.com/blyea_u/")
-ca.get_data("https://www.instagram.com/reel/C9NSNb5ow03/?igsh=a29uNGk0eTdta3Fw")
-
 ```
 
 

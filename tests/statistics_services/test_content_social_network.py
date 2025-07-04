@@ -56,10 +56,11 @@ def test_youtube_video_statistics_link_one(object_statistics, ob_channel):
         view_count=result_analyzer.view_count,
         subscriber=result_analyzer.subscriber,
         number_videos=result_analyzer.number_videos,
-        data_create=result_analyzer.data_create
+        data_create=result_analyzer.data_create,
     )
     assert Channel == type(result_analyzer.pytube_ob)
     assert test_youtube_ob == result_analyzer_core_data
+
 
 @pytest.mark.statistics
 def test_youtube_video_statistics_link_one(object_statistics, ob_channel):
@@ -93,7 +94,7 @@ def test_youtube_video_statistics_link_one(object_statistics, ob_channel):
         view_count=result_analyzer.view_count,
         subscriber=result_analyzer.subscriber,
         number_videos=result_analyzer.number_videos,
-        data_create=result_analyzer.data_create
+        data_create=result_analyzer.data_create,
     )
     assert Channel == type(result_analyzer.pytube_ob)
     assert test_youtube_ob == result_analyzer_core_data
