@@ -17,6 +17,7 @@ from .modules.interface_statistics_module import StatisticianModuleStrategy
 
 from .modules.statistics_telegram import TelegramGroup, TelegramPost
 from .modules.statistics_youtube import YouTubeChannel, YouTubeContent
+from .statistics_exceptions import ParsingNotPossible
 
 from ..data_structures.balancer_type import Proxy, TelegramAccount, InstagramAccount
 
@@ -26,7 +27,6 @@ from socnet_entitys import (
     BaseEntityBalancer,
     Proxy,
     TelegramAccount,
-    InstagramAccount,
 )
 from socnet_entitys.entitys import Entity
 
@@ -50,16 +50,18 @@ class StatisticianSocNet:
         match (result_analytic.social_network, result_analytic.content_type):
             case ("youtube", "video"):
                 try:
-                    proxy = self._entity_balancer.get(Proxy).proxy_str
+                    proxy = self._entity_balancer.get(Proxy)
                     self._entity_balancer.release(proxy)
+                    proxy = proxy.proxy_comparison
                 except (LookupError, AttributeError):
                     proxy = None
                 return YouTubeContent(link=link, proxy=proxy, object_sn=result_analytic)
             case ("youtube", "channel"):
                 try:
-                    proxy = self._entity_balancer.get(Proxy).proxy_str
+                    proxy = self._entity_balancer.get(Proxy)
                     self._entity_balancer.release(proxy)
-                except (LookupError, AttributeError) as e:
+                    proxy = proxy.proxy_comparison
+                except (LookupError, AttributeError):
                     proxy = None
                 return YouTubeChannel(link=link, proxy=proxy, object_sn=result_analytic)
             case ("telegram", "chat"):
@@ -67,12 +69,12 @@ class StatisticianSocNet:
                 self._entity_balancer.release(telegram_account)
                 if telegram_account.token_session:
                     telegram_client = TelegramClient(
-                        api_id=telegram_account.api_id,
-                        api_hash=telegram_account.api_hash,
-                        session=StringSession(telegram_account.token_session),
+                        api_id=int(telegram_account.api_id),
+                        api_hash=str(telegram_account.api_hash),
+                        session=StringSession(str(telegram_account.token_session)),
                     )
                 else:
-                    pass
+                    raise ParsingNotPossible("Uninitialized telegram account")
                 return TelegramGroup(
                     url=link,
                     clients_handler=telegram_client,
@@ -83,12 +85,12 @@ class StatisticianSocNet:
                 self._entity_balancer.release(telegram_account)
                 if telegram_account.token_session:
                     telegram_client = TelegramClient(
-                        api_id=telegram_account.api_id,
-                        api_hash=telegram_account.api_hash,
-                        session=StringSession(telegram_account.token_session),
+                        api_id=int(telegram_account.api_id),
+                        api_hash=str(telegram_account.api_hash),
+                        session=StringSession(str(telegram_account.token_session)),
                     )
                 else:
-                    pass
+                    raise ParsingNotPossible("Uninitialized telegram account")
                 return TelegramPost(
                     url=link,
                     clients_handler=telegram_client,

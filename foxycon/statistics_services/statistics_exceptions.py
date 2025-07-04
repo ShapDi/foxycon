@@ -15,3 +15,4 @@ class RequiredTelegramAccount(ParsingNotPossible):
     def __init__(self) -> None:
         message = "To parse telegram, you need to add at least one account"
         super().__init__(message)
+

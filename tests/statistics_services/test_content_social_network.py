@@ -41,9 +41,9 @@ def test_youtube_video_statistics_link_one(object_statistics, ob_channel):
         link="https://www.youtube.com/@onlinegamercentral",
         description="Официальный канал сообщества IGM в VK.\n\nМы делаем контент для всех, кто интересуется игровой индустрией.\n\nНесколько раз в неделю мы выпускаем самые разные ролики о видеоиграх: взлёт, эволюции и смерть серии игр... рецензии и много другого.\n\nПодписывайтесь на канал, чтобы не пропустить видео от IGM. Скоро услышимся!\n\nПо вопросам рекламы: \nadv@igm.gg\n\nПо вопросам сотрудничества:\nTodd@igm.gg\n\nРегистрация в перечне владельцев соцсетей: https://knd.gov.ru/license?id=675ad347e9320a200a8e4da7&registryType=bloggersPermission\n",
         country="Russia",
-        view_count=858062846,
+        view_count=859542439,
         subscriber=2840000,
-        number_videos=5817,
+        number_videos=5824,
         data_create=datetime.date(2013, 9, 19),
     )
     result_analyzer_core_data = CoreYouTubeChannelsData(
@@ -78,9 +78,9 @@ def test_youtube_video_statistics_link_one(object_statistics, ob_channel):
         link="https://www.youtube.com/@onlinegamercentral",
         description="Официальный канал сообщества IGM в VK.\n\nМы делаем контент для всех, кто интересуется игровой индустрией.\n\nНесколько раз в неделю мы выпускаем самые разные ролики о видеоиграх: взлёт, эволюции и смерть серии игр... рецензии и много другого.\n\nПодписывайтесь на канал, чтобы не пропустить видео от IGM. Скоро услышимся!\n\nПо вопросам рекламы: \nadv@igm.gg\n\nПо вопросам сотрудничества:\nTodd@igm.gg\n\nРегистрация в перечне владельцев соцсетей: https://knd.gov.ru/license?id=675ad347e9320a200a8e4da7&registryType=bloggersPermission\n",
         country="Russia",
-        view_count=858062846,
+        view_count=859542439,
         subscriber=2840000,
-        number_videos=5817,
+        number_videos=5824,
         data_create=datetime.date(2013, 9, 19),
     )
     result_analyzer_core_data = CoreYouTubeChannelsData(
