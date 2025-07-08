@@ -22,7 +22,7 @@ class YouTubeContentData(ContentData):
 
 
 @dataclass
-class YouTubeContentData(YouTubeContentData):
+class HeavyYouTubeContentData(YouTubeContentData):
     pytube_ob: YouTube
 
 
