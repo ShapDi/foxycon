@@ -53,7 +53,12 @@ class StatisticianSocNet:
                     proxy = proxy.proxy_comparison
                 except (LookupError, AttributeError):
                     proxy = None
-                return YouTubeContent(link=link, proxy=proxy, object_sn=result_analytic, type_data=type_data)
+                return YouTubeContent(
+                    link=link,
+                    proxy=proxy,
+                    object_sn=result_analytic,
+                    type_data=type_data,
+                )
             case ("youtube", "channel"):
                 try:
                     proxy = self._entity_balancer.get(Proxy)
@@ -61,7 +66,12 @@ class StatisticianSocNet:
                     proxy = proxy.proxy_comparison
                 except (LookupError, AttributeError):
                     proxy = None
-                return YouTubeChannel(link=link, proxy=proxy, object_sn=result_analytic, type_data=type_data)
+                return YouTubeChannel(
+                    link=link,
+                    proxy=proxy,
+                    object_sn=result_analytic,
+                    type_data=type_data,
+                )
             case ("telegram", "chat"):
                 telegram_account = self._entity_balancer.get(TelegramAccount)
                 self._entity_balancer.release(telegram_account)
