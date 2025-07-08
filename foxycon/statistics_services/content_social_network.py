@@ -43,9 +43,7 @@ class StatisticianSocNet:
         self._async_entity_balancer = async_entity_balancer
 
     def get_statistician_object(
-        self,
-        link,
-        result_analytic: ResultAnalytics,
+        self, link: str, result_analytic: ResultAnalytics, type_data: str
     ) -> StatisticianModuleStrategy | None:
         match (result_analytic.social_network, result_analytic.content_type):
             case ("youtube", "video"):
@@ -55,7 +53,7 @@ class StatisticianSocNet:
                     proxy = proxy.proxy_comparison
                 except (LookupError, AttributeError):
                     proxy = None
-                return YouTubeContent(link=link, proxy=proxy, object_sn=result_analytic)
+                return YouTubeContent(link=link, proxy=proxy, object_sn=result_analytic, type_data=type_data)
             case ("youtube", "channel"):
                 try:
                     proxy = self._entity_balancer.get(Proxy)
@@ -63,7 +61,7 @@ class StatisticianSocNet:
                     proxy = proxy.proxy_comparison
                 except (LookupError, AttributeError):
                     proxy = None
-                return YouTubeChannel(link=link, proxy=proxy, object_sn=result_analytic)
+                return YouTubeChannel(link=link, proxy=proxy, object_sn=result_analytic, type_data=type_data)
             case ("telegram", "chat"):
                 telegram_account = self._entity_balancer.get(TelegramAccount)
                 self._entity_balancer.release(telegram_account)
@@ -104,7 +102,7 @@ class StatisticianSocNet:
         return data
 
     async def get_data_async(
-        self, link
+        self, link, type_data="static"
     ) -> Union[
         YouTubeContentData,
         YouTubeChannelsData,
@@ -113,12 +111,14 @@ class StatisticianSocNet:
         TelegramChatData,
     ]:
         link_analytics = self.get_basic_data(link)
-        data = await self.get_statistician_object(link, link_analytics).get_data_async()
+        data = await self.get_statistician_object(
+            link, link_analytics, type_data
+        ).get_data_async()
 
         return data
 
     def get_data(
-        self, link
+        self, link, type_data="static"
     ) -> Union[
         YouTubeContentData,
         YouTubeChannelsData,
@@ -127,6 +127,6 @@ class StatisticianSocNet:
         TelegramChatData,
     ]:
         link_analytics = self.get_basic_data(link)
-        data = self.get_statistician_object(link, link_analytics).get_data()
+        data = self.get_statistician_object(link, link_analytics, type_data).get_data()
 
         return data

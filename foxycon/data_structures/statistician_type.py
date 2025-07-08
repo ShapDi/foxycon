@@ -18,7 +18,7 @@ class YouTubeContentData(ContentData):
     link: str
     views: int
     channel_url: str
-    publish_date: datetime
+    publish_date: datetime.date
 
 
 @dataclass

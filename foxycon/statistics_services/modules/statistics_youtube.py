@@ -9,12 +9,20 @@ from regex import regex
 
 from .interface_statistics_module import StatisticianModuleStrategy
 from ...data_structures.analysis_type import ResultAnalytics
-from ...data_structures.statistician_type import YouTubeChannelsData, YouTubeContentData
+from ...data_structures.statistician_type import (
+    YouTubeChannelsData,
+    YouTubeContentData,
+    HeavyYouTubeContentData,
+    HeavyYouTubeChannelsData,
+)
 
 
 class YouTubeChannel(StatisticianModuleStrategy):
-    def __init__(self, link: str, object_sn: ResultAnalytics, proxy=None):
+    def __init__(
+        self, link: str, object_sn: ResultAnalytics, type_data: str, proxy=None
+    ):
         self._proxy = proxy
+        self._type_data = type_data
         self._object_sn = object_sn
         self._object_channel = self.get_object_youtube(link, self._proxy)
         self.name = self._object_channel.channel_name
@@ -190,39 +198,70 @@ class YouTubeChannel(StatisticianModuleStrategy):
         return self._object_channel
 
     def get_data(self):
-        return YouTubeChannelsData(
-            name=self.name,
-            link=self.link,
-            description=self.description,
-            country=self.country,
-            channel_id=self.code,
-            view_count=self.view_count,
-            subscriber=self.subscriber,
-            data_create=self.data_create,
-            number_videos=self.number_videos,
-            analytics_obj=self._object_sn,
-            pytube_ob=self.object_channel,
-        )
+        if self._type_data == "heavy":
+            return HeavyYouTubeChannelsData(
+                name=self.name,
+                link=self.link,
+                description=self.description,
+                country=self.country,
+                channel_id=self.code,
+                view_count=self.view_count,
+                subscriber=self.subscriber,
+                data_create=self.data_create,
+                number_videos=self.number_videos,
+                analytics_obj=self._object_sn,
+                pytube_ob=self.object_channel,
+            )
+        else:
+            return YouTubeChannelsData(
+                name=self.name,
+                link=self.link,
+                description=self.description,
+                country=self.country,
+                channel_id=self.code,
+                view_count=self.view_count,
+                subscriber=self.subscriber,
+                data_create=self.data_create,
+                number_videos=self.number_videos,
+                analytics_obj=self._object_sn,
+            )
 
     async def get_data_async(self):
-        return YouTubeChannelsData(
-            name=self.name,
-            link=self.link,
-            description=self.description,
-            country=self.country,
-            channel_id=self.code,
-            view_count=self.view_count,
-            subscriber=self.subscriber,
-            data_create=self.data_create,
-            number_videos=self.number_videos,
-            analytics_obj=self._object_sn,
-            pytube_ob=self.object_channel,
-        )
+        if self._type_data == "heavy":
+            return HeavyYouTubeChannelsData(
+                name=self.name,
+                link=self.link,
+                description=self.description,
+                country=self.country,
+                channel_id=self.code,
+                view_count=self.view_count,
+                subscriber=self.subscriber,
+                data_create=self.data_create,
+                number_videos=self.number_videos,
+                analytics_obj=self._object_sn,
+                pytube_ob=self.object_channel,
+            )
+        else:
+            return YouTubeChannelsData(
+                name=self.name,
+                link=self.link,
+                description=self.description,
+                country=self.country,
+                channel_id=self.code,
+                view_count=self.view_count,
+                subscriber=self.subscriber,
+                data_create=self.data_create,
+                number_videos=self.number_videos,
+                analytics_obj=self._object_sn,
+            )
 
 
 class YouTubeContent(StatisticianModuleStrategy):
-    def __init__(self, link: str, object_sn: ResultAnalytics, proxy=None):
+    def __init__(
+        self, link: str, object_sn: ResultAnalytics, type_data: str, proxy=None
+    ):
         self._proxy = proxy
+        self._type_data = type_data
         self._object_sn = object_sn
         self._object_youtube = self.get_object_youtube(link, self._proxy)
         self.title = self._object_youtube.title
@@ -258,32 +297,58 @@ class YouTubeContent(StatisticianModuleStrategy):
         return self._object_youtube
 
     def get_data(self):
-        return YouTubeContentData(
-            title=self.title,
-            likes=self.likes,
-            link=self.link,
-            channel_id=self.code,
-            views=self.views,
-            system_id=self.system_id,
-            channel_url=self.channel_url,
-            publish_date=self.publish_date,
-            analytics_obj=self._object_sn,
-            pytube_ob=self.object_youtube,
-        )
+        if self._type_data == "heavy":
+            return HeavyYouTubeContentData(
+                title=self.title,
+                likes=self.likes,
+                link=self.link,
+                channel_id=self.code,
+                views=self.views,
+                system_id=self.system_id,
+                channel_url=self.channel_url,
+                publish_date=self.publish_date,
+                analytics_obj=self._object_sn,
+                pytube_ob=self.object_youtube,
+            )
+        else:
+            return YouTubeContentData(
+                title=self.title,
+                likes=self.likes,
+                link=self.link,
+                channel_id=self.code,
+                views=self.views,
+                system_id=self.system_id,
+                channel_url=self.channel_url,
+                publish_date=self.publish_date,
+                analytics_obj=self._object_sn,
+            )
 
     async def get_data_async(self):
-        return YouTubeContentData(
-            title=self.title,
-            likes=self.likes,
-            link=self.link,
-            channel_id=self.code,
-            views=self.views,
-            system_id=self.system_id,
-            channel_url=self.channel_url,
-            publish_date=self.publish_date,
-            analytics_obj=self._object_sn,
-            pytube_ob=self.object_youtube,
-        )
+        if self._type_data == "heavy":
+            return HeavyYouTubeContentData(
+                title=self.title,
+                likes=self.likes,
+                link=self.link,
+                channel_id=self.code,
+                views=self.views,
+                system_id=self.system_id,
+                channel_url=self.channel_url,
+                publish_date=self.publish_date,
+                analytics_obj=self._object_sn,
+                pytube_ob=self.object_youtube,
+            )
+        else:
+            return YouTubeContentData(
+                title=self.title,
+                likes=self.likes,
+                link=self.link,
+                channel_id=self.code,
+                views=self.views,
+                system_id=self.system_id,
+                channel_url=self.channel_url,
+                publish_date=self.publish_date,
+                analytics_obj=self._object_sn,
+            )
 
 
 class Convert:
