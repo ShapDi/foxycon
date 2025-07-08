@@ -10,7 +10,7 @@ class ContentData:
 
 
 @dataclass
-class CoreYouTubeContentData(ContentData):
+class YouTubeContentData(ContentData):
     system_id: str
     channel_id: str
     title: str
@@ -22,12 +22,12 @@ class CoreYouTubeContentData(ContentData):
 
 
 @dataclass
-class YouTubeContentData(CoreYouTubeContentData):
+class YouTubeContentData(YouTubeContentData):
     pytube_ob: YouTube
 
 
 @dataclass
-class CoreYouTubeChannelsData(ContentData):
+class YouTubeChannelsData(ContentData):
     channel_id: str
     name: str
     link: str
@@ -40,7 +40,7 @@ class CoreYouTubeChannelsData(ContentData):
 
 
 @dataclass
-class YouTubeChannelsData(CoreYouTubeChannelsData):
+class HeavyYouTubeChannelsData(YouTubeChannelsData):
     pytube_ob: Channel
 
 
