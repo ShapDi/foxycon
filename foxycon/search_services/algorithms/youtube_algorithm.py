@@ -18,7 +18,7 @@ class YouTubeAlgorithmRecommendation(SearchAlgorithm):
 
     @override
     def init_statistic_engine(self, statistician_socnet_object: StatisticianSocNet):
-        object_statistic = statistician_socnet_object.get_data(self._link_start)
+        object_statistic = statistician_socnet_object.get_data(self._link_start, type_data='heavy')
         self._statistician_socnet_object = statistician_socnet_object
         self._parsing_object_controller = ParsingObjectController(object_statistic)
         return self
@@ -69,7 +69,7 @@ class YouTubeAlgorithmRecommendation(SearchAlgorithm):
     def get_list_object_statistic(self):
         list_object_statistic = []
         for link in self._list_link:
-            object_statistic = self._statistician_socnet_object.get_data(link)
+            object_statistic = self._statistician_socnet_object.get_data(link, type_data='heavy')
             list_object_statistic.append(object_statistic)
         return list_object_statistic
 
