@@ -6,7 +6,6 @@ from telethon.errors import (
 from telethon.tl.functions.channels import JoinChannelRequest, GetParticipantRequest
 from telethon import TelegramClient
 
-from foxycon.data_structures.error_type import Telegram
 
 from telethon.sync import functions
 
