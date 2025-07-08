@@ -1,13 +1,6 @@
-from telethon.errors import (
-    UserPrivacyRestrictedError,
-    ChatWriteForbiddenError,
-    FloodWaitError,
-)
+from telethon.sync import functions
 from telethon.tl.functions.channels import JoinChannelRequest, GetParticipantRequest
 from telethon import TelegramClient
-
-
-from telethon.sync import functions
 
 from .interface_statistics_module import StatisticianModuleStrategy
 from ...data_structures.analysis_type import ResultAnalytics
