@@ -28,7 +28,6 @@ from socnet_entitys import (
     Proxy,
     TelegramAccount,
 )
-from socnet_entitys.entitys import Entity
 
 
 class StatisticianSocNet:
