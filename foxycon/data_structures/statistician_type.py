@@ -1,6 +1,9 @@
 import datetime
+from typing import List
 from dataclasses import dataclass
+
 from pytubefix import YouTube, Channel
+
 from foxycon.data_structures.analysis_type import ResultAnalytics
 
 
@@ -27,6 +30,12 @@ class HeavyYouTubeContentData(YouTubeContentData):
 
 
 @dataclass
+class ExternalLink:
+    title: str
+    link: str
+
+
+@dataclass
 class YouTubeChannelsData(ContentData):
     channel_id: str
     name: str
@@ -37,6 +46,7 @@ class YouTubeChannelsData(ContentData):
     subscriber: int
     number_videos: int
     data_create: datetime.date
+    external_link: List[ExternalLink]
 
 
 @dataclass

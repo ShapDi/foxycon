@@ -14,6 +14,7 @@ from ...data_structures.statistician_type import (
     YouTubeContentData,
     HeavyYouTubeContentData,
     HeavyYouTubeChannelsData,
+    ExternalLink,
 )
 
 
@@ -34,6 +35,7 @@ class YouTubeChannel(StatisticianModuleStrategy):
         self.data_create = self.get_data_create()
         self.number_videos = self.get_number_videos()
         self.subscriber = self.get_subscriber()
+        self.external_links = self.get_external_links()
 
     @staticmethod
     def transform_youtube_channel_link(url: str) -> str:
@@ -193,6 +195,33 @@ class YouTubeChannel(StatisticianModuleStrategy):
         )
         return text_description
 
+    def get_external_links(self):
+        data = self.get_base_con()
+        external_links = (
+            data[0]
+            .get("showEngagementPanelEndpoint")
+            .get("engagementPanel")
+            .get("engagementPanelSectionListRenderer")
+            .get("content")
+            .get("sectionListRenderer")
+            .get("contents")[0]
+            .get("itemSectionRenderer")
+            .get("contents")[0]
+            .get("aboutChannelRenderer")
+            .get("metadata")
+            .get("aboutChannelViewModel")
+            .get("links")
+        )
+        return [
+            ExternalLink(
+                title=link_data.get("channelExternalLinkViewModel")
+                .get("title")
+                .get("content"),
+                link=f"http://{link_data.get('channelExternalLinkViewModel').get('link').get('content')}",
+            )
+            for link_data in external_links
+        ]
+
     @property
     def object_channel(self):
         return self._object_channel
@@ -211,6 +240,7 @@ class YouTubeChannel(StatisticianModuleStrategy):
                 number_videos=self.number_videos,
                 analytics_obj=self._object_sn,
                 pytube_ob=self.object_channel,
+                external_link=self.external_links,
             )
         else:
             return YouTubeChannelsData(
@@ -224,6 +254,7 @@ class YouTubeChannel(StatisticianModuleStrategy):
                 data_create=self.data_create,
                 number_videos=self.number_videos,
                 analytics_obj=self._object_sn,
+                external_link=self.external_links,
             )
 
     async def get_data_async(self):
@@ -240,6 +271,7 @@ class YouTubeChannel(StatisticianModuleStrategy):
                 number_videos=self.number_videos,
                 analytics_obj=self._object_sn,
                 pytube_ob=self.object_channel,
+                external_link=self.external_links,
             )
         else:
             return YouTubeChannelsData(
@@ -253,6 +285,7 @@ class YouTubeChannel(StatisticianModuleStrategy):
                 data_create=self.data_create,
                 number_videos=self.number_videos,
                 analytics_obj=self._object_sn,
+                external_link=self.external_links,
             )
 
 
