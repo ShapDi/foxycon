@@ -1,3 +1,4 @@
+from foxycon.search_services.algorithms.telegram_algorithm import TelegramAlgorithmUsers
 from foxycon.statistics_services.content_social_network import StatisticianSocNet
 from foxycon.analysis_services.сontent_analyzer import ContentAnalyzer
 from foxycon.search_services.search import Search, SearchBuilder
@@ -10,4 +11,5 @@ __all__ = [
     "Search",
     "SearchBuilder",
     "YouTubeAlgorithmRecommendation",
+    "TelegramAlgorithmUsers",
 ]
