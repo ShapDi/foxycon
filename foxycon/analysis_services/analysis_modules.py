@@ -188,3 +188,35 @@ class TelegramAnalyzer(AnalyzerModuleStrategy):
             "social_network": "telegram",
             "code": self.get_code(link),
         }
+
+
+class PornHubAnalyzer(AnalyzerModuleStrategy):
+    @staticmethod
+    def get_code(link):
+        parsed_url = urllib.parse.urlparse(link)
+        if len(parsed_url.path.split("/")) == 3:
+            return parsed_url.path.split("/")[2]
+        else:
+            params = urllib.parse.parse_qs(parsed_url.query)
+            return params.get("viewkey")[0]
+
+    @staticmethod
+    def clean_link(link):
+        parsed_url = urllib.parse.urlparse(link)
+        return parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path
+
+    @staticmethod
+    def get_type_content(link):
+        parsed_url = urllib.parse.urlparse(link)
+        if len(parsed_url.path.split("/")) == 3:
+            return parsed_url.path.split("/")[1]
+        else:
+            return "video"
+
+    def get_data(self, link):
+        return {
+            "clean_link": self.clean_link(link),
+            "type_content": self.get_type_content(link),
+            "social_network": "pornhab",
+            "code": self.get_code(link),
+        }

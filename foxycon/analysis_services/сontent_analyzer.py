@@ -6,6 +6,7 @@ from foxycon.analysis_services.analysis_modules import (
     YouTubeAnalyzer,
     InstagramAnalyzer,
     TelegramAnalyzer,
+    PornHubAnalyzer,
 )
 from foxycon.data_structures.analysis_type import ResultAnalytics
 
@@ -25,6 +26,8 @@ class ContentAnalyzer:
                 return InstagramAnalyzer
             case "t.me":
                 return TelegramAnalyzer
+            case "www.pornhub.com":
+                return PornHubAnalyzer
         return None
 
     def get_data(self, link) -> ResultAnalytics | None:
