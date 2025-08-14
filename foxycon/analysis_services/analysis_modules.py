@@ -202,8 +202,9 @@ class PornHubAnalyzer(AnalyzerModuleStrategy):
 
     @staticmethod
     def clean_link(link):
-        parsed_url = urllib.parse.urlparse(link)
-        return parsed_url.scheme + "://" + parsed_url.netloc + parsed_url.path
+        # parsed_url = urllib.parse.urlparse(link)
+        # print(parsed_url)
+        return link
 
     @staticmethod
     def get_type_content(link):
