@@ -14,6 +14,7 @@ from foxycon.data_structures.statistician_type import (
     InstagramContentData,
 )
 from .modules.interface_statistics_module import StatisticianModuleStrategy
+from .modules.statistics_pornhab import PornHabVideo
 
 from .modules.statistics_telegram import TelegramGroup, TelegramPost
 from .modules.statistics_youtube import YouTubeChannel, YouTubeContent
@@ -103,6 +104,8 @@ class StatisticianSocNet:
                     clients_handler=telegram_client,
                     analytics_obj=result_analytic,
                 )
+            case ("pornhab", "video"):
+                return PornHabVideo(link=link, analytics_obj=result_analytic)
         return None
 
     @staticmethod

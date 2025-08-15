@@ -90,3 +90,52 @@ class TelegramChatData(ContentData):
     participants_count: int
     date_create: datetime.datetime
     # users: list[TelegramUserData]
+
+
+@dataclass
+class YouTubeVideoData(ContentData):
+    system_id: str
+    channel_id: str
+    title: str
+    likes: int
+    link: str
+    views: int
+    channel_url: str
+    publish_date: datetime.datetime
+
+
+@dataclass
+class PornHabModelData(ContentData):
+    system_id: str
+    channel_id: str
+    title: str
+    likes: int
+    link: str
+    views: int
+    channel_url: str
+
+
+@dataclass
+class PornHabChannelsData(ContentData):
+    system_id: str
+    channel_id: str
+    title: str
+    likes: int
+    link: str
+    views: int
+    channel_url: str
+    publish_date: datetime.datetime
+
+
+@dataclass
+class PornHabVideoData(ContentData):
+    system_id: str
+    channel_id: str
+    title: str
+    likes: int
+    dislikes: int
+    views: int
+    duration: datetime.timedelta
+    channel_url: str
+    # channel_data: PornHabChannelsData | PornHabModelData
+    publish_date: datetime.datetime
